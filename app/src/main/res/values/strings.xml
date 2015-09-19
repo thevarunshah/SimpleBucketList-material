@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Simple Bucket List</string>
+    <string name="add_item_text">Add New Goal</string>
+    <string name="add_new_item"><b>+</b></string>
+    <string name="text_hint">Enter Goal</string>
+    <string name="add">Add</string>
+    <string name="delete">delete</string>
+
+</resources>

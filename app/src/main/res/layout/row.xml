@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5sp" >
+
+    <CheckBox
+        android:id="@+id/row_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/row_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/row_check"
+        android:layout_toRightOf="@+id/row_check"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="30sp"
+        android:layout_marginEnd="30sp"
+        android:layout_marginTop="2.5sp"
+        android:layout_marginBottom="2.5sp"
+        android:text="@string/text_hint"
+        android:textSize="20sp" />
+
+    <ImageButton
+        android:id="@+id/row_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/delete"
+        android:src="@android:drawable/ic_delete"
+        android:background="@android:color/transparent" />
+
+</RelativeLayout>
