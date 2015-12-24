@@ -5,22 +5,40 @@
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
-    android:padding="10dp"
     tools:context="com.thevarunshah.simplebucketlist.BucketListView" >
 
-    <ListView
-        android:id="@+id/listview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/background_dark"
+            android:elevation="4dp"
+            android:logo="@drawable/ic_launcher"
+            android:theme="@style/ToolbarDarkOverflow"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_below="@id/toolbar" />
+
+    </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right|end"
+        android:layout_gravity="bottom|end|right"
         android:clickable="true"
         android:src="@drawable/ic_add_white_48dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         app:borderWidth="0dp"
         app:elevation="6dp"

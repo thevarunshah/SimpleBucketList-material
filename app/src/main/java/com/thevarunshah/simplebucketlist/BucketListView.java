@@ -13,24 +13,27 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.thevarunshah.classes.BucketAdapter;
 import com.thevarunshah.classes.BucketItem;
 
+import static android.R.*;
 
-public class BucketListView extends Activity implements OnClickListener, Serializable{
-	
+
+public class BucketListView extends AppCompatActivity implements OnClickListener, Serializable{
+
 	private static final long serialVersionUID = 1L; //for serializing data
 
 	private static final String TAG = "BucketListView"; //for debugging purposes
-	
+
 	private final ArrayList<BucketItem> bucketList = new ArrayList<BucketItem>(); //list of goals
-	
+
 	private ListView listView = null; //main view of goals
 	private BucketAdapter listAdapter = null; //adapter for goals display
 
@@ -39,6 +42,10 @@ public class BucketListView extends Activity implements OnClickListener, Seriali
     	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bucket_list_view);
+
+		Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+		myToolbar.setTitle("Bucket List");
+		setSupportActionBar(myToolbar);
         
         //obtain list view and create new bucket list custom adapter
         listView = (ListView) findViewById(R.id.listview);
