@@ -90,12 +90,7 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 				listAdapter.notifyDataSetChanged();
 			}
 		});
-		alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialogInterface, int whichButton) {
-
-				input.clearFocus();
-			}
-		});
+		alertDialog.setNegativeButton("CANCEL", null);
 
 		AlertDialog alert = alertDialog.create();
 		alert.show();

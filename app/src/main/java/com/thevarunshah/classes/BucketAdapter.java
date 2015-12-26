@@ -23,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thevarunshah.simplebucketlist.BucketListView;
 import com.thevarunshah.simplebucketlist.R;
 
 public class BucketAdapter extends ArrayAdapter<BucketItem> {
@@ -103,35 +104,35 @@ public class BucketAdapter extends ArrayAdapter<BucketItem> {
 
 			@Override
 			public void onClick(View v) {
-				
+
 				TextView tv = (TextView) v;
 				Log.i(TAG, "clicked on " + tv.getText());
-				
+
 				final BucketItem item = (BucketItem) getItem(position); //get clicked item
-				
+
 				//set up edit text object
 				final EditText input = new EditText(context);
 				input.setInputType(InputType.TYPE_CLASS_TEXT);
 				input.setText(tv.getText());
-				
+
 				//prompt edit
 				AlertDialog.Builder editAlert = new AlertDialog.Builder(context);
 				editAlert
-					.setIcon(android.R.drawable.ic_menu_info_details)
-					.setTitle("Edit Goal")
-					.setView(input)
-					.setPositiveButton("Save", new DialogInterface.OnClickListener(){
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							
-							BucketItem updatedItem = new BucketItem(input.getText().toString());
-							updatedItem.setDone(item.isDone());
-							bucketList.remove(item);
-							bucketList.add(position, updatedItem);
-							notifyDataSetChanged();
-						}
-					})
-					.setNegativeButton("Cancel", null);
+						.setIcon(android.R.drawable.ic_menu_info_details)
+						.setTitle("Edit Goal")
+						.setView(input)
+						.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+
+								BucketItem updatedItem = new BucketItem(input.getText().toString());
+								updatedItem.setDone(item.isDone());
+								bucketList.remove(item);
+								bucketList.add(position, updatedItem);
+								notifyDataSetChanged();
+							}
+						})
+						.setNegativeButton("Cancel", null);
 				AlertDialog editDialog = editAlert.create();
 				editDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 				editDialog.show();
@@ -147,22 +148,31 @@ public class BucketAdapter extends ArrayAdapter<BucketItem> {
 
 				final BucketItem item = (BucketItem) getItem(position); //get clicked item
 
-				//confirm delete
-				new AlertDialog.Builder(context)
-					.setIconAttribute(android.R.attr.alertDialogIcon)
-					.setTitle("Confirm Delete")
-					.setMessage("Are you sure you want to delete this goal?")
-					.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
+				LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+				final View dialog = layoutInflater.inflate(R.layout.delete_dialog, null);
+				final android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getContext(), R.style.AppCompatAlertDialogStyle);
+				alertDialog.setTitle("Confirm Delete");
+				alertDialog.setIcon(R.drawable.ic_warning_black_24dp);
 
-							//remove goal from adapter and update view
-							bucketList.remove(item);
-							notifyDataSetChanged();
-						}
-					})
-					.setNegativeButton("No", null)
-					.show();
+				alertDialog.setView(dialog);
+
+				final TextView message = (TextView) dialog.findViewById(R.id.delete_dialog);
+				message.setText("Are you sure you want to delete this item?");
+
+				alertDialog.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialogInterface, int whichButton) {
+
+						Log.i(TAG, "deleting goal");
+
+						//remove goal from adapter and update view
+						bucketList.remove(item);
+						notifyDataSetChanged();
+					}
+				});
+				alertDialog.setNegativeButton("CANCEL", null);
+
+				android.support.v7.app.AlertDialog alert = alertDialog.create();
+				alert.show();
 
 				return true;
 			}

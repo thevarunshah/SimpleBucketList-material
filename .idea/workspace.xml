@@ -90,18 +90,29 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="delete_dialog.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/delete_dialog.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.862069">
+              <caret line="10" column="29" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="BucketListView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/thevarunshah/simplebucketlist/BucketListView.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="70" column="52" selection-start-line="70" selection-start-column="52" selection-end-line="70" selection-end-column="52" />
+              <caret line="92" column="54" selection-start-line="92" selection-start-column="54" selection-end-line="92" selection-end-column="54" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2813#3200#0" expanded="true" />
                 <element signature="e#3199#3200#0" expanded="true" />
-                <element signature="e#3245#3393#0" expanded="true" />
-                <element signature="e#3392#3393#0" expanded="true" />
-                <element signature="e#5211#5241#1" expanded="true" />
+                <element signature="e#5067#5097#1" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -110,13 +121,15 @@
       <file leaf-file-name="BucketAdapter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/thevarunshah/classes/BucketAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8870432">
-              <caret line="168" column="11" selection-start-line="168" selection-start-column="11" selection-end-line="168" selection-end-column="11" />
+            <state vertical-scroll-proportion="0.49169436">
+              <caret line="154" column="70" selection-start-line="154" selection-start-column="70" selection-end-line="154" selection-end-column="70" />
               <folding>
-                <element signature="e#3055#4294#0" expanded="true" />
-                <element signature="e#4293#4294#0" expanded="true" />
-                <element signature="e#4380#5149#0" expanded="true" />
-                <element signature="e#5148#5149#0" expanded="true" />
+                <element signature="e#2128#2693#0" expanded="true" />
+                <element signature="e#2692#2693#0" expanded="true" />
+                <element signature="e#4429#5722#0" expanded="true" />
+                <element signature="e#5278#5554#0" expanded="true" />
+                <element signature="e#5553#5554#0" expanded="true" />
+                <element signature="e#5721#5722#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -130,6 +143,16 @@
               <folding>
                 <element signature="e#590#608#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-2.5185184">
+              <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1606,10 +1629,11 @@
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/bucket_list_view.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/input_dialog.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/thevarunshah/simplebucketlist/BucketListView.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/row.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/thevarunshah/simplebucketlist/BucketListView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/thevarunshah/classes/BucketAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/delete_dialog.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
       </list>
     </option>
   </component>
@@ -1898,6 +1922,11 @@
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="979ea2ff" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_23" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Varun\Documents\SimpleBucketList\app\src\main\res\layout" />
+    </key>
+  </component>
   <component name="RunManager" selected="Android Application.app">
     <configuration default="false" name="build" type="GroovyScriptRunConfiguration" factoryName="Groovy" temporary="true">
       <module name="SimpleBucketList" />
@@ -2176,13 +2205,35 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/bucket_list_view.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/thevarunshah/simplebucketlist/BucketListView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="20" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="20" />
           <folding>
-            <element signature="e#590#608#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2813#3200#0" expanded="true" />
+            <element signature="e#3199#3200#0" expanded="true" />
+            <element signature="e#5067#5097#1" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="14" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2205,43 +2256,7 @@
             <element signature="imports" expanded="true" />
             <element signature="e#2813#3200#0" expanded="true" />
             <element signature="e#3199#3200#0" expanded="true" />
-            <element signature="e#3245#3393#0" expanded="true" />
-            <element signature="e#3392#3393#0" expanded="true" />
-            <element signature="e#5211#5241#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="14" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/bucket_list_view.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/thevarunshah/simplebucketlist/BucketListView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="20" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2813#3200#0" expanded="true" />
-            <element signature="e#3199#3200#0" expanded="true" />
-            <element signature="e#3245#3393#0" expanded="true" />
-            <element signature="e#3392#3393#0" expanded="true" />
-            <element signature="e#5211#5241#1" expanded="true" />
+            <element signature="e#5067#5097#1" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2273,9 +2288,7 @@
             <element signature="imports" expanded="true" />
             <element signature="e#2813#3200#0" expanded="true" />
             <element signature="e#3199#3200#0" expanded="true" />
-            <element signature="e#3245#3393#0" expanded="true" />
-            <element signature="e#3392#3393#0" expanded="true" />
-            <element signature="e#5211#5241#1" expanded="true" />
+            <element signature="e#5067#5097#1" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2307,9 +2320,7 @@
             <element signature="imports" expanded="true" />
             <element signature="e#2813#3200#0" expanded="true" />
             <element signature="e#3199#3200#0" expanded="true" />
-            <element signature="e#3245#3393#0" expanded="true" />
-            <element signature="e#3392#3393#0" expanded="true" />
-            <element signature="e#5211#5241#1" expanded="true" />
+            <element signature="e#5067#5097#1" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2341,9 +2352,7 @@
             <element signature="imports" expanded="true" />
             <element signature="e#2813#3200#0" expanded="true" />
             <element signature="e#3199#3200#0" expanded="true" />
-            <element signature="e#3245#3393#0" expanded="true" />
-            <element signature="e#3392#3393#0" expanded="true" />
-            <element signature="e#5211#5241#1" expanded="true" />
+            <element signature="e#5067#5097#1" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2375,9 +2384,7 @@
             <element signature="imports" expanded="true" />
             <element signature="e#2813#3200#0" expanded="true" />
             <element signature="e#3199#3200#0" expanded="true" />
-            <element signature="e#3245#3393#0" expanded="true" />
-            <element signature="e#3392#3393#0" expanded="true" />
-            <element signature="e#5211#5241#1" expanded="true" />
+            <element signature="e#5067#5097#1" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2409,9 +2416,7 @@
             <element signature="imports" expanded="true" />
             <element signature="e#2813#3200#0" expanded="true" />
             <element signature="e#3199#3200#0" expanded="true" />
-            <element signature="e#3245#3393#0" expanded="true" />
-            <element signature="e#3392#3393#0" expanded="true" />
-            <element signature="e#5211#5241#1" expanded="true" />
+            <element signature="e#5067#5097#1" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2450,9 +2455,7 @@
             <element signature="imports" expanded="true" />
             <element signature="e#2813#3200#0" expanded="true" />
             <element signature="e#3199#3200#0" expanded="true" />
-            <element signature="e#3245#3393#0" expanded="true" />
-            <element signature="e#3392#3393#0" expanded="true" />
-            <element signature="e#5211#5241#1" expanded="true" />
+            <element signature="e#5067#5097#1" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2491,9 +2494,7 @@
             <element signature="imports" expanded="true" />
             <element signature="e#2813#3200#0" expanded="true" />
             <element signature="e#3199#3200#0" expanded="true" />
-            <element signature="e#3245#3393#0" expanded="true" />
-            <element signature="e#3392#3393#0" expanded="true" />
-            <element signature="e#5211#5241#1" expanded="true" />
+            <element signature="e#5067#5097#1" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2610,16 +2611,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="40" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
-          <folding>
-            <element signature="e#590#608#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.47304347">
@@ -2639,25 +2630,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/input_dialog.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.206897">
-          <caret line="14" column="45" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11826087">
-          <caret line="4" column="45" selection-start-line="4" selection-start-column="45" selection-end-line="4" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/row.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -2669,30 +2641,70 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/input_dialog.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.206897">
+          <caret line="14" column="45" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/delete_dialog.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.862069">
+          <caret line="10" column="29" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.5185184">
+          <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="40" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
+          <folding>
+            <element signature="e#590#608#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/thevarunshah/simplebucketlist/BucketListView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="70" column="52" selection-start-line="70" selection-start-column="52" selection-end-line="70" selection-end-column="52" />
+          <caret line="92" column="54" selection-start-line="92" selection-start-column="54" selection-end-line="92" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2813#3200#0" expanded="true" />
             <element signature="e#3199#3200#0" expanded="true" />
-            <element signature="e#3245#3393#0" expanded="true" />
-            <element signature="e#3392#3393#0" expanded="true" />
-            <element signature="e#5211#5241#1" expanded="true" />
+            <element signature="e#5067#5097#1" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/thevarunshah/classes/BucketAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8870432">
-          <caret line="168" column="11" selection-start-line="168" selection-start-column="11" selection-end-line="168" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.49169436">
+          <caret line="154" column="70" selection-start-line="154" selection-start-column="70" selection-end-line="154" selection-end-column="70" />
           <folding>
-            <element signature="e#3055#4294#0" expanded="true" />
-            <element signature="e#4293#4294#0" expanded="true" />
-            <element signature="e#4380#5149#0" expanded="true" />
-            <element signature="e#5148#5149#0" expanded="true" />
+            <element signature="e#2128#2693#0" expanded="true" />
+            <element signature="e#2692#2693#0" expanded="true" />
+            <element signature="e#4429#5722#0" expanded="true" />
+            <element signature="e#5278#5554#0" expanded="true" />
+            <element signature="e#5553#5554#0" expanded="true" />
+            <element signature="e#5721#5722#0" expanded="true" />
           </folding>
         </state>
       </provider>
