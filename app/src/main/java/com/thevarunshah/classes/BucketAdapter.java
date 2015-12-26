@@ -1,13 +1,8 @@
 package com.thevarunshah.classes;
 
-import java.util.ArrayList;
-
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Paint;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +14,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.thevarunshah.simplebucketlist.BucketListView;
 import com.thevarunshah.simplebucketlist.R;
+
+import java.util.ArrayList;
 
 public class BucketAdapter extends ArrayAdapter<BucketItem> {
 	

@@ -1,5 +1,6 @@
 package com.thevarunshah.simplebucketlist;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,10 +18,8 @@ import android.widget.ListView;
 import com.thevarunshah.classes.BucketAdapter;
 import com.thevarunshah.classes.BucketItem;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -45,6 +44,7 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
         setContentView(R.layout.bucket_list_view);
 
 		Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+		myToolbar.setContentInsetsRelative(72, 72);
 		setSupportActionBar(myToolbar);
         
         //obtain list view and create new bucket list custom adapter
@@ -104,13 +104,8 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 		super.onPause();
 		
 		//backup data
-		try {
-			Log.i(TAG, "writing to file");
-			writeData(this.bucketList);
-		} catch (IOException e) {
-			Log.i(TAG, "could not write to file");
-			Log.i(TAG, "Exception: " + e);
-		}
+		Log.i(TAG, "writing to file");
+		writeData(this.bucketList);
 	}
 	
 	@Override
@@ -119,54 +114,69 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 		super.onResume();
 		
 		//read data from backup
-		try {
-			if(bucketList.isEmpty()){
-				Log.i(TAG, "reading from file");
-				ArrayList<BucketItem> backup = readData();
-				this.bucketList.clear();
-				this.bucketList.addAll(backup);
+		if(bucketList.isEmpty()){
+			Log.i(TAG, "reading from file");
+			ArrayList<BucketItem> backup = readData();
+			if(backup == null){
+				return;
 			}
-		} catch (Exception e) {
-			Log.i(TAG, "could not read from file");
-			Log.i(TAG, "Exception: " + e);
+			this.bucketList.clear();
+			this.bucketList.addAll(backup);
 		}
 	}
 	
 	/**
-	 * creates a new file in SD card and writes to it
+	 * creates a new file in internal memory and writes to it
 	 * 
 	 * @param bucketList object which is written to file
-	 * @throws IOException
 	 */
-	private static void writeData(ArrayList<BucketItem> bucketList) throws IOException {
-		
-		//obtain file and create if not there
-		File file = new File(android.os.Environment.getExternalStorageDirectory() + "/bucket_list.ser");
-		file.createNewFile();
-		
-		//write to file
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-		oos.writeObject(bucketList);
-		oos.close();
+	private void writeData(ArrayList<BucketItem> bucketList){
+
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+		try {
+			fos = this.getApplicationContext().openFileOutput("bucket_list.ser", Context.MODE_PRIVATE);
+			oos = new ObjectOutputStream(fos);
+			oos.writeObject(bucketList);
+		} catch (Exception e) {
+			Log.i(TAG, "could not write to file");
+			e.printStackTrace();
+		} finally{
+			try{
+				oos.close();
+				fos.close();
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	/**
-	 * reads from file in SD card
+	 * reads from file in internal memory
 	 * 
 	 * @return object which holds the backup data
-	 * @throws IOException
-	 * @throws ClassNotFoundException
 	 */
-	private static ArrayList<BucketItem> readData() throws IOException, ClassNotFoundException {
-		
-		//obtain file
-		File file = new File(android.os.Environment.getExternalStorageDirectory() + "/bucket_list.ser");
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-		
-		@SuppressWarnings("unchecked")
-		//read list from file
-		ArrayList<BucketItem> list = (ArrayList<BucketItem>) ois.readObject();
-		ois.close();
+	private ArrayList<BucketItem> readData(){
+
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
+		ArrayList<BucketItem> list = null;
+		try {
+			fis = this.getApplicationContext().openFileInput("bucket_list.ser");
+			ois = new ObjectInputStream(fis);
+			list = (ArrayList<BucketItem>) ois.readObject();
+		} catch (Exception e) {
+			Log.i(TAG, "could not read from file");
+			e.printStackTrace();
+		} finally{
+			try{
+				if(ois != null) ois.close();
+				if(fis != null) fis.close();
+			} catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+
 		return list;
 	}
 }
