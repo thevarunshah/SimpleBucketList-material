@@ -110,32 +110,38 @@ public class BucketAdapter extends ArrayAdapter<BucketItem> {
 
 				final BucketItem item = (BucketItem) getItem(position); //get clicked item
 
+				LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+				final View dialog = layoutInflater.inflate(R.layout.input_dialog, null);
+				final android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getContext(), R.style.AppCompatAlertDialogStyle);
+				alertDialog.setTitle("Edit Item");
+				alertDialog.setIcon(R.drawable.ic_edit_black_24dp);
+
+				alertDialog.setView(dialog);
+
 				//set up edit text object
-				final EditText input = new EditText(context);
-				input.setInputType(InputType.TYPE_CLASS_TEXT);
+				final EditText input = (EditText) dialog.findViewById(R.id.input_dialog_text);
 				input.setText(tv.getText());
+				input.setFocusableInTouchMode(true);
+				input.requestFocus();
 
-				//prompt edit
-				AlertDialog.Builder editAlert = new AlertDialog.Builder(context);
-				editAlert
-						.setIcon(android.R.drawable.ic_menu_info_details)
-						.setTitle("Edit Goal")
-						.setView(input)
-						.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
+				alertDialog.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialogInterface, int whichButton) {
 
-								BucketItem updatedItem = new BucketItem(input.getText().toString());
-								updatedItem.setDone(item.isDone());
-								bucketList.remove(item);
-								bucketList.add(position, updatedItem);
-								notifyDataSetChanged();
-							}
-						})
-						.setNegativeButton("Cancel", null);
-				AlertDialog editDialog = editAlert.create();
-				editDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-				editDialog.show();
+						Log.i(TAG, "saving edited goal");
+
+						BucketItem updatedItem = new BucketItem(input.getText().toString());
+						updatedItem.setDone(item.isDone());
+						bucketList.remove(item);
+						bucketList.add(position, updatedItem);
+						notifyDataSetChanged();
+					}
+				});
+				alertDialog.setNegativeButton("CANCEL", null);
+
+				android.support.v7.app.AlertDialog alert = alertDialog.create();
+				alert.show();
+
+				alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 			}
 		});
 
