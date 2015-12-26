@@ -10,15 +10,24 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.thevarunshah.classes.BucketAdapter;
 import com.thevarunshah.classes.BucketItem;
@@ -44,7 +53,7 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
         setContentView(R.layout.bucket_list_view);
 
 		Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
-		myToolbar.setTitle("Bucket List");
+		//myToolbar.setTitle("Bucket List");
 		setSupportActionBar(myToolbar);
         
         //obtain list view and create new bucket list custom adapter
@@ -63,27 +72,45 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 	public void onClick(View v) {
 
     	Log.i(TAG, "pressed add button");
-    	
-    	//start add item activity and wait for result (in onActivityResult(...))
-    	Intent i = new Intent(BucketListView.this, AddItem.class);
-    	startActivityForResult(i, 0);
-	}
-    
-    @Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		if(resultCode == RESULT_OK && requestCode == 0){
+		LayoutInflater layoutInflater = LayoutInflater.from(BucketListView.this);
+		final View dialog = layoutInflater.inflate(R.layout.input_dialog, null);
+		final AlertDialog.Builder alertDialog = new AlertDialog.Builder(BucketListView.this, R.style.AppCompatAlertDialogStyle);
+		alertDialog.setTitle("New Item");
 
-			Log.i(TAG, "adding new goal");
-			
-			BucketItem goal = new BucketItem(data.getStringExtra("text")); //create new goal
-			
-			//add goal to main list and update view
-			bucketList.add(goal);
-			listAdapter.notifyDataSetChanged();
-		}
+		alertDialog.setView(dialog);
+
+		final EditText input = (EditText) dialog.findViewById(R.id.input_dialog_text);
+		input.setFocusableInTouchMode(true);
+		input.requestFocus();
+		input.setHint("Enter Details");
+
+		alertDialog.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialogInterface, int whichButton) {
+
+				Log.i(TAG, "adding new goal");
+
+				String itemText = input.getText().toString();
+				BucketItem goal = new BucketItem(itemText); //create new goal
+
+				//add goal to main list and update view
+				bucketList.add(goal);
+				listAdapter.notifyDataSetChanged();
+			}
+		});
+		alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialogInterface, int whichButton) {
+
+				input.clearFocus();
+			}
+		});
+
+		AlertDialog alert = alertDialog.create();
+		alert.show();
+
+		alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 	}
-	
+
 	@Override
 	protected void onPause(){
 		
