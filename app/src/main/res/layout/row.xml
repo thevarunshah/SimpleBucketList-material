@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="5sp" >
+    android:padding="5dp" >
 
     <CheckBox
         android:id="@+id/row_check"
@@ -22,21 +22,12 @@
         android:layout_toEndOf="@+id/row_check"
         android:layout_toRightOf="@+id/row_check"
         android:layout_centerInParent="true"
-        android:layout_marginRight="30sp"
-        android:layout_marginEnd="30sp"
-        android:layout_marginTop="2.5sp"
-        android:layout_marginBottom="2.5sp"
+        android:layout_marginLeft="2.5dp"
+        android:layout_marginStart="2.5dp"
+        android:layout_marginRight="2.5dp"
+        android:layout_marginEnd="2.5dp"
+        android:layout_marginTop="2.5dp"
+        android:layout_marginBottom="2.5dp"
         android:textSize="20sp" />
-
-    <ImageButton
-        android:id="@+id/row_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:contentDescription="@string/delete"
-        android:src="@android:drawable/ic_delete"
-        android:background="@android:color/transparent" />
 
 </RelativeLayout>

@@ -44,10 +44,8 @@ public class BucketAdapter extends ArrayAdapter<BucketItem> {
 		
 		CheckBox done;
 		TextView goal;
-		ImageButton delete;
 	}
 
-	@SuppressLint("InflateParams") 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -61,7 +59,6 @@ public class BucketAdapter extends ArrayAdapter<BucketItem> {
 			holder = new ViewHolder();
 			holder.goal = (TextView) convertView.findViewById(R.id.row_text);
 			holder.done = (CheckBox) convertView.findViewById(R.id.row_check);
-			holder.delete = (ImageButton) convertView.findViewById(R.id.row_delete);
 			convertView.setTag(holder);
 		} 
 		else{
@@ -74,20 +71,19 @@ public class BucketAdapter extends ArrayAdapter<BucketItem> {
 		//attach a check listener to the checkbox
 		holder.done.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            	
-                BucketItem item = (BucketItem) getItem(position); //get checked item
-                item.setDone(isChecked); //set as done/undone
-                
-                if(isChecked){
-                	holderFinal.goal.setPaintFlags(holderFinal.goal.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); //apply strikethrough effect
-                }
-                else{
-                	holderFinal.goal.setPaintFlags(holderFinal.goal.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG); //get rid of strikethrough effect
-                }
-            }
-        });
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+				BucketItem item = (BucketItem) getItem(position); //get checked item
+				item.setDone(isChecked); //set as done/undone
+
+				if (isChecked) {
+					holderFinal.goal.setPaintFlags(holderFinal.goal.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); //apply strikethrough effect
+				} else {
+					holderFinal.goal.setPaintFlags(holderFinal.goal.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG); //get rid of strikethrough effect
+				}
+			}
+		});
 		
 		//attach a press listener for toast message
 		holder.done.setOnClickListener(new OnClickListener() {
@@ -141,17 +137,16 @@ public class BucketAdapter extends ArrayAdapter<BucketItem> {
 				editDialog.show();
 			}
 		});
-		
-		//attach a press listener to the delete button
-		holder.delete.setOnClickListener(new OnClickListener() {
-			
+
+		//attach a long press listener to the item
+		holder.goal.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
-			public void onClick(View v) {
-				
+			public boolean onLongClick(View v) {
+
 				Log.i(TAG, "clicked on delete");
-				
+
 				final BucketItem item = (BucketItem) getItem(position); //get clicked item
-				
+
 				//confirm delete
 				new AlertDialog.Builder(context)
 					.setIconAttribute(android.R.attr.alertDialogIcon)
@@ -160,7 +155,7 @@ public class BucketAdapter extends ArrayAdapter<BucketItem> {
 					.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							
+
 							//remove goal from adapter and update view
 							bucketList.remove(item);
 							notifyDataSetChanged();
@@ -168,6 +163,8 @@ public class BucketAdapter extends ArrayAdapter<BucketItem> {
 					})
 					.setNegativeButton("No", null)
 					.show();
+
+				return true;
 			}
 		});
 

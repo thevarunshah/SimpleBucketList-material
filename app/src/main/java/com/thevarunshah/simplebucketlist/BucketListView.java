@@ -1,18 +1,6 @@
 package com.thevarunshah.simplebucketlist;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -23,16 +11,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.thevarunshah.classes.BucketAdapter;
 import com.thevarunshah.classes.BucketItem;
 
-import static android.R.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 
 public class BucketListView extends AppCompatActivity implements OnClickListener, Serializable{
@@ -53,7 +45,6 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
         setContentView(R.layout.bucket_list_view);
 
 		Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
-		//myToolbar.setTitle("Bucket List");
 		setSupportActionBar(myToolbar);
         
         //obtain list view and create new bucket list custom adapter
@@ -77,6 +68,7 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 		final View dialog = layoutInflater.inflate(R.layout.input_dialog, null);
 		final AlertDialog.Builder alertDialog = new AlertDialog.Builder(BucketListView.this, R.style.AppCompatAlertDialogStyle);
 		alertDialog.setTitle("New Item");
+		alertDialog.setIcon(R.drawable.ic_launcher);
 
 		alertDialog.setView(dialog);
 
