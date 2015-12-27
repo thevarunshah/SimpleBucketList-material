@@ -38,8 +38,6 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 
 	private final ArrayList<BucketItem> bucketList = new ArrayList<BucketItem>(); //list of goals
 
-	public static boolean completeItemsHidden = false;
-
 	private ListView listView = null; //main view of goals
 	private BucketAdapter listAdapter = null; //adapter for goals display
 
@@ -109,32 +107,20 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_menu, menu);
-		if(this.completeItemsHidden){
-			menu.findItem(R.id.hide_completed).setTitle(R.string.show_completed_text);
-		}
-		else{
-			menu.findItem(R.id.hide_completed).setTitle(R.string.hide_completed_text);
-		}
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case R.id.hide_completed:
-				if(!this.completeItemsHidden){
-					item.setTitle(R.string.show_completed_text);
-				}
-				else{
-					item.setTitle(R.string.hide_completed_text);
-				}
-				this.completeItemsHidden = !this.completeItemsHidden;
+			case R.id.archive_completed:
+				return true;
+			case R.id.display_archived:
 				return true;
 			case R.id.about:
 				Log.i(TAG, "Made by Varun Shah");
 				Snackbar snackbar = Snackbar.make(findViewById(R.id.coordLayout), "Made by Varun Shah", Snackbar.LENGTH_SHORT);
 				snackbar.show();
-
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -161,17 +147,6 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 			readData();
 		}
 	}
-
-	public ArrayList<BucketItem> getUncompletedList(){
-
-		ArrayList<BucketItem> uncompleted = new ArrayList<BucketItem>();
-		for(BucketItem bi : this.bucketList){
-			if(!bi.isDone()){
-				uncompleted.add(bi);
-			}
-		}
-		return uncompleted;
-	}
 	
 	/**
 	 * creates a new file in internal memory and writes to it
@@ -184,7 +159,6 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 			fos = this.getApplicationContext().openFileOutput("bucket_list.ser", Context.MODE_PRIVATE);
 			oos = new ObjectOutputStream(fos);
 			oos.writeObject(this.bucketList);
-			oos.writeBoolean(this.completeItemsHidden);
 		} catch (Exception e) {
 			Log.i(TAG, "could not write to file");
 			e.printStackTrace();
@@ -213,7 +187,6 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 				this.bucketList.clear();
 				this.bucketList.addAll(list);
 			}
-			this.completeItemsHidden = ois.readBoolean();
 		} catch (Exception e) {
 			Log.i(TAG, "could not read from file");
 			e.printStackTrace();
