@@ -21,6 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ArchiveListView"
+            android:label="@string/archived" />
     </application>
 
 </manifest>

@@ -1,7 +1,7 @@
 package com.thevarunshah.simplebucketlist;
 
-import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,24 +19,14 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.thevarunshah.classes.Backend;
 import com.thevarunshah.classes.BucketAdapter;
 import com.thevarunshah.classes.BucketItem;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
 
-
-public class BucketListView extends AppCompatActivity implements OnClickListener, Serializable{
-
-	private static final long serialVersionUID = 1L; //for serializing data
+public class BucketListView extends AppCompatActivity implements OnClickListener{
 
 	private static final String TAG = "BucketListView"; //for debugging purposes
-
-	private final ArrayList<BucketItem> bucketList = new ArrayList<BucketItem>(); //list of goals
 
 	private ListView listView = null; //main view of goals
 	private BucketAdapter listAdapter = null; //adapter for goals display
@@ -53,7 +43,7 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 
         //obtain list view and create new bucket list custom adapter
         listView = (ListView) findViewById(R.id.listview);
-        listAdapter = new BucketAdapter(this, R.layout.row, bucketList);
+        listAdapter = new BucketAdapter(this, R.layout.row, Backend.getBucketList());
         
         //attach adapter to list view
         listView.setAdapter(listAdapter);
@@ -90,7 +80,7 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 				BucketItem goal = new BucketItem(itemText); //create new goal
 
 				//add goal to main list and update view
-				bucketList.add(goal);
+				Backend.getBucketList().add(goal);
 				listAdapter.notifyDataSetChanged();
 			}
 		});
@@ -114,8 +104,15 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.archive_completed:
+				//transfer completed items to archive
+				Backend.transferCompletedToArchive();
+				listAdapter.notifyDataSetChanged();
+				Snackbar infoBar = Snackbar.make(findViewById(R.id.coordLayout), "All completed items archived!", Snackbar.LENGTH_SHORT);
+				infoBar.show();
 				return true;
 			case R.id.display_archived:
+				Intent i = new Intent(BucketListView.this, ArchiveListView.class);
+				startActivity(i);
 				return true;
 			case R.id.about:
 				Log.i(TAG, "Made by Varun Shah");
@@ -133,7 +130,7 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 		
 		//backup data
 		Log.i(TAG, "writing to file");
-		writeData();
+		Backend.writeData(this.getApplicationContext());
 	}
 	
 	@Override
@@ -142,61 +139,9 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 		super.onResume();
 		
 		//read data from backup
-		if(bucketList.isEmpty()){
+		if(Backend.getBucketList().isEmpty()){
 			Log.i(TAG, "reading from file");
-			readData();
-		}
-	}
-	
-	/**
-	 * creates a new file in internal memory and writes to it
-	 */
-	private void writeData(){
-
-		FileOutputStream fos = null;
-		ObjectOutputStream oos = null;
-		try {
-			fos = this.getApplicationContext().openFileOutput("bucket_list.ser", Context.MODE_PRIVATE);
-			oos = new ObjectOutputStream(fos);
-			oos.writeObject(this.bucketList);
-		} catch (Exception e) {
-			Log.i(TAG, "could not write to file");
-			e.printStackTrace();
-		} finally{
-			try{
-				oos.close();
-				fos.close();
-			} catch (Exception e){
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	/**
-	 * reads from file in internal memory
-	 */
-	private void readData(){
-
-		FileInputStream fis = null;
-		ObjectInputStream ois = null;
-		try {
-			fis = this.getApplicationContext().openFileInput("bucket_list.ser");
-			ois = new ObjectInputStream(fis);
-			ArrayList<BucketItem> list = (ArrayList<BucketItem>) ois.readObject();
-			if(list != null){
-				this.bucketList.clear();
-				this.bucketList.addAll(list);
-			}
-		} catch (Exception e) {
-			Log.i(TAG, "could not read from file");
-			e.printStackTrace();
-		} finally{
-			try{
-				if(ois != null) ois.close();
-				if(fis != null) fis.close();
-			} catch(Exception e){
-				e.printStackTrace();
-			}
+			Backend.readData(this.getApplicationContext());
 		}
 	}
 }
