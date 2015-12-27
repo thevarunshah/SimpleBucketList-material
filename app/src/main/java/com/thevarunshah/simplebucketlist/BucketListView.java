@@ -18,7 +18,6 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.thevarunshah.classes.BucketAdapter;
 import com.thevarunshah.classes.BucketItem;
@@ -39,6 +38,8 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 
 	private final ArrayList<BucketItem> bucketList = new ArrayList<BucketItem>(); //list of goals
 
+	public static boolean completeItemsHidden = false;
+
 	private ListView listView = null; //main view of goals
 	private BucketAdapter listAdapter = null; //adapter for goals display
 
@@ -51,7 +52,7 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 		Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
 		myToolbar.setContentInsetsRelative(72, 72);
 		setSupportActionBar(myToolbar);
-        
+
         //obtain list view and create new bucket list custom adapter
         listView = (ListView) findViewById(R.id.listview);
         listAdapter = new BucketAdapter(this, R.layout.row, bucketList);
@@ -108,7 +109,12 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_menu, menu);
-
+		if(this.completeItemsHidden){
+			menu.findItem(R.id.hide_completed).setTitle(R.string.show_completed_text);
+		}
+		else{
+			menu.findItem(R.id.hide_completed).setTitle(R.string.hide_completed_text);
+		}
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -116,13 +122,13 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.hide_completed:
-				String text = item.getTitle().toString();
-				if(text.startsWith("Hide")){
+				if(!this.completeItemsHidden){
 					item.setTitle(R.string.show_completed_text);
 				}
 				else{
 					item.setTitle(R.string.hide_completed_text);
 				}
+				this.completeItemsHidden = !this.completeItemsHidden;
 				return true;
 			case R.id.about:
 				Log.i(TAG, "Made by Varun Shah");
@@ -141,7 +147,7 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 		
 		//backup data
 		Log.i(TAG, "writing to file");
-		writeData(this.bucketList);
+		writeData();
 	}
 	
 	@Override
@@ -152,28 +158,33 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 		//read data from backup
 		if(bucketList.isEmpty()){
 			Log.i(TAG, "reading from file");
-			ArrayList<BucketItem> backup = readData();
-			if(backup == null){
-				return;
-			}
-			this.bucketList.clear();
-			this.bucketList.addAll(backup);
+			readData();
 		}
+	}
+
+	public ArrayList<BucketItem> getUncompletedList(){
+
+		ArrayList<BucketItem> uncompleted = new ArrayList<BucketItem>();
+		for(BucketItem bi : this.bucketList){
+			if(!bi.isDone()){
+				uncompleted.add(bi);
+			}
+		}
+		return uncompleted;
 	}
 	
 	/**
 	 * creates a new file in internal memory and writes to it
-	 * 
-	 * @param bucketList object which is written to file
 	 */
-	private void writeData(ArrayList<BucketItem> bucketList){
+	private void writeData(){
 
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		try {
 			fos = this.getApplicationContext().openFileOutput("bucket_list.ser", Context.MODE_PRIVATE);
 			oos = new ObjectOutputStream(fos);
-			oos.writeObject(bucketList);
+			oos.writeObject(this.bucketList);
+			oos.writeBoolean(this.completeItemsHidden);
 		} catch (Exception e) {
 			Log.i(TAG, "could not write to file");
 			e.printStackTrace();
@@ -189,18 +200,20 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 	
 	/**
 	 * reads from file in internal memory
-	 * 
-	 * @return object which holds the backup data
 	 */
-	private ArrayList<BucketItem> readData(){
+	private void readData(){
 
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
-		ArrayList<BucketItem> list = null;
 		try {
 			fis = this.getApplicationContext().openFileInput("bucket_list.ser");
 			ois = new ObjectInputStream(fis);
-			list = (ArrayList<BucketItem>) ois.readObject();
+			ArrayList<BucketItem> list = (ArrayList<BucketItem>) ois.readObject();
+			if(list != null){
+				this.bucketList.clear();
+				this.bucketList.addAll(list);
+			}
+			this.completeItemsHidden = ois.readBoolean();
 		} catch (Exception e) {
 			Log.i(TAG, "could not read from file");
 			e.printStackTrace();
@@ -212,7 +225,5 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 				e.printStackTrace();
 			}
 		}
-
-		return list;
 	}
 }
