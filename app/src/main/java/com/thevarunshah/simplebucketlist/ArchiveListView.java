@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.thevarunshah.classes.ArchiveAdapter;
 import com.thevarunshah.classes.Backend;
 import com.thevarunshah.classes.BucketAdapter;
 
@@ -15,7 +16,7 @@ public class ArchiveListView extends AppCompatActivity {
     private static final String TAG = "ArchiveListView"; //for debugging purposes
 
     private ListView listView = null; //main view of goals
-    private BucketAdapter listAdapter = null; //adapter for goals display
+    private ArchiveAdapter listAdapter = null; //adapter for goals display
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,7 @@ public class ArchiveListView extends AppCompatActivity {
 
         //obtain list view and create new bucket list custom adapter
         listView = (ListView) findViewById(R.id.archive_listview);
-        listAdapter = new BucketAdapter(this, R.layout.row, Backend.getArchiveList());
+        listAdapter = new ArchiveAdapter(this, R.layout.archive_row, Backend.getArchiveList());
 
         //attach adapter to list view
         listView.setAdapter(listAdapter);
