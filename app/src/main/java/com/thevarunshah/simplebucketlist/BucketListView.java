@@ -4,16 +4,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.thevarunshah.classes.BucketAdapter;
 import com.thevarunshah.classes.BucketItem;
@@ -96,6 +101,37 @@ public class BucketListView extends AppCompatActivity implements OnClickListener
 		alert.show();
 
 		alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_menu, menu);
+
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.hide_completed:
+				String text = item.getTitle().toString();
+				if(text.startsWith("Hide")){
+					item.setTitle(R.string.show_completed_text);
+				}
+				else{
+					item.setTitle(R.string.hide_completed_text);
+				}
+				return true;
+			case R.id.about:
+				Log.i(TAG, "Made by Varun Shah");
+				Snackbar snackbar = Snackbar.make(findViewById(R.id.coordLayout), "Made by Varun Shah", Snackbar.LENGTH_SHORT);
+				snackbar.show();
+
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
+    android:id="@+id/coordLayout"
     tools:context="com.thevarunshah.simplebucketlist.BucketListView" >
 
     <RelativeLayout
@@ -19,7 +20,7 @@
             android:background="@android:color/background_dark"
             android:elevation="4dp"
             android:theme="@style/ToolbarDarkOverflow"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            app:popupTheme="@style/ToolbarDarkOverflow"/>
 
         <ListView
             android:id="@+id/listview"

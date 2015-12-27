@@ -3,5 +3,8 @@
 
     <string name="app_name">Simple Bucket List</string>
     <string name="title"><b>Bucket List</b></string>
+    <string name="hide_completed_text">Hide Completed Items</string>
+    <string name="show_completed_text">Show All Items</string>
+    <string name="about">About</string>
 
 </resources>
