@@ -68,11 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BucketAdapter.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BucketAdapter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/thevarunshah/classes/BucketAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="73" column="54" selection-start-line="73" selection-start-column="54" selection-end-line="73" selection-end-column="54" />
+            <state vertical-scroll-proportion="0.28239202">
+              <caret line="152" column="67" selection-start-line="152" selection-start-column="67" selection-end-line="152" selection-end-column="67" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -80,10 +80,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BucketItem.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BucketItem.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/thevarunshah/classes/BucketItem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.16943522">
+            <state vertical-scroll-proportion="0.0">
               <caret line="9" column="62" selection-start-line="9" selection-start-column="62" selection-end-line="9" selection-end-column="62" />
               <folding />
             </state>
@@ -1771,8 +1771,8 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/archive_row.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/thevarunshah/simplebucketlist/ArchiveListView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/thevarunshah/classes/ArchiveAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/thevarunshah/classes/BucketAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/thevarunshah/classes/BucketItem.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/thevarunshah/classes/BucketAdapter.java" />
       </list>
     </option>
   </component>
@@ -2746,16 +2746,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/thevarunshah/simplebucketlist/BucketListView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="109" column="137" selection-start-line="109" selection-start-column="137" selection-end-line="109" selection-end-column="137" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/thevarunshah/classes/Backend.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2766,21 +2756,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/thevarunshah/classes/BucketAdapter.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/thevarunshah/classes/BucketItem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="73" column="54" selection-start-line="73" selection-start-column="54" selection-end-line="73" selection-end-column="54" />
+          <caret line="9" column="62" selection-start-line="9" selection-start-column="62" selection-end-line="9" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/thevarunshah/simplebucketlist/BucketListView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="109" column="137" selection-start-line="109" selection-start-column="137" selection-end-line="109" selection-end-column="137" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/thevarunshah/classes/BucketItem.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/thevarunshah/classes/BucketAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16943522">
-          <caret line="9" column="62" selection-start-line="9" selection-start-column="62" selection-end-line="9" selection-end-column="62" />
-          <folding />
+        <state vertical-scroll-proportion="0.28239202">
+          <caret line="152" column="67" selection-start-line="152" selection-start-column="67" selection-end-line="152" selection-end-column="67" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

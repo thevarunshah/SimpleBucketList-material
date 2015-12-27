@@ -124,10 +124,7 @@ public class BucketAdapter extends ArrayAdapter<BucketItem> {
 
 						Log.i(TAG, "saving edited goal");
 
-						BucketItem updatedItem = new BucketItem(input.getText().toString());
-						updatedItem.setDone(item.isDone());
-						bucketList.remove(item);
-						bucketList.add(position, updatedItem);
+						item.setGoal(input.getText().toString());
 						notifyDataSetChanged();
 					}
 				});
@@ -153,7 +150,7 @@ public class BucketAdapter extends ArrayAdapter<BucketItem> {
 				final View dialog = layoutInflater.inflate(R.layout.delete_dialog, null);
 				final android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getContext(), R.style.AppCompatAlertDialogStyle);
 				alertDialog.setTitle("Confirm Delete");
-				alertDialog.setIcon(R.drawable.ic_warning_black_24dp);
+				alertDialog.setIcon(R.drawable.ic_delete_black_24dp);
 
 				alertDialog.setView(dialog);
 
