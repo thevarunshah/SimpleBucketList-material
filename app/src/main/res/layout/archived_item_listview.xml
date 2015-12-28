@@ -7,14 +7,14 @@
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
     android:id="@+id/archive_coordLayout"
-    tools:context="com.thevarunshah.simplebucketlist.BucketListView" >
+    tools:context=".ArchivedItemListView" >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/archive_toolbar"
+            android:id="@+id/archived_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@android:color/background_dark"
@@ -23,11 +23,11 @@
             app:popupTheme="@style/ToolbarDarkOverflow"/>
 
         <ListView
-            android:id="@+id/archive_listview"
+            android:id="@+id/archived_listview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:layout_below="@id/archive_toolbar" />
+            android:layout_below="@id/archived_toolbar" />
 
     </RelativeLayout>
 

@@ -7,7 +7,7 @@
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
     android:id="@+id/coordLayout"
-    tools:context="com.thevarunshah.simplebucketlist.BucketListView" >
+    tools:context=".BucketItemListView" >
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -14,24 +14,31 @@ public class Backend implements Serializable {
 
     private static final long serialVersionUID = 1L; //for serializing data
 
-    private static final ArrayList<BucketItem> bucketList = new ArrayList<BucketItem>(); //list of all items
-    private static final ArrayList<BucketItem> archiveList = new ArrayList<BucketItem>(); //list of archived items
+    private static final ArrayList<Item> bucketList = new ArrayList<Item>(); //list of all items
+    private static final ArrayList<Item> archiveList = new ArrayList<Item>(); //list of archived items
 
     private static final String TAG = "Backend"; //for debugging purposes
 
+    /**
+     * transfers all completed items in the bucket list to the archive list
+     */
     public static void transferCompletedToArchive(){
 
+        //add items to the archive list and store their indices for deletion
         ArrayList<Integer> removeIndices = new ArrayList<Integer>();
         for(int i = 0; i < bucketList.size(); i++){
-            BucketItem bi = bucketList.get(i);
+
+            Item bi = bucketList.get(i);
             if(bi.isDone()){
                 archiveList.add(bi);
                 removeIndices.add(i);
             }
         }
 
-        int numRemoved = 0; //index offset since items are being removed while iterating
+        //remove items from the bucket list
+        int numRemoved = 0; //index offset
         for(Integer i : removeIndices){
+
             bucketList.remove(i-numRemoved);
             numRemoved++;
         }
@@ -39,13 +46,16 @@ public class Backend implements Serializable {
 
     /**
      * creates a new file in internal memory and writes to it
+     *
+     * @param context the application context
      */
-    public static void writeData(Context c){
+    public static void writeData(Context context){
 
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
         try {
-            fos = c.openFileOutput("bucket_list.ser", Context.MODE_PRIVATE);
+            //open file and and write the bucket and archive lists to it
+            fos = context.openFileOutput("bucket_list.ser", Context.MODE_PRIVATE);
             oos = new ObjectOutputStream(fos);
             oos.writeObject(bucketList);
             oos.writeObject(archiveList);
@@ -57,30 +67,35 @@ public class Backend implements Serializable {
                 oos.close();
                 fos.close();
             } catch (Exception e){
+                Log.i(TAG, "could not close the file");
                 e.printStackTrace();
             }
         }
     }
 
     /**
-     * reads from file in internal memory
+     * reads from serialized file in internal memory
+     *
+     * @param context the application context
      */
-    public static void readData(Context c){
+    public static void readData(Context context){
 
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         try {
-            fis = c.openFileInput("bucket_list.ser");
+            //open file and read the bucket and archive lists from it
+            fis = context.openFileInput("bucket_list.ser");
             ois = new ObjectInputStream(fis);
-            ArrayList<BucketItem> bList = (ArrayList<BucketItem>) ois.readObject();
-            if(bList != null){
+
+            ArrayList<Item> bucketItems = (ArrayList<Item>) ois.readObject();
+            ArrayList<Item> archiveItems = (ArrayList<Item>) ois.readObject();
+            if(bucketItems != null){
                 bucketList.clear();
-                bucketList.addAll(bList);
+                bucketList.addAll(bucketItems);
             }
-            ArrayList<BucketItem> aList = (ArrayList<BucketItem>) ois.readObject();
-            if(aList != null){
+            if(archiveItems != null){
                 archiveList.clear();
-                archiveList.addAll(aList);
+                archiveList.addAll(archiveItems);
             }
         } catch (Exception e) {
             Log.i(TAG, "could not read from file");
@@ -90,16 +105,17 @@ public class Backend implements Serializable {
                 if(ois != null) ois.close();
                 if(fis != null) fis.close();
             } catch(Exception e){
+                Log.i(TAG, "could not close the file");
                 e.printStackTrace();
             }
         }
     }
 
-    public static ArrayList<BucketItem> getBucketList() {
+    public static ArrayList<Item> getBucketList() {
         return bucketList;
     }
 
-    public static ArrayList<BucketItem> getArchiveList() {
+    public static ArrayList<Item> getArchiveList() {
         return archiveList;
     }
 }
