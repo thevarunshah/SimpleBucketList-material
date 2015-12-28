@@ -1,7 +1,9 @@
 package com.thevarunshah.simplebucketlist;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,6 +19,7 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.thevarunshah.classes.Backend;
 import com.thevarunshah.classes.BucketItemAdapter;
@@ -122,12 +125,59 @@ public class BucketItemListView extends AppCompatActivity {
 				startActivity(i);
 				return true;
 			case R.id.about:
-				Snackbar snackbar = Snackbar.make(findViewById(R.id.coordLayout), "Made by Varun Shah",
-						Snackbar.LENGTH_SHORT);
-				snackbar.show();
+				displayAboutDialog();
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * display app information and prompt them to rate it.
+	 */
+	private void displayAboutDialog(){
+
+		//inflate layout with customized alert dialog view
+		LayoutInflater layoutInflater = LayoutInflater.from(BucketItemListView.this);
+		final View dialog = layoutInflater.inflate(R.layout.info_dialog, null);
+		final AlertDialog.Builder infoDialogBuilder = new AlertDialog.Builder(BucketItemListView.this,
+				R.style.AppCompatAlertDialogStyle);
+
+		//customize alert dialog and set its view
+		infoDialogBuilder.setTitle("About");
+		infoDialogBuilder.setIcon(R.drawable.ic_info_black_24dp);
+		infoDialogBuilder.setView(dialog);
+
+		//fetch textview and set its text
+		final TextView message = (TextView) dialog.findViewById(R.id.info_dialog);
+		message.setText(R.string.about_message);
+
+		//set up actions for dialog buttons
+		infoDialogBuilder.setPositiveButton("RATE APP", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialogInterface, int whichButton) {
+
+				String appPackageName = getApplicationContext().getPackageName();
+				Intent i = new Intent(Intent.ACTION_VIEW);
+				try{
+					i.setData(Uri.parse("market://details?id=" + appPackageName));
+					startActivity(i);
+				} catch(ActivityNotFoundException e){
+					try{
+						i.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName));
+						startActivity(i);
+					} catch (ActivityNotFoundException e2){
+						Snackbar errorBar = Snackbar.make(findViewById(R.id.coordLayout),
+								"Could not launch the Google Play app.", Snackbar.LENGTH_SHORT);
+						errorBar.show();
+					}
+				}
+			}
+		});
+		infoDialogBuilder.setNegativeButton("DISMISS", null);
+
+		//create and show the dialog
+		AlertDialog infoDialog = infoDialogBuilder.create();
+		infoDialog.show();
 	}
 
 	@Override

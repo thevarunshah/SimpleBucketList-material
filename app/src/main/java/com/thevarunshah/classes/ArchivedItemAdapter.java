@@ -71,7 +71,7 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 
 				//inflate layout with customized alert dialog view
 				LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-				final View dialog = layoutInflater.inflate(R.layout.delete_dialog, null);
+				final View dialog = layoutInflater.inflate(R.layout.info_dialog, null);
 				final AlertDialog.Builder deleteItemDialogBuilder = new AlertDialog.Builder(getContext(),
 						R.style.AppCompatAlertDialogStyle);
 
@@ -81,7 +81,7 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 				deleteItemDialogBuilder.setView(dialog);
 
 				//fetch textview and set its text
-				final TextView message = (TextView) dialog.findViewById(R.id.delete_dialog);
+				final TextView message = (TextView) dialog.findViewById(R.id.info_dialog);
 				message.setText("Are you sure you want to delete this item?");
 
 				deleteItemDialogBuilder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {

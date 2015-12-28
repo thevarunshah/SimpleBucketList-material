@@ -6,5 +6,7 @@
     <string name="archive_completed_text">Archive Completed Items</string>
     <string name="show_archived_text">Show Archived Items</string>
     <string name="about">About</string>
+    <string name="about_message">App created by: <b>Varun Shah</b>
+        \n\nIf you find this app useful, please take a moment to rate it.\nThank you!</string>
 
 </resources>
