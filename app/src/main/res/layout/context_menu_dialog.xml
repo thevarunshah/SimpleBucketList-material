@@ -1,0 +1,55 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/context_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:drawableTop="@drawable/ic_edit_black_24dp"
+        android:drawablePadding="5dp"
+        android:text="Edit"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/context_archive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:drawableTop="@drawable/ic_archive_black_24dp"
+        android:drawablePadding="5dp"
+        android:text="Archive"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/context_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:drawableTop="@drawable/ic_delete_black_24dp"
+        android:drawablePadding="5dp"
+        android:text="Delete"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

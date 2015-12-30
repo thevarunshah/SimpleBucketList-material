@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -86,53 +87,6 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 			}
 		});
 
-		//attach a on-tap listener to the item for editing
-		holder.item.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				TextView tv = (TextView) v;
-				final Item item = getItem(position); //get clicked item
-
-				//inflate layout with customized alert dialog view
-				LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-				final View dialog = layoutInflater.inflate(R.layout.input_dialog, null);
-				final AlertDialog.Builder editItemDialogBuilder = new AlertDialog.Builder(getContext(),
-						R.style.AppCompatAlertDialogStyle);
-
-				//customize alert dialog and set its view
-				editItemDialogBuilder.setTitle("Edit Item");
-				editItemDialogBuilder.setIcon(R.drawable.ic_edit_black_24dp);
-				editItemDialogBuilder.setView(dialog);
-
-				//fetch and set up edittext
-				final EditText input = (EditText) dialog.findViewById(R.id.input_dialog_text);
-				input.setText(tv.getText());
-				input.setFocusableInTouchMode(true);
-				input.requestFocus();
-
-				//set up actions for dialog buttons
-				editItemDialogBuilder.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialogInterface, int whichButton) {
-
-						//update text of item and the view
-						item.setItemText(input.getText().toString());
-						notifyDataSetChanged();
-					}
-				});
-				editItemDialogBuilder.setNegativeButton("CANCEL", null);
-
-				//create and show the dialog
-				AlertDialog editItemDialog = editItemDialogBuilder.create();
-				editItemDialog.show();
-
-				//show keyboard
-				editItemDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-			}
-		});
-
 		//attach a long-tap listener to the item
 		holder.item.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
@@ -142,34 +96,99 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 
 				//inflate layout with customized alert dialog view
 				LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-				final View dialog = layoutInflater.inflate(R.layout.info_dialog, null);
-				final AlertDialog.Builder deleteItemDialogBuilder = new AlertDialog.Builder(getContext(),
+				final View dialog = layoutInflater.inflate(R.layout.context_menu_dialog, null);
+				final AlertDialog.Builder itemOptionsDialogBuilder = new AlertDialog.Builder(getContext(),
 						R.style.AppCompatAlertDialogStyle);
 
 				//customize alert dialog and set its view
-				deleteItemDialogBuilder.setTitle("Confirm Delete");
-				deleteItemDialogBuilder.setIcon(R.drawable.ic_delete_black_24dp);
-				deleteItemDialogBuilder.setView(dialog);
-
-				//fetch textview and set its text
-				final TextView message = (TextView) dialog.findViewById(R.id.info_dialog);
-				message.setText("Are you sure you want to delete this item?");
+				itemOptionsDialogBuilder.setTitle("Item Options");
+				itemOptionsDialogBuilder.setView(dialog);
 
 				//set up actions for dialog buttons
-				deleteItemDialogBuilder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialogInterface, int whichButton) {
+				itemOptionsDialogBuilder.setNegativeButton("CANCEL", null);
 
-						//remove item from adapter and update view
-						bucketList.remove(item);
-						notifyDataSetChanged();
+				//create the dialog
+				final AlertDialog itemOptionsDialog = itemOptionsDialogBuilder.create();
+
+				/*
+				 *fetch buttons and attach the appropriate on-tap listeners
+				 */
+
+				//edit button on-tap listener
+				Button editButton = (Button) dialog.findViewById(R.id.context_edit);
+				editButton.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+
+						//inflate layout with customized alert dialog view
+						LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+						final View dialog = layoutInflater.inflate(R.layout.input_dialog, null);
+						final AlertDialog.Builder editItemDialogBuilder = new AlertDialog.Builder(getContext(),
+								R.style.AppCompatAlertDialogStyle);
+
+						//customize alert dialog and set its view
+						editItemDialogBuilder.setTitle("Edit Item");
+						editItemDialogBuilder.setIcon(R.drawable.ic_edit_black_24dp);
+						editItemDialogBuilder.setView(dialog);
+
+						//fetch and set up edittext
+						final EditText input = (EditText) dialog.findViewById(R.id.input_dialog_text);
+						input.setText(item.getItemText());
+						input.setFocusableInTouchMode(true);
+						input.requestFocus();
+
+						//set up actions for dialog buttons
+						editItemDialogBuilder.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialogInterface, int whichButton) {
+
+								//update text of item and the view
+								item.setItemText(input.getText().toString());
+								notifyDataSetChanged();
+								itemOptionsDialog.dismiss();
+							}
+						});
+						editItemDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								itemOptionsDialog.dismiss();
+							}
+						});
+
+						//create and show the dialog
+						AlertDialog editItemDialog = editItemDialogBuilder.create();
+						editItemDialog.show();
+
+						//show keyboard
+						editItemDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 					}
 				});
-				deleteItemDialogBuilder.setNegativeButton("CANCEL", null);
+				//archive button on-tap listener
+				Button archiveButton = (Button) dialog.findViewById(R.id.context_archive);
+				archiveButton.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
 
-				//create and show the dialog
-				AlertDialog deleteItemDialog = deleteItemDialogBuilder.create();
-				deleteItemDialog.show();
+						Backend.moveToArchive(position);
+						notifyDataSetChanged();
+						itemOptionsDialog.dismiss();
+					}
+				});
+				//delete button on-tap listener
+				Button deleteButton = (Button) dialog.findViewById(R.id.context_delete);
+				deleteButton.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+
+						//remove item from adapter and update view
+						bucketList.remove(position);
+						notifyDataSetChanged();
+						itemOptionsDialog.dismiss();
+					}
+				});
+
+				//show the dialog
+				itemOptionsDialog.show();
 
 				return true;
 			}

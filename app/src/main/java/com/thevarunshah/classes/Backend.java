@@ -45,6 +45,18 @@ public class Backend implements Serializable {
     }
 
     /**
+     * moves a single item at index position from the bucket list to the archive list
+     *
+     * @param position the index of the item to be moved
+     */
+    public static void moveToArchive(int position){
+
+        Item bi = bucketList.get(position);
+        archiveList.add(bi);
+        bucketList.remove(position);
+    }
+
+    /**
      * creates a new file in internal memory and writes to it
      *
      * @param context the application context
