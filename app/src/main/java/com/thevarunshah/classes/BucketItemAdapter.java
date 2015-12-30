@@ -160,7 +160,8 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 						editItemDialog.show();
 
 						//show keyboard
-						editItemDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+						editItemDialog.getWindow()
+								.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 					}
 				});
 				//archive button on-tap listener
@@ -169,6 +170,7 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 					@Override
 					public void onClick(View v) {
 
+						//move item to the archive list and update the view
 						Backend.moveToArchive(position);
 						notifyDataSetChanged();
 						itemOptionsDialog.dismiss();

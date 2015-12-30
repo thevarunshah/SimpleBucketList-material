@@ -1,10 +1,17 @@
 package com.thevarunshah.simplebucketlist;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.thevarunshah.classes.ArchivedItemAdapter;
 import com.thevarunshah.classes.Backend;
@@ -34,9 +41,49 @@ public class ArchivedItemListView extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        //fetch and set actionbar menu
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.archive_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+            case R.id.delete_archived:
+                //inflate layout with customized alert dialog view
+                LayoutInflater layoutInflater = LayoutInflater.from(ArchivedItemListView.this);
+                final View dialog = layoutInflater.inflate(R.layout.info_dialog, null);
+                final AlertDialog.Builder deleteItemDialogBuilder = new AlertDialog.Builder(ArchivedItemListView.this,
+                    R.style.AppCompatAlertDialogStyle);
+
+                //customize alert dialog and set its view
+                deleteItemDialogBuilder.setTitle("Delete All");
+                deleteItemDialogBuilder.setIcon(R.drawable.ic_warning_black_24dp);
+                deleteItemDialogBuilder.setView(dialog);
+
+                //fetch textview and set its text
+                final TextView message = (TextView) dialog.findViewById(R.id.info_dialog);
+                message.setText("Are you sure you want to permanently delete all archived items?");
+
+                deleteItemDialogBuilder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogInterface, int whichButton) {
+
+                        //remove all archived items from archive list and update view
+                        Backend.getArchiveList().clear();
+                        listAdapter.notifyDataSetChanged();
+                    }
+                });
+                deleteItemDialogBuilder.setNegativeButton("CANCEL", null);
+
+                //create and show the dialog
+                AlertDialog deleteItemDialog = deleteItemDialogBuilder.create();
+                deleteItemDialog.show();
+
+                return true;
             case android.R.id.home:
                 //back button tapped, finish activity
                 this.finish();
