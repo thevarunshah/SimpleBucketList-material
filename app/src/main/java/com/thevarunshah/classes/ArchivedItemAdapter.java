@@ -19,19 +19,17 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 
 	private final static String TAG = "ArchivedItemAdapter"; //for debugging purposes
 
-	private ArrayList<Item> archiveList; //the list the adapter manages
-	private Context context; //context attached to adapter
+	private final ArrayList<Item> archiveList; //the list the adapter manages
+	private final Context context; //context attached to adapter
 
 	/**
 	 * the archive list adapter
-	 *
-	 * @param context the application context
-	 * @param textViewResourceId the layout view for each row
+	 *  @param context the application context
 	 * @param archiveList the list of items
 	 */
-	public ArchivedItemAdapter(Context context, int textViewResourceId, ArrayList<Item> archiveList) {
+	public ArchivedItemAdapter(Context context, ArrayList<Item> archiveList) {
 		
-		super(context, textViewResourceId, archiveList);
+		super(context, R.layout.archived_row, archiveList);
 		this.context = context;
 		this.archiveList = archiveList;
 	}

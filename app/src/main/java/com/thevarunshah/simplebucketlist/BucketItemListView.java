@@ -46,7 +46,7 @@ public class BucketItemListView extends AppCompatActivity {
 
 		//obtain list view and create new bucket list custom adapter
 		listView = (ListView) findViewById(R.id.listview);
-		listAdapter = new BucketItemAdapter(this, R.layout.row, Backend.getBucketList());
+		listAdapter = new BucketItemAdapter(this, Backend.getBucketList());
 		listView.setAdapter(listAdapter); //attach adapter to list view
 
 		//obtain add button and attach a on-tap listener to it

@@ -10,9 +10,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Backend implements Serializable {
-
-    private static final long serialVersionUID = 1L; //for serializing data
+public class Backend {
 
     private static final ArrayList<Item> bucketList = new ArrayList<Item>(); //list of all items
     private static final ArrayList<Item> archiveList = new ArrayList<Item>(); //list of archived items

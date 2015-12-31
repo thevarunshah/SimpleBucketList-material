@@ -25,19 +25,17 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 
 	private final static String TAG = "BucketItemAdapter"; //for debugging purposes
 
-	private ArrayList<Item> bucketList; //the list the adapter manages
-	private Context context; //context attached to adapter
+	private final ArrayList<Item> bucketList; //the list the adapter manages
+	private final Context context; //context attached to adapter
 
 	/**
 	 * the bucket list adapter
-	 *
-	 * @param context the application context
-	 * @param textViewResourceId the layout view for each row
+	 *  @param context the application context
 	 * @param bucketList the list of items
 	 */
-	public BucketItemAdapter(Context context, int textViewResourceId, ArrayList<Item> bucketList) {
+	public BucketItemAdapter(Context context, ArrayList<Item> bucketList) {
 
-		super(context, textViewResourceId, bucketList);
+		super(context, R.layout.row, bucketList);
 		this.context = context;
 		this.bucketList = bucketList;
 	}

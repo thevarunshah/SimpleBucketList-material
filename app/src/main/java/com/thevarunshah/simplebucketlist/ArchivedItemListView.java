@@ -36,7 +36,7 @@ public class ArchivedItemListView extends AppCompatActivity {
 
         //obtain list view and create new archive list custom adapter
         listView = (ListView) findViewById(R.id.archived_listview);
-        listAdapter = new ArchivedItemAdapter(this, R.layout.archived_row, Backend.getArchiveList());
+        listAdapter = new ArchivedItemAdapter(this, Backend.getArchiveList());
         listView.setAdapter(listAdapter); //attach adapter to list view
     }
 
