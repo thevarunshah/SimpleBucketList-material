@@ -75,6 +75,8 @@ public class ArchivedItemListView extends AppCompatActivity {
                         //remove all archived items from archive list and update view
                         Backend.getArchiveList().clear();
                         listAdapter.notifyDataSetChanged();
+
+                        Backend.writeData(getApplicationContext()); //backup data
                     }
                 });
                 deleteItemDialogBuilder.setNegativeButton("CANCEL", null);
@@ -90,13 +92,6 @@ public class ArchivedItemListView extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onPause(){
-
-        super.onPause();
-        Backend.writeData(this.getApplicationContext()); //backup data
     }
 
     @Override

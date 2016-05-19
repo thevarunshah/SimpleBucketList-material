@@ -82,6 +82,8 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 				} else {
 					holderFinal.item.setPaintFlags(holderFinal.item.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
 				}
+
+				Backend.writeData(getContext()); //backup data
 			}
 		});
 
@@ -143,6 +145,8 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 								//update text of item and the view
 								item.setItemText(input.getText().toString());
 								notifyDataSetChanged();
+
+								Backend.writeData(getContext()); //backup data
 								itemOptionsDialog.dismiss();
 							}
 						});
@@ -171,6 +175,8 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 						//move item to the archive list and update the view
 						Backend.moveToArchive(position);
 						notifyDataSetChanged();
+
+						Backend.writeData(getContext()); //backup data
 						itemOptionsDialog.dismiss();
 					}
 				});
@@ -183,6 +189,8 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 						//remove item from adapter and update view
 						bucketList.remove(position);
 						notifyDataSetChanged();
+
+						Backend.writeData(getContext()); //backup data
 						itemOptionsDialog.dismiss();
 					}
 				});

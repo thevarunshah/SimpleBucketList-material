@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.thevarunshah.simplebucketlist.ArchivedItemListView;
 import com.thevarunshah.simplebucketlist.R;
 
 import java.util.ArrayList;
@@ -88,6 +89,8 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 						//remove item from adapter and update view
 						archiveList.remove(item);
 						notifyDataSetChanged();
+
+						Backend.writeData(getContext()); //backup data
 					}
 				});
 				deleteItemDialogBuilder.setNegativeButton("CANCEL", null);

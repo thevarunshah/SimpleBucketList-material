@@ -83,6 +83,8 @@ public class BucketItemListView extends AppCompatActivity {
 						//add item to main list and update view
 						Backend.getBucketList().add(item);
 						listAdapter.notifyDataSetChanged();
+
+						Backend.writeData(getApplicationContext()); //backup data
 					}
 				});
 				newItemDialogBuilder.setNegativeButton("CANCEL", null);
@@ -114,6 +116,7 @@ public class BucketItemListView extends AppCompatActivity {
 				//transfer completed items to archive
 				Backend.transferCompletedToArchive();
 				listAdapter.notifyDataSetChanged();
+				Backend.writeData(this.getApplicationContext()); //backup data
 				//friendly success message
 				Snackbar infoBar = Snackbar.make(findViewById(R.id.coordLayout), "All completed items archived!",
 						Snackbar.LENGTH_SHORT);
@@ -178,13 +181,6 @@ public class BucketItemListView extends AppCompatActivity {
 		//create and show the dialog
 		AlertDialog infoDialog = infoDialogBuilder.create();
 		infoDialog.show();
-	}
-
-	@Override
-	protected void onPause(){
-
-		super.onPause();
-		Backend.writeData(this.getApplicationContext()); //backup data
 	}
 
 	@Override
