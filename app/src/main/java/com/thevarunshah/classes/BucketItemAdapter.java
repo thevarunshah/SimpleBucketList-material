@@ -87,6 +87,26 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 			}
 		});
 
+		holder.item.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				//get item and set as done/undone
+				Item item = getItem(position);
+				item.setDone(!item.isDone());
+				holderFinal.done.setChecked(item.isDone());
+
+				//apply or get rid of strikethrough effect
+				if (item.isDone()) {
+					holderFinal.item.setPaintFlags(holderFinal.item.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+				} else {
+					holderFinal.item.setPaintFlags(holderFinal.item.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+				}
+
+				Backend.writeData(getContext()); //backup data
+			}
+		});
+
 		//attach a long-tap listener to the item
 		holder.item.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
