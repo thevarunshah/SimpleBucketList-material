@@ -13,6 +13,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginBottom="10dp"
-        android:inputType="textCapSentences" />
+        android:inputType="textCapSentences|textMultiLine"
+        android:maxLines="5"/>
 
 </LinearLayout>
