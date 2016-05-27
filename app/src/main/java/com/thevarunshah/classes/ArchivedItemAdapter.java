@@ -2,6 +2,7 @@ package com.thevarunshah.classes;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,8 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 	 * a view holder for each item in the row
 	 */
 	private class ViewHolder {
-		
+
+		ImageButton unarchive;
 		ImageButton delete;
 		TextView item;
 	}
@@ -54,12 +56,32 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 			LayoutInflater vi = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = vi.inflate(R.layout.archived_row, null);
 			holder.item = (TextView) convertView.findViewById(R.id.row_text);
+			holder.unarchive = (ImageButton) convertView.findViewById(R.id.unarchive_button);
 			holder.delete = (ImageButton) convertView.findViewById(R.id.delete_button);
 			convertView.setTag(holder);
 		} 
 		else{
 			holder = (ViewHolder) convertView.getTag();
 		}
+
+		//attach a on-tap listener to the item for unarchiving
+		holder.unarchive.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				final Item item = getItem(position); //get clicked item
+
+				//remove item from adapter, add to bucket list and update view
+				Backend.getBucketList().add(item);
+				archiveList.remove(item);
+				notifyDataSetChanged();
+
+				Snackbar infoBar = Snackbar.make(v, "Unarchived item.", Snackbar.LENGTH_SHORT);
+				infoBar.show();
+
+				Backend.writeData(getContext()); //backup data
+			}
+		});
 		
 		//attach a on-tap listener to the item for deleting
 		holder.delete.setOnClickListener(new OnClickListener() {

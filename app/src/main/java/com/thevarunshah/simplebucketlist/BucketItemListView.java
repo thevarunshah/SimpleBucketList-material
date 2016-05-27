@@ -190,5 +190,8 @@ public class BucketItemListView extends AppCompatActivity {
 		if(Backend.getBucketList().isEmpty()){
 			Backend.readData(this.getApplicationContext()); //read data from backup
 		}
+		else{
+			this.listAdapter.notifyDataSetChanged(); //refresh
+		}
 	}
 }

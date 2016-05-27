@@ -53,21 +53,55 @@ public class ArchivedItemListView extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+            case R.id.unarchive_archived:
+                //inflate layout with customized alert dialog view
+                LayoutInflater unarchiveLayoutInflater = LayoutInflater.from(ArchivedItemListView.this);
+                final View unarchiveDialog = unarchiveLayoutInflater.inflate(R.layout.info_dialog, null);
+                final AlertDialog.Builder unarchiveItemDialogBuilder = new AlertDialog.Builder(ArchivedItemListView.this,
+                        R.style.AppCompatAlertDialogStyle);
+
+                //customize alert dialog and set its view
+                unarchiveItemDialogBuilder.setTitle("Unarchive All");
+                unarchiveItemDialogBuilder.setIcon(R.drawable.ic_info_black_24dp);
+                unarchiveItemDialogBuilder.setView(unarchiveDialog);
+
+                //fetch textview and set its text
+                final TextView unarchiveMessage = (TextView) unarchiveDialog.findViewById(R.id.info_dialog);
+                unarchiveMessage.setText("Are you sure you want to unarchive all archived items?");
+
+                unarchiveItemDialogBuilder.setPositiveButton("UNARCHIVE", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogInterface, int whichButton) {
+
+                        //move all archived items from archive list to bucket list and update view
+                        Backend.getBucketList().addAll(Backend.getArchiveList());
+                        Backend.getArchiveList().clear();
+                        listAdapter.notifyDataSetChanged();
+
+                        Backend.writeData(getApplicationContext()); //backup data
+                    }
+                });
+                unarchiveItemDialogBuilder.setNegativeButton("CANCEL", null);
+
+                //create and show the dialog
+                AlertDialog unarchiveItemDialog = unarchiveItemDialogBuilder.create();
+                unarchiveItemDialog.show();
+
+                return true;
             case R.id.delete_archived:
                 //inflate layout with customized alert dialog view
-                LayoutInflater layoutInflater = LayoutInflater.from(ArchivedItemListView.this);
-                final View dialog = layoutInflater.inflate(R.layout.info_dialog, null);
+                LayoutInflater deleteLayoutInflater = LayoutInflater.from(ArchivedItemListView.this);
+                final View deleteDialog = deleteLayoutInflater.inflate(R.layout.info_dialog, null);
                 final AlertDialog.Builder deleteItemDialogBuilder = new AlertDialog.Builder(ArchivedItemListView.this,
                     R.style.AppCompatAlertDialogStyle);
 
                 //customize alert dialog and set its view
                 deleteItemDialogBuilder.setTitle("Delete All");
                 deleteItemDialogBuilder.setIcon(R.drawable.ic_warning_black_24dp);
-                deleteItemDialogBuilder.setView(dialog);
+                deleteItemDialogBuilder.setView(deleteDialog);
 
                 //fetch textview and set its text
-                final TextView message = (TextView) dialog.findViewById(R.id.info_dialog);
-                message.setText("Are you sure you want to permanently delete all archived items?");
+                final TextView deleteMessage = (TextView) deleteDialog.findViewById(R.id.info_dialog);
+                deleteMessage.setText("Are you sure you want to permanently delete all archived items?");
 
                 deleteItemDialogBuilder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogInterface, int whichButton) {

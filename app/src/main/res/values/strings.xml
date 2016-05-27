@@ -6,6 +6,7 @@
     <string name="archive_completed_text">Archive Completed Items</string>
     <string name="show_archived_text">Show Archived Items</string>
     <string name="delete_archived_text">Delete All</string>
+    <string name="unarchive_text">Unarchive All</string>
     <string name="edit">Edit</string>
     <string name="archive">Archive</string>
     <string name="delete">Delete</string>
