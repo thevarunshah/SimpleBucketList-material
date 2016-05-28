@@ -54,10 +54,15 @@ public class Backend {
 
         //for each item in the archive list, move it back to it's original position
         int numMoved = 0;
-        for(int i = archiveList.size()-removedIndices.size(); i < archiveList.size(); i++){
+        for(int i = archiveList.size()-removedIndices.size(); i < archiveList.size()+numMoved; i++){
 
-            bucketList.add(removedIndices.get(numMoved), archiveList.get(i));
+            bucketList.add(removedIndices.get(numMoved), archiveList.get(i-numMoved));
+            archiveList.remove(i-numMoved);
             numMoved++;
+
+            if(numMoved == removedIndices.size()){
+                break;
+            }
         }
     }
 
