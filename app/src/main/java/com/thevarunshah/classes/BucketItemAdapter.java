@@ -2,7 +2,9 @@ package com.thevarunshah.classes;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -110,7 +112,7 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 		//attach a long-tap listener to the item
 		holder.item.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
-			public boolean onLongClick(View v) {
+			public boolean onLongClick(final View v) {
 
 				final Item item = getItem(position); //get clicked item
 
@@ -138,7 +140,7 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 				Button editButton = (Button) dialog.findViewById(R.id.context_edit);
 				editButton.setOnClickListener(new OnClickListener() {
 					@Override
-					public void onClick(View v) {
+					public void onClick(View v2) {
 
 						//inflate layout with customized alert dialog view
 						LayoutInflater layoutInflater = LayoutInflater.from(getContext());
@@ -190,28 +192,43 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 				Button archiveButton = (Button) dialog.findViewById(R.id.context_archive);
 				archiveButton.setOnClickListener(new OnClickListener() {
 					@Override
-					public void onClick(View v) {
+					public void onClick(View v2) {
 
 						//move item to the archive list and update the view
 						Backend.moveToArchive(position);
 						notifyDataSetChanged();
-
 						Backend.writeData(getContext()); //backup data
 						itemOptionsDialog.dismiss();
+
+						Snackbar infoBar = Snackbar.make(v, "Item archived.", Snackbar.LENGTH_SHORT);
+						infoBar.show();
 					}
 				});
 				//delete button on-tap listener
 				Button deleteButton = (Button) dialog.findViewById(R.id.context_delete);
 				deleteButton.setOnClickListener(new OnClickListener() {
 					@Override
-					public void onClick(View v) {
+					public void onClick(View v2) {
 
 						//remove item from adapter and update view
 						bucketList.remove(position);
 						notifyDataSetChanged();
-
 						Backend.writeData(getContext()); //backup data
 						itemOptionsDialog.dismiss();
+
+						Snackbar infoBar = Snackbar.make(v, "Item deleted.", Snackbar.LENGTH_LONG);
+						infoBar.setAction("UNDO", new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+
+								//undo deleting
+								bucketList.add(position, item);
+								notifyDataSetChanged();
+								Backend.writeData(getContext()); //backup data
+							}
+						});
+						infoBar.setActionTextColor(Color.WHITE);
+						infoBar.show();
 					}
 				});
 

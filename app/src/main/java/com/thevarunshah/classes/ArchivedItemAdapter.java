@@ -2,6 +2,7 @@ package com.thevarunshah.classes;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -75,11 +76,22 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 				Backend.getBucketList().add(item);
 				archiveList.remove(item);
 				notifyDataSetChanged();
-
-				Snackbar infoBar = Snackbar.make(v, "Unarchived item.", Snackbar.LENGTH_SHORT);
-				infoBar.show();
-
 				Backend.writeData(getContext()); //backup data
+
+				Snackbar infoBar = Snackbar.make(v, "Item unarchived.", Snackbar.LENGTH_LONG);
+				infoBar.setAction("UNDO", new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+
+						//undo unarchiving
+						Backend.getBucketList().remove(item);
+						archiveList.add(position, item);
+						notifyDataSetChanged();
+						Backend.writeData(getContext()); //backup data
+					}
+				});
+				infoBar.setActionTextColor(Color.WHITE);
+				infoBar.show();
 			}
 		});
 		
@@ -90,36 +102,24 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 
 				final Item item = getItem(position); //get clicked item
 
-				//inflate layout with customized alert dialog view
-				LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-				final View dialog = layoutInflater.inflate(R.layout.info_dialog, null);
-				final AlertDialog.Builder deleteItemDialogBuilder = new AlertDialog.Builder(getContext(),
-						R.style.AppCompatAlertDialogStyle);
+				//remove item from adapter and update view
+				archiveList.remove(item);
+				notifyDataSetChanged();
+				Backend.writeData(getContext()); //backup data
 
-				//customize alert dialog and set its view
-				deleteItemDialogBuilder.setTitle("Confirm Delete");
-				deleteItemDialogBuilder.setIcon(R.drawable.ic_warning_black_24dp);
-				deleteItemDialogBuilder.setView(dialog);
+				Snackbar infoBar = Snackbar.make(v, "Item deleted.", Snackbar.LENGTH_LONG);
+				infoBar.setAction("UNDO", new OnClickListener() {
+					@Override
+					public void onClick(View v) {
 
-				//fetch textview and set its text
-				final TextView message = (TextView) dialog.findViewById(R.id.info_dialog);
-				message.setText("Are you sure you want to delete this item?");
-
-				deleteItemDialogBuilder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialogInterface, int whichButton) {
-
-						//remove item from adapter and update view
-						archiveList.remove(item);
+						//undo deleting
+						archiveList.add(position, item);
 						notifyDataSetChanged();
-
 						Backend.writeData(getContext()); //backup data
 					}
 				});
-				deleteItemDialogBuilder.setNegativeButton("CANCEL", null);
-
-				//create and show the dialog
-				AlertDialog deleteItemDialog = deleteItemDialogBuilder.create();
-				deleteItemDialog.show();
+				infoBar.setActionTextColor(Color.WHITE);
+				infoBar.show();
 			}
 		});
 

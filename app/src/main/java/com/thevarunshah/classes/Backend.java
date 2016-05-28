@@ -19,8 +19,10 @@ public class Backend {
 
     /**
      * transfers all completed items in the bucket list to the archive list
+     *
+     * @return indices of the items moved to archive
      */
-    public static void transferCompletedToArchive(){
+    public static ArrayList<Integer> transferCompletedToArchive(){
 
         //add items to the archive list and store their indices for deletion
         ArrayList<Integer> removeIndices = new ArrayList<Integer>();
@@ -39,6 +41,18 @@ public class Backend {
 
             bucketList.remove(i-numRemoved);
             numRemoved++;
+        }
+
+        return removeIndices;
+    }
+
+    public static void undoTransferToArchive(ArrayList<Integer> removedIndices){
+
+        int numMoved = 0;
+        for(int i = archiveList.size()-removedIndices.size(); i < archiveList.size(); i++){
+
+            bucketList.add(removedIndices.get(numMoved), archiveList.get(i));
+            numMoved++;
         }
     }
 

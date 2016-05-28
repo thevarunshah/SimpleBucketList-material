@@ -3,6 +3,7 @@ package com.thevarunshah.simplebucketlist;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +25,8 @@ import android.widget.TextView;
 import com.thevarunshah.classes.Backend;
 import com.thevarunshah.classes.BucketItemAdapter;
 import com.thevarunshah.classes.Item;
+
+import java.util.ArrayList;
 
 
 public class BucketItemListView extends AppCompatActivity {
@@ -114,12 +117,30 @@ public class BucketItemListView extends AppCompatActivity {
 		switch (item.getItemId()) {
 			case R.id.archive_completed:
 				//transfer completed items to archive
-				Backend.transferCompletedToArchive();
+				final ArrayList<Integer> removedIndices = Backend.transferCompletedToArchive();
+				if(removedIndices.size() == 0){
+					Snackbar infoBar = Snackbar.make(findViewById(R.id.coordLayout), "No items to archive.",
+							Snackbar.LENGTH_SHORT);
+					infoBar.show();
+					return true;
+				}
 				listAdapter.notifyDataSetChanged();
 				Backend.writeData(this.getApplicationContext()); //backup data
+
 				//friendly success message
-				Snackbar infoBar = Snackbar.make(findViewById(R.id.coordLayout), "All completed items archived!",
-						Snackbar.LENGTH_SHORT);
+				Snackbar infoBar = Snackbar.make(findViewById(R.id.coordLayout), "All completed items archived.",
+						Snackbar.LENGTH_LONG);
+				infoBar.setAction("UNDO", new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+
+						//undo deleting
+						Backend.undoTransferToArchive(removedIndices);
+						listAdapter.notifyDataSetChanged();
+						Backend.writeData(getApplicationContext()); //backup data
+					}
+				});
+				infoBar.setActionTextColor(Color.WHITE);
 				infoBar.show();
 				return true;
 			case R.id.display_archived:
