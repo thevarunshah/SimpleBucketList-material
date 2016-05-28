@@ -89,6 +89,7 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 			}
 		});
 
+		//attach an on-tap listener to the item for checking/unchecking
 		holder.item.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -200,6 +201,7 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 						Backend.writeData(getContext()); //backup data
 						itemOptionsDialog.dismiss();
 
+						//display success message
 						Snackbar infoBar = Snackbar.make(v, "Item archived.", Snackbar.LENGTH_SHORT);
 						infoBar.show();
 					}
@@ -216,6 +218,7 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 						Backend.writeData(getContext()); //backup data
 						itemOptionsDialog.dismiss();
 
+						//display success message and give option to undo
 						Snackbar infoBar = Snackbar.make(v, "Item deleted.", Snackbar.LENGTH_LONG);
 						infoBar.setAction("UNDO", new OnClickListener() {
 							@Override

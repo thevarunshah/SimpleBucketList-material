@@ -7,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Backend {
@@ -46,8 +45,14 @@ public class Backend {
         return removeIndices;
     }
 
+    /**
+     * undoes the transferring of completed items to the archive list
+     *
+     * @param removedIndices
+     */
     public static void undoTransferToArchive(ArrayList<Integer> removedIndices){
 
+        //for each item in the archive list, move it back to it's original position
         int numMoved = 0;
         for(int i = archiveList.size()-removedIndices.size(); i < archiveList.size(); i++){
 

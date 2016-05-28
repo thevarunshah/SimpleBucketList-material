@@ -1,10 +1,8 @@
 package com.thevarunshah.classes;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.thevarunshah.simplebucketlist.ArchivedItemListView;
 import com.thevarunshah.simplebucketlist.R;
 
 import java.util.ArrayList;
@@ -78,6 +75,7 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 				notifyDataSetChanged();
 				Backend.writeData(getContext()); //backup data
 
+				//display success message and give option to undo
 				Snackbar infoBar = Snackbar.make(v, "Item unarchived.", Snackbar.LENGTH_LONG);
 				infoBar.setAction("UNDO", new OnClickListener() {
 					@Override
@@ -107,6 +105,7 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 				notifyDataSetChanged();
 				Backend.writeData(getContext()); //backup data
 
+				//display success message and give option to undo
 				Snackbar infoBar = Snackbar.make(v, "Item deleted.", Snackbar.LENGTH_LONG);
 				infoBar.setAction("UNDO", new OnClickListener() {
 					@Override

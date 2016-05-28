@@ -127,7 +127,7 @@ public class BucketItemListView extends AppCompatActivity {
 				listAdapter.notifyDataSetChanged();
 				Backend.writeData(this.getApplicationContext()); //backup data
 
-				//friendly success message
+				//friendly success message and give option to undo
 				Snackbar infoBar = Snackbar.make(findViewById(R.id.coordLayout), "All completed items archived.",
 						Snackbar.LENGTH_LONG);
 				infoBar.setAction("UNDO", new OnClickListener() {
