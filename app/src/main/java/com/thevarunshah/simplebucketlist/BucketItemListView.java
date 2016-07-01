@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -53,7 +54,7 @@ public class BucketItemListView extends AppCompatActivity {
 		listView.setAdapter(listAdapter); //attach adapter to list view
 
 		//obtain add button and attach a on-tap listener to it
-		FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.add_item);
+		final FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.add_item);
 		addButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -98,6 +99,34 @@ public class BucketItemListView extends AppCompatActivity {
 
 				//show keyboard
 				newItemDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+			}
+		});
+
+		//moving fab out of the way when scrolling listview
+		listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+			int lastPosition = -1;
+
+			@Override
+			public void onScroll(AbsListView absListView, int firstVisibleItem, int i1, int i2) {
+
+				if(lastPosition == firstVisibleItem){
+					return;
+				}
+
+				if(firstVisibleItem > lastPosition){
+					addButton.animate().translationY(addButton.getHeight()*2); //scrolling down
+				}
+				else{
+					addButton.animate().translationY(0); //scrolling up
+				}
+
+				lastPosition = firstVisibleItem;
+			}
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+
 			}
 		});
 	}
