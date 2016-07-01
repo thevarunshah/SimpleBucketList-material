@@ -13,8 +13,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.thevarunshah.classes.ArchivedItemAdapter;
-import com.thevarunshah.classes.Backend;
+import com.thevarunshah.simplebucketlist.internal.ArchivedItemAdapter;
+import com.thevarunshah.simplebucketlist.internal.Utility;
 
 public class ArchivedItemListView extends AppCompatActivity {
 
@@ -36,7 +36,7 @@ public class ArchivedItemListView extends AppCompatActivity {
 
         //obtain list view and create new archive list custom adapter
         listView = (ListView) findViewById(R.id.archived_listview);
-        listAdapter = new ArchivedItemAdapter(this, Backend.getArchiveList());
+        listAdapter = new ArchivedItemAdapter(this, Utility.getArchiveList());
         listView.setAdapter(listAdapter); //attach adapter to list view
     }
 
@@ -73,11 +73,11 @@ public class ArchivedItemListView extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int whichButton) {
 
                         //move all archived items from archive list to bucket list and update view
-                        Backend.getBucketList().addAll(Backend.getArchiveList());
-                        Backend.getArchiveList().clear();
+                        Utility.getBucketList().addAll(Utility.getArchiveList());
+                        Utility.getArchiveList().clear();
                         listAdapter.notifyDataSetChanged();
 
-                        Backend.writeData(getApplicationContext()); //backup data
+                        Utility.writeData(getApplicationContext()); //backup data
                     }
                 });
                 unarchiveItemDialogBuilder.setNegativeButton("CANCEL", null);
@@ -107,10 +107,10 @@ public class ArchivedItemListView extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int whichButton) {
 
                         //remove all archived items from archive list and update view
-                        Backend.getArchiveList().clear();
+                        Utility.getArchiveList().clear();
                         listAdapter.notifyDataSetChanged();
 
-                        Backend.writeData(getApplicationContext()); //backup data
+                        Utility.writeData(getApplicationContext()); //backup data
                     }
                 });
                 deleteItemDialogBuilder.setNegativeButton("CANCEL", null);
@@ -132,8 +132,8 @@ public class ArchivedItemListView extends AppCompatActivity {
     protected void onResume(){
 
         super.onResume();
-        if(Backend.getArchiveList().isEmpty()){
-            Backend.readData(this.getApplicationContext()); //read data from backup
+        if(Utility.getArchiveList().isEmpty()){
+            Utility.readData(this.getApplicationContext()); //read data from backup
         }
     }
 }

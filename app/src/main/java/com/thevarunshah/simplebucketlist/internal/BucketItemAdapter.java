@@ -1,4 +1,4 @@
-package com.thevarunshah.classes;
+package com.thevarunshah.simplebucketlist.internal;
 
 import android.content.Context;
 import android.graphics.Paint;
@@ -12,6 +12,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.thevarunshah.simplebucketlist.R;
+import com.thevarunshah.classes.Item;
 
 import java.util.ArrayList;
 
@@ -77,7 +78,7 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 					holderFinal.item.setPaintFlags(holderFinal.item.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
 				}
 
-				Backend.writeData(getContext()); //backup data
+				Utility.writeData(getContext()); //backup data
 			}
 		});
 

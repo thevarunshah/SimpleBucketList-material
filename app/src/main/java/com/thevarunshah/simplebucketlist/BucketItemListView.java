@@ -26,9 +26,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.thevarunshah.classes.Backend;
-import com.thevarunshah.classes.BucketItemAdapter;
 import com.thevarunshah.classes.Item;
+import com.thevarunshah.simplebucketlist.internal.Utility;
+import com.thevarunshah.simplebucketlist.internal.BucketItemAdapter;
 
 import java.util.ArrayList;
 
@@ -53,7 +53,7 @@ public class BucketItemListView extends AppCompatActivity {
 
 		//obtain list view and create new bucket list custom adapter
 		listView = (ListView) findViewById(R.id.listview);
-		listAdapter = new BucketItemAdapter(this, Backend.getBucketList());
+		listAdapter = new BucketItemAdapter(this, Utility.getBucketList());
 		listView.setAdapter(listAdapter); //attach adapter to list view
 
 		attachListenersToListView();
@@ -90,10 +90,10 @@ public class BucketItemListView extends AppCompatActivity {
 						Item item = new Item(itemText);
 
 						//add item to main list and update view
-						Backend.getBucketList().add(item);
+						Utility.getBucketList().add(item);
 						listAdapter.notifyDataSetChanged();
 
-						Backend.writeData(getApplicationContext()); //backup data
+						Utility.writeData(getApplicationContext()); //backup data
 					}
 				});
 				newItemDialogBuilder.setNegativeButton("CANCEL", null);
@@ -208,7 +208,7 @@ public class BucketItemListView extends AppCompatActivity {
 								item.setItemText(input.getText().toString());
 								listAdapter.notifyDataSetChanged();
 
-								Backend.writeData(BucketItemListView.this); //backup data
+								Utility.writeData(BucketItemListView.this); //backup data
 								itemOptionsDialog.dismiss();
 							}
 						});
@@ -235,9 +235,9 @@ public class BucketItemListView extends AppCompatActivity {
 					public void onClick(View v) {
 
 						//move item to the archive list and update the view
-						Backend.moveToArchive(i);
+						Utility.moveToArchive(i);
 						listAdapter.notifyDataSetChanged();
-						Backend.writeData(BucketItemListView.this); //backup data
+						Utility.writeData(BucketItemListView.this); //backup data
 						itemOptionsDialog.dismiss();
 
 						//display success message
@@ -254,7 +254,7 @@ public class BucketItemListView extends AppCompatActivity {
 						//remove item from adapter and update view
 						listAdapter.getBucketList().remove(i);
 						listAdapter.notifyDataSetChanged();
-						Backend.writeData(BucketItemListView.this); //backup data
+						Utility.writeData(BucketItemListView.this); //backup data
 						itemOptionsDialog.dismiss();
 
 						//display success message and give option to undo
@@ -266,7 +266,7 @@ public class BucketItemListView extends AppCompatActivity {
 								//undo deleting
 								listAdapter.getBucketList().add(i, item);
 								listAdapter.notifyDataSetChanged();
-								Backend.writeData(BucketItemListView.this); //backup data
+								Utility.writeData(BucketItemListView.this); //backup data
 							}
 						});
 						infoBar.setActionTextColor(Color.WHITE);
@@ -297,7 +297,7 @@ public class BucketItemListView extends AppCompatActivity {
 		switch (item.getItemId()) {
 			case R.id.archive_completed:
 				//transfer completed items to archive
-				final ArrayList<Integer> removedIndices = Backend.transferCompletedToArchive();
+				final ArrayList<Integer> removedIndices = Utility.transferCompletedToArchive();
 				if(removedIndices.size() == 0){
 					Snackbar infoBar = Snackbar.make(findViewById(R.id.coordLayout), "No items to archive.",
 							Snackbar.LENGTH_SHORT);
@@ -305,7 +305,7 @@ public class BucketItemListView extends AppCompatActivity {
 					return true;
 				}
 				listAdapter.notifyDataSetChanged();
-				Backend.writeData(this.getApplicationContext()); //backup data
+				Utility.writeData(this.getApplicationContext()); //backup data
 
 				//friendly success message and give option to undo
 				Snackbar infoBar = Snackbar.make(findViewById(R.id.coordLayout), "All completed items archived.",
@@ -315,9 +315,9 @@ public class BucketItemListView extends AppCompatActivity {
 					public void onClick(View v) {
 
 						//undo deleting
-						Backend.undoTransferToArchive(removedIndices);
+						Utility.undoTransferToArchive(removedIndices);
 						listAdapter.notifyDataSetChanged();
-						Backend.writeData(getApplicationContext()); //backup data
+						Utility.writeData(getApplicationContext()); //backup data
 					}
 				});
 				infoBar.setActionTextColor(Color.WHITE);
@@ -388,8 +388,8 @@ public class BucketItemListView extends AppCompatActivity {
 	protected void onResume(){
 
 		super.onResume();
-		if(Backend.getBucketList().isEmpty()){
-			Backend.readData(this.getApplicationContext()); //read data from backup
+		if(Utility.getBucketList().isEmpty()){
+			Utility.readData(this.getApplicationContext()); //read data from backup
 		}
 		else{
 			this.listAdapter.notifyDataSetChanged(); //refresh

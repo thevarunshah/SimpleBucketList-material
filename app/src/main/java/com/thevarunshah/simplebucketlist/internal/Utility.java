@@ -1,7 +1,9 @@
-package com.thevarunshah.classes;
+package com.thevarunshah.simplebucketlist.internal;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.thevarunshah.classes.Item;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,12 +11,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class Backend {
+public class Utility {
 
     private static final ArrayList<Item> bucketList = new ArrayList<Item>(); //list of all items
     private static final ArrayList<Item> archiveList = new ArrayList<Item>(); //list of archived items
 
-    private static final String TAG = "Backend"; //for debugging purposes
+    private static final String TAG = "Utility"; //for debugging purposes
 
     /**
      * transfers all completed items in the bucket list to the archive list

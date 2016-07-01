@@ -1,4 +1,4 @@
-package com.thevarunshah.classes;
+package com.thevarunshah.simplebucketlist.internal;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.thevarunshah.simplebucketlist.R;
+import com.thevarunshah.classes.Item;
 
 import java.util.ArrayList;
 
@@ -70,10 +71,10 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 				final Item item = getItem(position); //get clicked item
 
 				//remove item from adapter, add to bucket list and update view
-				Backend.getBucketList().add(item);
+				Utility.getBucketList().add(item);
 				archiveList.remove(item);
 				notifyDataSetChanged();
-				Backend.writeData(getContext()); //backup data
+				Utility.writeData(getContext()); //backup data
 
 				//display success message and give option to undo
 				Snackbar infoBar = Snackbar.make(v, "Item unarchived.", Snackbar.LENGTH_LONG);
@@ -82,10 +83,10 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 					public void onClick(View v) {
 
 						//undo unarchiving
-						Backend.getBucketList().remove(item);
+						Utility.getBucketList().remove(item);
 						archiveList.add(position, item);
 						notifyDataSetChanged();
-						Backend.writeData(getContext()); //backup data
+						Utility.writeData(getContext()); //backup data
 					}
 				});
 				infoBar.setActionTextColor(Color.WHITE);
@@ -103,7 +104,7 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 				//remove item from adapter and update view
 				archiveList.remove(item);
 				notifyDataSetChanged();
-				Backend.writeData(getContext()); //backup data
+				Utility.writeData(getContext()); //backup data
 
 				//display success message and give option to undo
 				Snackbar infoBar = Snackbar.make(v, "Item deleted.", Snackbar.LENGTH_LONG);
@@ -114,7 +115,7 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 						//undo deleting
 						archiveList.add(position, item);
 						notifyDataSetChanged();
-						Backend.writeData(getContext()); //backup data
+						Utility.writeData(getContext()); //backup data
 					}
 				});
 				infoBar.setActionTextColor(Color.WHITE);
