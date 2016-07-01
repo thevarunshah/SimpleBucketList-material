@@ -19,6 +19,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -52,6 +55,8 @@ public class BucketItemListView extends AppCompatActivity {
 		listView = (ListView) findViewById(R.id.listview);
 		listAdapter = new BucketItemAdapter(this, Backend.getBucketList());
 		listView.setAdapter(listAdapter); //attach adapter to list view
+
+		attachListenersToListView();
 
 		//obtain add button and attach a on-tap listener to it
 		final FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.add_item);
@@ -127,6 +132,152 @@ public class BucketItemListView extends AppCompatActivity {
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 
+			}
+		});
+	}
+
+	private void attachListenersToListView(){
+
+		//attach an on-tap listener to the item for checking/unchecking
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+				Item item = listAdapter.getItem(i);
+				CheckBox cb = (CheckBox) view.findViewById(R.id.row_check);
+				cb.setChecked(!item.isDone());
+			}
+		});
+
+		//attach a long-tap listener to the item
+		listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> adapterView, final View view, final int i, long l) {
+
+				final Item item = listAdapter.getItem(i); //get clicked item
+
+				//inflate layout with customized alert dialog view
+				LayoutInflater layoutInflater = LayoutInflater.from(BucketItemListView.this);
+				final View dialog = layoutInflater.inflate(R.layout.context_menu_dialog, null);
+				final AlertDialog.Builder itemOptionsDialogBuilder = new AlertDialog.Builder(BucketItemListView.this,
+						R.style.AppCompatAlertDialogStyle);
+
+				//customize alert dialog and set its view
+				itemOptionsDialogBuilder.setTitle("Item Options");
+				itemOptionsDialogBuilder.setView(dialog);
+
+				//set up actions for dialog buttons
+				itemOptionsDialogBuilder.setNegativeButton("CANCEL", null);
+
+				//create the dialog
+				final AlertDialog itemOptionsDialog = itemOptionsDialogBuilder.create();
+
+				/*
+				 *fetch buttons and attach the appropriate on-tap listeners
+				 */
+
+				//edit button on-tap listener
+				Button editButton = (Button) dialog.findViewById(R.id.context_edit);
+				editButton.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+
+						//inflate layout with customized alert dialog view
+						LayoutInflater layoutInflater = LayoutInflater.from(BucketItemListView.this);
+						final View dialog = layoutInflater.inflate(R.layout.input_dialog, null);
+						final AlertDialog.Builder editItemDialogBuilder = new AlertDialog.Builder(BucketItemListView.this,
+								R.style.AppCompatAlertDialogStyle);
+
+						//customize alert dialog and set its view
+						editItemDialogBuilder.setTitle("Edit Item");
+						editItemDialogBuilder.setIcon(R.drawable.ic_edit_black_24dp);
+						editItemDialogBuilder.setView(dialog);
+
+						//fetch and set up edittext
+						final EditText input = (EditText) dialog.findViewById(R.id.input_dialog_text);
+						input.setText(item.getItemText());
+						input.setFocusableInTouchMode(true);
+						input.requestFocus();
+
+						//set up actions for dialog buttons
+						editItemDialogBuilder.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialogInterface, int whichButton) {
+
+								//update text of item and the view
+								item.setItemText(input.getText().toString());
+								listAdapter.notifyDataSetChanged();
+
+								Backend.writeData(BucketItemListView.this); //backup data
+								itemOptionsDialog.dismiss();
+							}
+						});
+						editItemDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								itemOptionsDialog.dismiss();
+							}
+						});
+
+						//create and show the dialog
+						AlertDialog editItemDialog = editItemDialogBuilder.create();
+						editItemDialog.show();
+
+						//show keyboard
+						editItemDialog.getWindow()
+								.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+					}
+				});
+				//archive button on-tap listener
+				Button archiveButton = (Button) dialog.findViewById(R.id.context_archive);
+				archiveButton.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+
+						//move item to the archive list and update the view
+						Backend.moveToArchive(i);
+						listAdapter.notifyDataSetChanged();
+						Backend.writeData(BucketItemListView.this); //backup data
+						itemOptionsDialog.dismiss();
+
+						//display success message
+						Snackbar infoBar = Snackbar.make(view, "Item archived.", Snackbar.LENGTH_SHORT);
+						infoBar.show();
+					}
+				});
+				//delete button on-tap listener
+				Button deleteButton = (Button) dialog.findViewById(R.id.context_delete);
+				deleteButton.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+
+						//remove item from adapter and update view
+						listAdapter.getBucketList().remove(i);
+						listAdapter.notifyDataSetChanged();
+						Backend.writeData(BucketItemListView.this); //backup data
+						itemOptionsDialog.dismiss();
+
+						//display success message and give option to undo
+						Snackbar infoBar = Snackbar.make(view, "Item deleted.", Snackbar.LENGTH_LONG);
+						infoBar.setAction("UNDO", new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+
+								//undo deleting
+								listAdapter.getBucketList().add(i, item);
+								listAdapter.notifyDataSetChanged();
+								Backend.writeData(BucketItemListView.this); //backup data
+							}
+						});
+						infoBar.setActionTextColor(Color.WHITE);
+						infoBar.show();
+					}
+				});
+
+				//show the dialog
+				itemOptionsDialog.show();
+
+				return true;
 			}
 		});
 	}
