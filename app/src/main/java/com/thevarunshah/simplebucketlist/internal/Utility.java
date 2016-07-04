@@ -1,6 +1,7 @@
 package com.thevarunshah.simplebucketlist.internal;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.thevarunshah.classes.Item;
@@ -107,6 +108,15 @@ public class Utility {
                 e.printStackTrace();
             }
         }
+
+        updateWidget(context);
+    }
+
+    private static void updateWidget(Context context){
+
+        Intent widgetIntent = new Intent(context, BucketListWidgetProvider.class);
+        widgetIntent.setAction(BucketListWidgetProvider.UPDATE_ACTION);
+        context.sendBroadcast(widgetIntent);
     }
 
     /**

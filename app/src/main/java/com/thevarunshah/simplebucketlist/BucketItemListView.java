@@ -95,11 +95,6 @@ public class BucketItemListView extends AppCompatActivity {
 						listAdapter.notifyDataSetChanged();
 
 						Utility.writeData(getApplicationContext()); //backup data
-
-						//update widget
-						Intent widgetIntent = new Intent(getApplicationContext(), BucketListWidgetProvider.class);
-						widgetIntent.setAction(BucketListWidgetProvider.UPDATE_ACTION);
-						getApplicationContext().sendBroadcast(widgetIntent);
 					}
 				});
 				newItemDialogBuilder.setNegativeButton("CANCEL", null);

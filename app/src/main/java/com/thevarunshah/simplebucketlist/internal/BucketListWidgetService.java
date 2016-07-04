@@ -81,6 +81,7 @@ class ListViewRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
         onClickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
         onClickIntent.setData(Uri.parse(onClickIntent.toUri(Intent.URI_INTENT_SCHEME)));
         rv.setOnClickFillInIntent(R.id.widgetrow_text, onClickIntent);
+        rv.setOnClickFillInIntent(R.id.widgetrow_check, onClickIntent);
 
         return rv;
     }
