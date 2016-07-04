@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -63,6 +62,7 @@ class ListViewRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
 
         RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.widget_row);
 
+        //get item and set the appropriate checkbox
         Item item = records.get(position);
         String data = item.getItemText();
         rv.setTextViewText(R.id.widgetrow_text, data);
@@ -75,6 +75,7 @@ class ListViewRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
             rv.setInt(R.id.widgetrow_text, "setPaintFlags", Paint.ANTI_ALIAS_FLAG & ~Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
+        //setup onclick action for individual items
         final Intent onClickIntent = new Intent(mContext, BucketListWidgetProvider.class);
         onClickIntent.setAction(BucketListWidgetProvider.CLICK_ACTION);
         onClickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);

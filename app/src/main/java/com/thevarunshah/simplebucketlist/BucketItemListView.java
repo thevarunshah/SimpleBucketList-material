@@ -27,6 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.thevarunshah.classes.Item;
+import com.thevarunshah.simplebucketlist.internal.BucketListWidgetProvider;
 import com.thevarunshah.simplebucketlist.internal.Utility;
 import com.thevarunshah.simplebucketlist.internal.BucketItemAdapter;
 
@@ -94,6 +95,11 @@ public class BucketItemListView extends AppCompatActivity {
 						listAdapter.notifyDataSetChanged();
 
 						Utility.writeData(getApplicationContext()); //backup data
+
+						//update widget
+						Intent widgetIntent = new Intent(getApplicationContext(), BucketListWidgetProvider.class);
+						widgetIntent.setAction(BucketListWidgetProvider.UPDATE_ACTION);
+						getApplicationContext().sendBroadcast(widgetIntent);
 					}
 				});
 				newItemDialogBuilder.setNegativeButton("CANCEL", null);
