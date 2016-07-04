@@ -13,5 +13,6 @@
     <string name="about">About</string>
     <string name="about_message">App created by: <b>Varun Shah</b>
         \n\nIf you find this app useful, please take a moment to rate it.\nThank you!</string>
+    <string name="widget_empty_text">You have nothing in your bucket list.</string>
 
 </resources>
