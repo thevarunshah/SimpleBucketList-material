@@ -7,12 +7,14 @@
     android:padding="5dp">
 
     <ImageView
-        android:id="@+id/widgetrow_check"
+        android:id="@+id/widgetrow_bullet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:contentDescription="Item Completed Status"/>
+        android:paddingTop="5dp"
+        android:src="@drawable/ic_fiber_manual_record_black_18dp"
+        android:contentDescription="Bullet Point"/>
 
     <TextView
         android:id="@+id/widgetrow_text"
@@ -23,8 +25,8 @@
         android:layout_marginRight="2.5dp"
         android:layout_marginEnd="2.5dp"
         android:layout_marginBottom="2.5dp"
-        android:layout_toRightOf="@id/widgetrow_check"
-        android:layout_toEndOf="@id/widgetrow_check"
+        android:layout_toRightOf="@id/widgetrow_bullet"
+        android:layout_toEndOf="@id/widgetrow_bullet"
         android:layout_alignParentTop="true"
         android:textSize="20sp"
         android:background="@android:color/white"

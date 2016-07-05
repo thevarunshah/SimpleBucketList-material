@@ -67,11 +67,9 @@ class ListViewRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
         String data = item.getItemText();
         rv.setTextViewText(R.id.widgetrow_text, data);
         if(item.isDone()){
-            rv.setImageViewResource(R.id.widgetrow_check, R.drawable.ic_check_box_black_24dp);
             rv.setInt(R.id.widgetrow_text, "setPaintFlags", Paint.ANTI_ALIAS_FLAG | Paint.STRIKE_THRU_TEXT_FLAG);
         }
         else{
-            rv.setImageViewResource(R.id.widgetrow_check, R.drawable.ic_check_box_outline_blank_black_24dp);
             rv.setInt(R.id.widgetrow_text, "setPaintFlags", Paint.ANTI_ALIAS_FLAG & ~Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
@@ -81,7 +79,6 @@ class ListViewRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
         onClickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
         onClickIntent.setData(Uri.parse(onClickIntent.toUri(Intent.URI_INTENT_SCHEME)));
         rv.setOnClickFillInIntent(R.id.widgetrow_text, onClickIntent);
-        rv.setOnClickFillInIntent(R.id.widgetrow_check, onClickIntent);
 
         return rv;
     }
