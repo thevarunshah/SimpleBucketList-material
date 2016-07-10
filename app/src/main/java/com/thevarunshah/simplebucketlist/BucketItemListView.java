@@ -27,7 +27,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.thevarunshah.classes.Item;
-import com.thevarunshah.simplebucketlist.internal.BucketListWidgetProvider;
 import com.thevarunshah.simplebucketlist.internal.Utility;
 import com.thevarunshah.simplebucketlist.internal.BucketItemAdapter;
 
@@ -52,12 +51,12 @@ public class BucketItemListView extends AppCompatActivity {
 		toolbar.setContentInsetsRelative(72, 72);
 		setSupportActionBar(toolbar);
 
+		boolean tablet = (findViewById(R.id.coordLayout_tablet) != null);
+
 		//obtain list view and create new bucket list custom adapter
 		listView = (ListView) findViewById(R.id.listview);
-		listAdapter = new BucketItemAdapter(this, Utility.getBucketList());
+		listAdapter = new BucketItemAdapter(this, Utility.getBucketList(), tablet);
 		listView.setAdapter(listAdapter); //attach adapter to list view
-
-		attachListenersToListView();
 
 		//obtain add button and attach a on-tap listener to it
 		final FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.add_item);
@@ -108,33 +107,38 @@ public class BucketItemListView extends AppCompatActivity {
 			}
 		});
 
-		//moving fab out of the way when scrolling listview
-		listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+		if(!tablet){
 
-			int lastPosition = -1;
+			attachListenersToListView();
 
-			@Override
-			public void onScroll(AbsListView absListView, int firstVisibleItem, int i1, int i2) {
+			//moving fab out of the way when scrolling listview
+			listView.setOnScrollListener(new AbsListView.OnScrollListener() {
 
-				if(lastPosition == firstVisibleItem){
-					return;
+				int lastPosition = -1;
+
+				@Override
+				public void onScroll(AbsListView absListView, int firstVisibleItem, int i1, int i2) {
+
+					if(lastPosition == firstVisibleItem){
+						return;
+					}
+
+					if(firstVisibleItem > lastPosition){
+						addButton.animate().translationY(addButton.getHeight()*2); //scrolling down
+					}
+					else{
+						addButton.animate().translationY(0); //scrolling up
+					}
+
+					lastPosition = firstVisibleItem;
 				}
 
-				if(firstVisibleItem > lastPosition){
-					addButton.animate().translationY(addButton.getHeight()*2); //scrolling down
+				@Override
+				public void onScrollStateChanged(AbsListView view, int scrollState) {
+
 				}
-				else{
-					addButton.animate().translationY(0); //scrolling up
-				}
-
-				lastPosition = firstVisibleItem;
-			}
-
-			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-			}
-		});
+			});
+		}
 	}
 
 	private void attachListenersToListView(){

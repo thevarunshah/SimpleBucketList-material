@@ -1,0 +1,53 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <ImageButton
+        android:id="@+id/unarchive_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
+        android:paddingRight="2.5dp"
+        android:paddingEnd="2.5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:src="@drawable/ic_unarchive_black_24dp"
+        android:contentDescription="Unarchive Item" />
+
+    <ImageButton
+        android:id="@+id/delete_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/unarchive_button"
+        android:layout_toRightOf="@+id/unarchive_button"
+        android:background="@android:color/transparent"
+        android:paddingLeft="2.5dp"
+        android:paddingStart="2.5dp"
+        android:paddingRight="5dp"
+        android:paddingEnd="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:src="@drawable/ic_delete_black_24dp"
+        android:contentDescription="Delete Item" />
+
+    <TextView
+        android:id="@+id/row_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/delete_button"
+        android:layout_toRightOf="@+id/delete_button"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="2.5dp"
+        android:layout_marginStart="2.5dp"
+        android:layout_marginRight="2.5dp"
+        android:layout_marginEnd="2.5dp"
+        android:layout_marginTop="2.5dp"
+        android:layout_marginBottom="2.5dp"
+        android:textSize="25sp" />
+
+</RelativeLayout>
