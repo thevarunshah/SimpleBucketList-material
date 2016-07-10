@@ -102,8 +102,10 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 			}
 		});
 
+		//tablet view listeners
 		if(tablet) {
 
+			//on click for the item text
 			holder.item.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
@@ -112,6 +114,7 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 				}
 			});
 
+			//on click for edit
 			holder.edit.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
@@ -161,6 +164,7 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 				}
 			});
 
+			//on click for item archive
 			holder.archive.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
@@ -176,6 +180,7 @@ public class BucketItemAdapter extends ArrayAdapter<Item> {
 				}
 			});
 
+			//on click for item delete
 			holder.delete.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {

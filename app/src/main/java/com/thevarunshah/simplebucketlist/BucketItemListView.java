@@ -51,6 +51,7 @@ public class BucketItemListView extends AppCompatActivity {
 		toolbar.setContentInsetsRelative(72, 72);
 		setSupportActionBar(toolbar);
 
+		//check if tablet view is being used
 		boolean tablet = (findViewById(R.id.coordLayout_tablet) != null);
 
 		//obtain list view and create new bucket list custom adapter
@@ -107,6 +108,7 @@ public class BucketItemListView extends AppCompatActivity {
 			}
 		});
 
+		//add specific listeners only if tablet is not being used
 		if(!tablet){
 
 			attachListenersToListView();
@@ -141,6 +143,9 @@ public class BucketItemListView extends AppCompatActivity {
 		}
 	}
 
+	/**
+	 * attach the on click and on long click listeners to the listview
+	 */
 	private void attachListenersToListView(){
 
 		//attach an on-tap listener to the item for checking/unchecking
