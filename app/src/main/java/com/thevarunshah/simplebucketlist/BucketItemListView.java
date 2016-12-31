@@ -10,7 +10,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,27 +21,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.thevarunshah.classes.Item;
+import com.thevarunshah.simplebucketlist.internal.BucketItemListAdapter;
+import com.thevarunshah.simplebucketlist.internal.OnStartDragListener;
+import com.thevarunshah.simplebucketlist.internal.SimpleItemTouchHelperCallback;
 import com.thevarunshah.simplebucketlist.internal.Utility;
-import com.thevarunshah.simplebucketlist.internal.BucketItemAdapter;
 
 import java.util.ArrayList;
 
 
-public class BucketItemListView extends AppCompatActivity {
+public class BucketItemListView extends AppCompatActivity implements OnStartDragListener {
 
 	private static final String TAG = "BucketItemListView"; //for debugging purposes
 
-	private ListView listView = null; //main view of items
-	private BucketItemAdapter listAdapter = null; //adapter for items display
+	private RecyclerView recyclerView = null; //main view of items
+	private BucketItemListAdapter recyclerAdapter = null; //adapter for items display
+
+	private ItemTouchHelper itemTouchHelper;
+
+	public static boolean itemsMoved = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +59,14 @@ public class BucketItemListView extends AppCompatActivity {
 		boolean tablet = (findViewById(R.id.coordLayout_tablet) != null);
 
 		//obtain list view and create new bucket list custom adapter
-		listView = (ListView) findViewById(R.id.listview);
-		listAdapter = new BucketItemAdapter(this, Utility.getBucketList(), tablet);
-		listView.setAdapter(listAdapter); //attach adapter to list view
+		recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+		recyclerAdapter = new BucketItemListAdapter(this, Utility.getBucketList(), tablet, this);
+		recyclerView.setAdapter(recyclerAdapter); //attach adapter to list view
+		recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+		ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(recyclerAdapter);
+		itemTouchHelper = new ItemTouchHelper(callback);
+		itemTouchHelper.attachToRecyclerView(recyclerView);
 
 		//obtain add button and attach a on-tap listener to it
 		final FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.add_item);
@@ -92,7 +101,7 @@ public class BucketItemListView extends AppCompatActivity {
 
 						//add item to main list and update view
 						Utility.getBucketList().add(item);
-						listAdapter.notifyDataSetChanged();
+						recyclerAdapter.notifyDataSetChanged();
 
 						Utility.writeData(getApplicationContext()); //backup data
 					}
@@ -111,185 +120,25 @@ public class BucketItemListView extends AppCompatActivity {
 		//add specific listeners only if tablet is not being used
 		if(!tablet){
 
-			attachListenersToListView();
-
 			//moving fab out of the way when scrolling listview
-			listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-
-				int lastPosition = -1;
+			recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
 				@Override
-				public void onScroll(AbsListView absListView, int firstVisibleItem, int i1, int i2) {
-
-					if(lastPosition == firstVisibleItem){
-						return;
-					}
-
-					if(firstVisibleItem > lastPosition){
+				public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+					if (dy > 0) {
 						addButton.animate().translationY(addButton.getHeight()*2); //scrolling down
 					}
-					else{
+					else {
 						addButton.animate().translationY(0); //scrolling up
 					}
-
-					lastPosition = firstVisibleItem;
-				}
-
-				@Override
-				public void onScrollStateChanged(AbsListView view, int scrollState) {
-
 				}
 			});
 		}
 	}
 
-	/**
-	 * attach the on click and on long click listeners to the listview
-	 */
-	private void attachListenersToListView(){
-
-		//attach an on-tap listener to the item for checking/unchecking
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-				Item item = listAdapter.getItem(i);
-				CheckBox cb = (CheckBox) view.findViewById(R.id.row_check);
-				cb.setChecked(!item.isDone());
-			}
-		});
-
-		//attach a long-tap listener to the item
-		listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> adapterView, final View view, final int i, long l) {
-
-				final Item item = listAdapter.getItem(i); //get clicked item
-
-				//inflate layout with customized alert dialog view
-				LayoutInflater layoutInflater = LayoutInflater.from(BucketItemListView.this);
-				final View dialog = layoutInflater.inflate(R.layout.context_menu_dialog, null);
-				final AlertDialog.Builder itemOptionsDialogBuilder = new AlertDialog.Builder(BucketItemListView.this,
-						R.style.AppCompatAlertDialogStyle);
-
-				//customize alert dialog and set its view
-				itemOptionsDialogBuilder.setTitle("Item Options");
-				itemOptionsDialogBuilder.setView(dialog);
-
-				//set up actions for dialog buttons
-				itemOptionsDialogBuilder.setNegativeButton("CANCEL", null);
-
-				//create the dialog
-				final AlertDialog itemOptionsDialog = itemOptionsDialogBuilder.create();
-
-				/*
-				 *fetch buttons and attach the appropriate on-tap listeners
-				 */
-
-				//edit button on-tap listener
-				Button editButton = (Button) dialog.findViewById(R.id.context_edit);
-				editButton.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-
-						//inflate layout with customized alert dialog view
-						LayoutInflater layoutInflater = LayoutInflater.from(BucketItemListView.this);
-						final View dialog = layoutInflater.inflate(R.layout.input_dialog, null);
-						final AlertDialog.Builder editItemDialogBuilder = new AlertDialog.Builder(BucketItemListView.this,
-								R.style.AppCompatAlertDialogStyle);
-
-						//customize alert dialog and set its view
-						editItemDialogBuilder.setTitle("Edit Item");
-						editItemDialogBuilder.setIcon(R.drawable.ic_edit_black_24dp);
-						editItemDialogBuilder.setView(dialog);
-
-						//fetch and set up edittext
-						final EditText input = (EditText) dialog.findViewById(R.id.input_dialog_text);
-						input.setText(item.getItemText());
-						input.setFocusableInTouchMode(true);
-						input.requestFocus();
-
-						//set up actions for dialog buttons
-						editItemDialogBuilder.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialogInterface, int whichButton) {
-
-								//update text of item and the view
-								item.setItemText(input.getText().toString());
-								listAdapter.notifyDataSetChanged();
-
-								Utility.writeData(BucketItemListView.this); //backup data
-								itemOptionsDialog.dismiss();
-							}
-						});
-						editItemDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								itemOptionsDialog.dismiss();
-							}
-						});
-
-						//create and show the dialog
-						AlertDialog editItemDialog = editItemDialogBuilder.create();
-						editItemDialog.show();
-
-						//show keyboard
-						editItemDialog.getWindow()
-								.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-					}
-				});
-				//archive button on-tap listener
-				Button archiveButton = (Button) dialog.findViewById(R.id.context_archive);
-				archiveButton.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-
-						//move item to the archive list and update the view
-						Utility.moveToArchive(i);
-						listAdapter.notifyDataSetChanged();
-						Utility.writeData(BucketItemListView.this); //backup data
-						itemOptionsDialog.dismiss();
-
-						//display success message
-						Snackbar infoBar = Snackbar.make(view, "Item archived.", Snackbar.LENGTH_SHORT);
-						infoBar.show();
-					}
-				});
-				//delete button on-tap listener
-				Button deleteButton = (Button) dialog.findViewById(R.id.context_delete);
-				deleteButton.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-
-						//remove item from adapter and update view
-						listAdapter.getBucketList().remove(i);
-						listAdapter.notifyDataSetChanged();
-						Utility.writeData(BucketItemListView.this); //backup data
-						itemOptionsDialog.dismiss();
-
-						//display success message and give option to undo
-						Snackbar infoBar = Snackbar.make(view, "Item deleted.", Snackbar.LENGTH_LONG);
-						infoBar.setAction("UNDO", new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-
-								//undo deleting
-								listAdapter.getBucketList().add(i, item);
-								listAdapter.notifyDataSetChanged();
-								Utility.writeData(BucketItemListView.this); //backup data
-							}
-						});
-						infoBar.setActionTextColor(Color.WHITE);
-						infoBar.show();
-					}
-				});
-
-				//show the dialog
-				itemOptionsDialog.show();
-
-				return true;
-			}
-		});
+	@Override
+	public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+		itemTouchHelper.startDrag(viewHolder);
 	}
 
 	@Override
@@ -314,7 +163,7 @@ public class BucketItemListView extends AppCompatActivity {
 					infoBar.show();
 					return true;
 				}
-				listAdapter.notifyDataSetChanged();
+				recyclerAdapter.notifyDataSetChanged();
 				Utility.writeData(this.getApplicationContext()); //backup data
 
 				//friendly success message and give option to undo
@@ -326,7 +175,7 @@ public class BucketItemListView extends AppCompatActivity {
 
 						//undo deleting
 						Utility.undoTransferToArchive(removedIndices);
-						listAdapter.notifyDataSetChanged();
+						recyclerAdapter.notifyDataSetChanged();
 						Utility.writeData(getApplicationContext()); //backup data
 					}
 				});
@@ -402,7 +251,17 @@ public class BucketItemListView extends AppCompatActivity {
 			Utility.readData(this.getApplicationContext()); //read data from backup
 		}
 		else{
-			this.listAdapter.notifyDataSetChanged(); //refresh
+			this.recyclerAdapter.notifyDataSetChanged(); //refresh
+		}
+	}
+
+	@Override
+	protected void onPause() {
+
+		super.onPause();
+		if(itemsMoved) {
+			Utility.writeData(this.getApplicationContext()); //backup data
+			itemsMoved = false;
 		}
 	}
 }

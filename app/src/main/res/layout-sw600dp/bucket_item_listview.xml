@@ -23,8 +23,8 @@
             android:theme="@style/ToolbarDarkOverflow"
             app:popupTheme="@style/ToolbarDarkOverflow"/>
 
-        <ListView
-            android:id="@+id/listview"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="5dp"
@@ -32,7 +32,7 @@
             android:layout_below="@id/toolbar"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
-            android:background="@android:color/white"/>
+            android:background="@android:color/white" />
 
     </RelativeLayout>
 

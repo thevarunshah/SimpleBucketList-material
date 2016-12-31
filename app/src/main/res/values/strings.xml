@@ -10,6 +10,7 @@
     <string name="edit">Edit</string>
     <string name="archive">Archive</string>
     <string name="delete">Delete</string>
+    <string name="reorder">Reorder</string>
     <string name="about">About</string>
     <string name="about_message">App created by: <b>Varun Shah</b>
         \n\nIf you find this app useful, please take a moment to rate it.\nThank you!</string>
