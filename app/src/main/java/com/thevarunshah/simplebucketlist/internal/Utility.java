@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 public class Utility {
 
-    private static final ArrayList<Item> bucketList = new ArrayList<Item>(); //list of all items
-    private static final ArrayList<Item> archiveList = new ArrayList<Item>(); //list of archived items
+    private static final ArrayList<Item> bucketList = new ArrayList<>(); //list of all items
+    private static final ArrayList<Item> archiveList = new ArrayList<>(); //list of archived items
 
     private static final String TAG = "Utility"; //for debugging purposes
 
@@ -27,7 +27,7 @@ public class Utility {
     public static ArrayList<Integer> transferCompletedToArchive(){
 
         //add items to the archive list and store their indices for deletion
-        ArrayList<Integer> removeIndices = new ArrayList<Integer>();
+        ArrayList<Integer> removeIndices = new ArrayList<>();
         for(int i = 0; i < bucketList.size(); i++){
 
             Item bi = bucketList.get(i);

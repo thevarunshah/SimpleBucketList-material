@@ -30,12 +30,12 @@ public class ArchivedItemListView extends AppCompatActivity {
         setContentView(R.layout.archived_item_listview);
 
         //fetch toolbar and set it as the action bar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.archived_toolbar);
+        Toolbar toolbar = findViewById(R.id.archived_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //back button
 
         //obtain list view and create new archive list custom adapter
-        listView = (ListView) findViewById(R.id.archived_listview);
+        listView = findViewById(R.id.archived_listview);
         listAdapter = new ArchivedItemAdapter(this, Utility.getArchiveList());
         listView.setAdapter(listAdapter); //attach adapter to list view
     }
@@ -66,7 +66,7 @@ public class ArchivedItemListView extends AppCompatActivity {
                 unarchiveItemDialogBuilder.setView(unarchiveDialog);
 
                 //fetch textview and set its text
-                final TextView unarchiveMessage = (TextView) unarchiveDialog.findViewById(R.id.info_dialog);
+                final TextView unarchiveMessage = unarchiveDialog.findViewById(R.id.info_dialog);
                 unarchiveMessage.setText("Are you sure you want to unarchive all archived items?");
 
                 unarchiveItemDialogBuilder.setPositiveButton("UNARCHIVE", new DialogInterface.OnClickListener() {
@@ -100,7 +100,7 @@ public class ArchivedItemListView extends AppCompatActivity {
                 deleteItemDialogBuilder.setView(deleteDialog);
 
                 //fetch textview and set its text
-                final TextView deleteMessage = (TextView) deleteDialog.findViewById(R.id.info_dialog);
+                final TextView deleteMessage = deleteDialog.findViewById(R.id.info_dialog);
                 deleteMessage.setText("Are you sure you want to permanently delete all archived items?");
 
                 deleteItemDialogBuilder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {

@@ -51,7 +51,7 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 		setContentView(R.layout.bucket_item_listview);
 
 		//fetch toolbar and set it as the action bar
-		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		Toolbar toolbar = findViewById(R.id.toolbar);
 		toolbar.setContentInsetsRelative(72, 72);
 		setSupportActionBar(toolbar);
 
@@ -59,7 +59,7 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 		boolean tablet = (findViewById(R.id.coordLayout_tablet) != null);
 
 		//obtain list view and create new bucket list custom adapter
-		recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+		recyclerView = findViewById(R.id.recycler_view);
 		recyclerAdapter = new BucketItemListAdapter(this, Utility.getBucketList(), tablet, this);
 		recyclerView.setAdapter(recyclerAdapter); //attach adapter to list view
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -69,7 +69,7 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 		itemTouchHelper.attachToRecyclerView(recyclerView);
 
 		//obtain add button and attach a on-tap listener to it
-		final FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.add_item);
+		final FloatingActionButton addButton = findViewById(R.id.add_item);
 		addButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -86,7 +86,7 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 				newItemDialogBuilder.setView(dialog);
 
 				//fetch and set up edittext
-				final EditText input = (EditText) dialog.findViewById(R.id.input_dialog_text);
+				final EditText input = dialog.findViewById(R.id.input_dialog_text);
 				input.setHint("Enter Details");
 				input.setFocusableInTouchMode(true);
 				input.requestFocus();
@@ -211,7 +211,7 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 		infoDialogBuilder.setView(dialog);
 
 		//fetch textview and set its text
-		final TextView message = (TextView) dialog.findViewById(R.id.info_dialog);
+		final TextView message = dialog.findViewById(R.id.info_dialog);
 		message.setText(R.string.about_message);
 
 		//set up actions for dialog buttons

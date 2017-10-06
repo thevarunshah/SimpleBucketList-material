@@ -11,8 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.thevarunshah.simplebucketlist.R;
 import com.thevarunshah.classes.Item;
+import com.thevarunshah.simplebucketlist.R;
 
 import java.util.ArrayList;
 
@@ -54,9 +54,9 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 			//inflate view and link each component to the holder
 			LayoutInflater vi = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = vi.inflate(R.layout.archived_row, null);
-			holder.item = (TextView) convertView.findViewById(R.id.row_text);
-			holder.unarchive = (ImageButton) convertView.findViewById(R.id.unarchive_button);
-			holder.delete = (ImageButton) convertView.findViewById(R.id.delete_button);
+			holder.item = convertView.findViewById(R.id.row_text);
+			holder.unarchive = convertView.findViewById(R.id.unarchive_button);
+			holder.delete = convertView.findViewById(R.id.delete_button);
 			convertView.setTag(holder);
 		} 
 		else{

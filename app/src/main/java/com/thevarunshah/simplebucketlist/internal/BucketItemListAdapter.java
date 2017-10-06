@@ -61,7 +61,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                 @Override
                 public void onClick(View view) {
                     Item item = getItem(position);
-                    CheckBox cb = (CheckBox) view.findViewById(R.id.row_check);
+                    CheckBox cb = view.findViewById(R.id.row_check);
                     cb.setChecked(!item.isDone());
                 }
             });
@@ -94,7 +94,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
 				 */
 
                     //edit button on-tap listener
-                    Button editButton = (Button) dialog.findViewById(R.id.context_edit);
+                    Button editButton = dialog.findViewById(R.id.context_edit);
                     editButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -111,7 +111,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                             editItemDialogBuilder.setView(dialog);
 
                             //fetch and set up edittext
-                            final EditText input = (EditText) dialog.findViewById(R.id.input_dialog_text);
+                            final EditText input = dialog.findViewById(R.id.input_dialog_text);
                             input.setText(item.getItemText());
                             input.setFocusableInTouchMode(true);
                             input.requestFocus();
@@ -146,7 +146,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                         }
                     });
                     //archive button on-tap listener
-                    Button archiveButton = (Button) dialog.findViewById(R.id.context_archive);
+                    Button archiveButton = dialog.findViewById(R.id.context_archive);
                     archiveButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -163,7 +163,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                         }
                     });
                     //delete button on-tap listener
-                    Button deleteButton = (Button) dialog.findViewById(R.id.context_delete);
+                    Button deleteButton = dialog.findViewById(R.id.context_delete);
                     deleteButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -249,7 +249,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                     editItemDialogBuilder.setView(dialog);
 
                     //fetch and set up edittext
-                    final EditText input = (EditText) dialog.findViewById(R.id.input_dialog_text);
+                    final EditText input = dialog.findViewById(R.id.input_dialog_text);
                     input.setText(item.getItemText());
                     input.setFocusableInTouchMode(true);
                     input.requestFocus();
@@ -376,14 +376,14 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
         public ItemViewHolder(View itemView) {
             super(itemView);
             this.itemView = itemView;
-            item = (TextView) itemView.findViewById(R.id.row_text);
-            done = (CheckBox) itemView.findViewById(R.id.row_check);
+            item = itemView.findViewById(R.id.row_text);
+            done = itemView.findViewById(R.id.row_check);
             if(BucketItemListAdapter.tablet){
-                edit = (ImageButton) itemView.findViewById(R.id.context_edit);
-                archive = (ImageButton) itemView.findViewById(R.id.context_archive);
-                delete = (ImageButton) itemView.findViewById(R.id.context_delete);
+                edit = itemView.findViewById(R.id.context_edit);
+                archive = itemView.findViewById(R.id.context_archive);
+                delete = itemView.findViewById(R.id.context_delete);
             }
-            handle = (ImageView) itemView.findViewById(R.id.handle);
+            handle = itemView.findViewById(R.id.handle);
         }
 
         @Override
