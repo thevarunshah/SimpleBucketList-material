@@ -1,5 +1,7 @@
 package com.thevarunshah.simplebucketlist.internal;
 
+import android.app.backup.BackupManager;
+import android.app.backup.RestoreObserver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -13,6 +15,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class Utility {
+
+    private static BackupManager backupManager;
 
     private static final ArrayList<Item> bucketList = new ArrayList<>(); //list of all items
     private static final ArrayList<Item> archiveList = new ArrayList<>(); //list of archived items
@@ -109,6 +113,9 @@ public class Utility {
             }
         }
 
+        backupManager = new BackupManager(context);
+        backupManager.dataChanged();
+
         updateWidget(context);
     }
 
@@ -143,6 +150,8 @@ public class Utility {
                 archiveList.clear();
                 archiveList.addAll(archiveItems);
             }
+
+            updateWidget(context);
         } catch (Exception e) {
             Log.i(TAG, "could not read from file");
             e.printStackTrace();
@@ -155,6 +164,11 @@ public class Utility {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void restoreData(Context context, RestoreObserver restoreObserver) {
+        backupManager = new BackupManager(context);
+        backupManager.requestRestore(restoreObserver);
     }
 
     public static ArrayList<Item> getBucketList() {

@@ -32,7 +32,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
 
     private final static String TAG = "BucketItemListAdapter"; //for debugging purposes
 
-    private final ArrayList<Item> bucketList; //the list the adapter manages
+    private ArrayList<Item> bucketList; //the list the adapter manages
     private final Context context; //context attached to adapter
     private static boolean tablet;
     private final OnStartDragListener dragStartListener;
@@ -403,5 +403,9 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
 
     public ArrayList<Item> getBucketList(){
         return this.bucketList;
+    }
+
+    public void setBucketList(ArrayList<Item> bucketList) {
+        this.bucketList = bucketList;
     }
 }
