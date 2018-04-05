@@ -131,12 +131,13 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 			recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
 				@Override
-				public void onScrolled(RecyclerView recyclerView, int dx, int dy){
-					if (dy > 0) {
-						addButton.animate().translationY(addButton.getHeight()*2); //scrolling down
+				public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+					super.onScrollStateChanged(recyclerView, newState);
+					if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+						addButton.animate().translationY(addButton.getHeight()*2);
 					}
-					else {
-						addButton.animate().translationY(0); //scrolling up
+					if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+						addButton.animate().translationY(0);
 					}
 				}
 			});
