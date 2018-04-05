@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_reorder_black_24dp"
+        android:src="@drawable/ic_reorder_black_24px"
         android:contentDescription="@string/reorder"
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"

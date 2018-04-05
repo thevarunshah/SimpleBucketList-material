@@ -42,7 +42,7 @@ public class SettingsFragment extends PreferenceFragment {
 
                 //customize alert dialog and set its view
                 infoDialogBuilder.setTitle("Restore Data");
-                infoDialogBuilder.setIcon(R.drawable.ic_warning_black_24dp);
+                infoDialogBuilder.setIcon(R.drawable.ic_warning_black_24px);
                 infoDialogBuilder.setView(dialog);
 
                 //fetch textview and set its text
@@ -96,7 +96,7 @@ public class SettingsFragment extends PreferenceFragment {
 
                 //customize alert dialog and set its view
                 infoDialogBuilder.setTitle("About");
-                infoDialogBuilder.setIcon(R.drawable.ic_info_black_24dp);
+                infoDialogBuilder.setIcon(R.drawable.ic_info_black_24px);
                 infoDialogBuilder.setView(dialog);
 
                 //fetch textview and set its text

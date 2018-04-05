@@ -107,7 +107,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
 
                             //customize alert dialog and set its view
                             editItemDialogBuilder.setTitle("Edit Item");
-                            editItemDialogBuilder.setIcon(R.drawable.ic_edit_black_24dp);
+                            editItemDialogBuilder.setIcon(R.drawable.ic_edit_black_24px);
                             editItemDialogBuilder.setView(dialog);
 
                             //fetch and set up edittext
@@ -245,7 +245,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
 
                     //customize alert dialog and set its view
                     editItemDialogBuilder.setTitle("Edit Item");
-                    editItemDialogBuilder.setIcon(R.drawable.ic_edit_black_24dp);
+                    editItemDialogBuilder.setIcon(R.drawable.ic_edit_black_24px);
                     editItemDialogBuilder.setView(dialog);
 
                     //fetch and set up edittext

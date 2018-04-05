@@ -16,7 +16,7 @@
         android:paddingEnd="2.5dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:src="@drawable/ic_unarchive_black_24dp"
+        android:src="@drawable/ic_unarchive_black_24px"
         android:contentDescription="Unarchive Item" />
 
     <ImageButton
@@ -32,7 +32,7 @@
         android:paddingEnd="5dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:src="@drawable/ic_delete_black_24dp"
+        android:src="@drawable/ic_delete_black_24px"
         android:contentDescription="Delete Item" />
 
     <TextView

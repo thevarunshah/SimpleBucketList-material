@@ -66,7 +66,7 @@ public class ArchivedItemListView extends AppCompatActivity {
 
                 //customize alert dialog and set its view
                 unarchiveItemDialogBuilder.setTitle("Unarchive All");
-                unarchiveItemDialogBuilder.setIcon(R.drawable.ic_unarchive_black_24dp);
+                unarchiveItemDialogBuilder.setIcon(R.drawable.ic_unarchive_black_24px);
                 unarchiveItemDialogBuilder.setView(unarchiveDialog);
 
                 //fetch textview and set its text
@@ -100,7 +100,7 @@ public class ArchivedItemListView extends AppCompatActivity {
 
                 //customize alert dialog and set its view
                 deleteItemDialogBuilder.setTitle("Delete All");
-                deleteItemDialogBuilder.setIcon(R.drawable.ic_warning_black_24dp);
+                deleteItemDialogBuilder.setIcon(R.drawable.ic_warning_black_24px);
                 deleteItemDialogBuilder.setView(deleteDialog);
 
                 //fetch textview and set its text
