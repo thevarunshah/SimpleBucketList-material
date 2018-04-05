@@ -34,6 +34,15 @@
             android:layout_marginRight="100dp"
             android:background="@android:color/white" />
 
+        <TextView
+            android:id="@+id/list_empty_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="@string/empty_state_text_archived"
+            android:textSize="22sp"/>
+
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.thevarunshah.classes.Item;
 import com.thevarunshah.simplebucketlist.internal.BucketItemListAdapter;
@@ -36,6 +37,8 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 
 	private RecyclerView recyclerView = null; //main view of items
 	private BucketItemListAdapter recyclerAdapter = null; //adapter for items display
+
+	private TextView emptyStateTextView;
 
 	private ItemTouchHelper itemTouchHelper;
 
@@ -64,6 +67,8 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 		ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(recyclerAdapter);
 		itemTouchHelper = new ItemTouchHelper(callback);
 		itemTouchHelper.attachToRecyclerView(recyclerView);
+
+		emptyStateTextView = findViewById(R.id.list_empty_textview);
 
 		//obtain add button and attach a on-tap listener to it
 		final FloatingActionButton addButton = findViewById(R.id.add_item);
@@ -101,6 +106,11 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 						recyclerAdapter.notifyDataSetChanged();
 
 						Utility.writeData(getApplicationContext()); //backup data
+
+						if (recyclerView.getVisibility() == View.GONE) {
+							recyclerView.setVisibility(View.VISIBLE);
+							emptyStateTextView.setVisibility(View.GONE);
+						}
 					}
 				});
 				newItemDialogBuilder.setNegativeButton("CANCEL", null);
@@ -201,6 +211,14 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 		}
 		else{
 			this.recyclerAdapter.notifyDataSetChanged(); //refresh
+		}
+
+		if(Utility.getBucketList().isEmpty()){
+			recyclerView.setVisibility(View.GONE);
+			emptyStateTextView.setVisibility(View.VISIBLE);
+		} else {
+			recyclerView.setVisibility(View.VISIBLE);
+			emptyStateTextView.setVisibility(View.GONE);
 		}
 	}
 

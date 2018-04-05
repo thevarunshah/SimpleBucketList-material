@@ -23,6 +23,8 @@ public class ArchivedItemListView extends AppCompatActivity {
     private ListView listView = null; //main view of items
     private ArchivedItemAdapter listAdapter = null; //adapter for items display
 
+    private TextView emptyStateTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -38,6 +40,8 @@ public class ArchivedItemListView extends AppCompatActivity {
         listView = findViewById(R.id.archived_listview);
         listAdapter = new ArchivedItemAdapter(this, Utility.getArchiveList());
         listView.setAdapter(listAdapter); //attach adapter to list view
+
+        emptyStateTextView = findViewById(R.id.list_empty_textview);
     }
 
     @Override
@@ -134,6 +138,14 @@ public class ArchivedItemListView extends AppCompatActivity {
         super.onResume();
         if(Utility.getArchiveList().isEmpty()){
             Utility.readData(this.getApplicationContext()); //read data from backup
+        }
+
+        if(Utility.getArchiveList().isEmpty()){
+            listView.setVisibility(View.GONE);
+            emptyStateTextView.setVisibility(View.VISIBLE);
+        } else {
+            listView.setVisibility(View.VISIBLE);
+            emptyStateTextView.setVisibility(View.GONE);
         }
     }
 }

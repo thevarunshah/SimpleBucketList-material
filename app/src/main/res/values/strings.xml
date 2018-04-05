@@ -15,6 +15,8 @@
     <string name="restore">Restore Data</string>
     <string name="restore_message">Are you sure you want to restore data from the Google server?\nData is automatically backed up every 24 hours.
         \n\n<b>This action cannot be undone.</b></string>
+    <string name="empty_state_text">Add a new item by\ntapping \'<b>+</b>\' below!</string>
+    <string name="empty_state_text_archived">No archived items.</string>
     <string name="about">About</string>
     <string name="about_message">App created by: <b>Varun Shah</b>
         \n\nIf you find this app useful, please take a moment to rate it.\nThank you!</string>
