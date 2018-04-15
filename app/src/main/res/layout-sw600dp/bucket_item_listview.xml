@@ -32,7 +32,8 @@
             android:layout_below="@id/toolbar"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
-            android:background="@android:color/white" />
+            android:background="@android:color/white"
+            android:scrollbars="vertical" />
 
     </RelativeLayout>
 

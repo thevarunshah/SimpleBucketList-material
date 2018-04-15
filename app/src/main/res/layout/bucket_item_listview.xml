@@ -28,7 +28,8 @@
             android:layout_height="match_parent"
             android:padding="5dp"
             android:clipToPadding="false"
-            android:layout_below="@id/toolbar" />
+            android:layout_below="@id/toolbar"
+            android:scrollbars="vertical" />
 
     </RelativeLayout>
 
