@@ -22,7 +22,6 @@ public class ArchivedItemListView extends AppCompatActivity {
 
     private ListView listView = null; //main view of items
     private ArchivedItemAdapter listAdapter = null; //adapter for items display
-
     private TextView emptyStateTextView;
 
     @Override
@@ -46,7 +45,6 @@ public class ArchivedItemListView extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         //fetch and set actionbar menu
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.archive_menu, menu);
@@ -61,8 +59,7 @@ public class ArchivedItemListView extends AppCompatActivity {
                 //inflate layout with customized alert dialog view
                 LayoutInflater unarchiveLayoutInflater = LayoutInflater.from(ArchivedItemListView.this);
                 final View unarchiveDialog = unarchiveLayoutInflater.inflate(R.layout.info_dialog, null);
-                final AlertDialog.Builder unarchiveItemDialogBuilder = new AlertDialog.Builder(ArchivedItemListView.this,
-                        R.style.AppCompatAlertDialogStyle);
+                final AlertDialog.Builder unarchiveItemDialogBuilder = new AlertDialog.Builder(ArchivedItemListView.this, R.style.AppCompatAlertDialogStyle);
 
                 //customize alert dialog and set its view
                 unarchiveItemDialogBuilder.setTitle("Unarchive All");
@@ -71,11 +68,10 @@ public class ArchivedItemListView extends AppCompatActivity {
 
                 //fetch textview and set its text
                 final TextView unarchiveMessage = unarchiveDialog.findViewById(R.id.info_dialog);
-                unarchiveMessage.setText("Are you sure you want to unarchive all archived items?");
+                unarchiveMessage.setText(R.string.unarchive_confirm_text);
 
                 unarchiveItemDialogBuilder.setPositiveButton("UNARCHIVE", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogInterface, int whichButton) {
-
                         //move all archived items from archive list to bucket list and update view
                         Utility.getBucketList().addAll(Utility.getArchiveList());
                         Utility.getArchiveList().clear();
@@ -95,8 +91,7 @@ public class ArchivedItemListView extends AppCompatActivity {
                 //inflate layout with customized alert dialog view
                 LayoutInflater deleteLayoutInflater = LayoutInflater.from(ArchivedItemListView.this);
                 final View deleteDialog = deleteLayoutInflater.inflate(R.layout.info_dialog, null);
-                final AlertDialog.Builder deleteItemDialogBuilder = new AlertDialog.Builder(ArchivedItemListView.this,
-                    R.style.AppCompatAlertDialogStyle);
+                final AlertDialog.Builder deleteItemDialogBuilder = new AlertDialog.Builder(ArchivedItemListView.this, R.style.AppCompatAlertDialogStyle);
 
                 //customize alert dialog and set its view
                 deleteItemDialogBuilder.setTitle("Delete All");
@@ -105,11 +100,10 @@ public class ArchivedItemListView extends AppCompatActivity {
 
                 //fetch textview and set its text
                 final TextView deleteMessage = deleteDialog.findViewById(R.id.info_dialog);
-                deleteMessage.setText("Are you sure you want to permanently delete all archived items?");
+                deleteMessage.setText(R.string.delete_confirm_text);
 
                 deleteItemDialogBuilder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogInterface, int whichButton) {
-
                         //remove all archived items from archive list and update view
                         Utility.getArchiveList().clear();
                         listAdapter.notifyDataSetChanged();
@@ -134,18 +128,12 @@ public class ArchivedItemListView extends AppCompatActivity {
 
     @Override
     protected void onResume(){
-
         super.onResume();
-        if(Utility.getArchiveList().isEmpty()){
+        if (Utility.getArchiveList().isEmpty()) {
             Utility.readData(this.getApplicationContext()); //read data from backup
         }
 
-        if(Utility.getArchiveList().isEmpty()){
-            listView.setVisibility(View.GONE);
-            emptyStateTextView.setVisibility(View.VISIBLE);
-        } else {
-            listView.setVisibility(View.VISIBLE);
-            emptyStateTextView.setVisibility(View.GONE);
-        }
+        listView.setVisibility(Utility.getArchiveList().isEmpty() ? View.GONE : View.VISIBLE);
+        emptyStateTextView.setVisibility(Utility.getArchiveList().isEmpty() ? View.VISIBLE : View.GONE);
     }
 }

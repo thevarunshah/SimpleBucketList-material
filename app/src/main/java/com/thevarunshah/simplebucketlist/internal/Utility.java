@@ -33,7 +33,6 @@ public class Utility {
         //add items to the archive list and store their indices for deletion
         ArrayList<Integer> removeIndices = new ArrayList<>();
         for(int i = 0; i < bucketList.size(); i++){
-
             Item bi = bucketList.get(i);
             if(bi.isDone()){
                 archiveList.add(bi);
@@ -44,7 +43,6 @@ public class Utility {
         //remove items from the bucket list
         int numRemoved = 0; //index offset
         for(Integer i : removeIndices){
-
             bucketList.remove(i-numRemoved);
             numRemoved++;
         }
@@ -62,7 +60,6 @@ public class Utility {
         //for each item in the archive list, move it back to it's original position
         int numMoved = 0;
         for(int i = archiveList.size()-removedIndices.size(); i < archiveList.size()+numMoved; i++){
-
             bucketList.add(removedIndices.get(numMoved), archiveList.get(i-numMoved));
             archiveList.remove(i-numMoved);
             numMoved++;
@@ -79,9 +76,7 @@ public class Utility {
      * @param position the index of the item to be moved
      */
     public static void moveToArchive(int position){
-
-        Item bi = bucketList.get(position);
-        archiveList.add(bi);
+        archiveList.add(bucketList.get(position));
         bucketList.remove(position);
     }
 
@@ -101,14 +96,14 @@ public class Utility {
             oos.writeObject(bucketList);
             oos.writeObject(archiveList);
         } catch (Exception e) {
-            Log.i(TAG, "could not write to file");
+            Log.e(TAG, "could not write to file");
             e.printStackTrace();
         } finally{
             try{
-                oos.close();
-                fos.close();
+                if (oos != null) oos.close();
+                if (fos != null) fos.close();
             } catch (Exception e){
-                Log.i(TAG, "could not close the file");
+                Log.e(TAG, "could not close the file");
                 e.printStackTrace();
             }
         }
@@ -120,7 +115,6 @@ public class Utility {
     }
 
     private static void updateWidget(Context context){
-
         Intent widgetIntent = new Intent(context, BucketListWidgetProvider.class);
         widgetIntent.setAction(BucketListWidgetProvider.UPDATE_ACTION);
         context.sendBroadcast(widgetIntent);
@@ -153,14 +147,14 @@ public class Utility {
 
             updateWidget(context);
         } catch (Exception e) {
-            Log.i(TAG, "could not read from file");
+            Log.e(TAG, "could not read from file");
             e.printStackTrace();
         } finally{
             try{
-                if(ois != null) ois.close();
-                if(fis != null) fis.close();
+                if (ois != null) ois.close();
+                if (fis != null) fis.close();
             } catch(Exception e){
-                Log.i(TAG, "could not close the file");
+                Log.e(TAG, "could not close the file");
                 e.printStackTrace();
             }
         }

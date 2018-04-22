@@ -30,16 +30,13 @@ import com.thevarunshah.simplebucketlist.internal.Utility;
 
 import java.util.ArrayList;
 
-
 public class BucketItemListView extends AppCompatActivity implements OnStartDragListener {
 
 	private static final String TAG = "BucketItemListView"; //for debugging purposes
 
 	private RecyclerView recyclerView = null; //main view of items
 	private BucketItemListAdapter recyclerAdapter = null; //adapter for items display
-
 	private TextView emptyStateTextView;
-
 	private ItemTouchHelper itemTouchHelper;
 
 	public static boolean itemsMoved = false;
@@ -79,8 +76,7 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 				//inflate layout with customized alert dialog view
 				LayoutInflater layoutInflater = LayoutInflater.from(BucketItemListView.this);
 				final View dialog = layoutInflater.inflate(R.layout.input_dialog, null);
-				final AlertDialog.Builder newItemDialogBuilder = new AlertDialog.Builder(BucketItemListView.this,
-						R.style.AppCompatAlertDialogStyle);
+				final AlertDialog.Builder newItemDialogBuilder = new AlertDialog.Builder(BucketItemListView.this, R.style.AppCompatAlertDialogStyle);
 
 				//customize alert dialog and set its view
 				newItemDialogBuilder.setTitle("New Item");
@@ -104,7 +100,6 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 						//add item to main list and update view
 						Utility.getBucketList().add(item);
 						recyclerAdapter.notifyDataSetChanged();
-
 						Utility.writeData(getApplicationContext()); //backup data
 
 						if (recyclerView.getVisibility() == View.GONE) {
@@ -126,7 +121,6 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 
 		//add specific listeners only if tablet is not being used
 		if(!tablet){
-
 			//moving fab out of the way when scrolling listview
 			recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -151,7 +145,6 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
 		//fetch and set actionbar menu
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_menu, menu);
@@ -165,9 +158,8 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 			case R.id.archive_completed:
 				//transfer completed items to archive
 				final ArrayList<Integer> removedIndices = Utility.transferCompletedToArchive();
-				if(removedIndices.size() == 0){
-					Snackbar infoBar = Snackbar.make(findViewById(R.id.coordLayout), "No items to archive.",
-							Snackbar.LENGTH_SHORT);
+				if (removedIndices.size() == 0) {
+					Snackbar infoBar = Snackbar.make(findViewById(R.id.coordLayout), R.string.archive_nothing_text, Snackbar.LENGTH_SHORT);
 					infoBar.show();
 					return true;
 				}
@@ -175,12 +167,10 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 				Utility.writeData(this.getApplicationContext()); //backup data
 
 				//friendly success message and give option to undo
-				Snackbar infoBar = Snackbar.make(findViewById(R.id.coordLayout), "All completed items archived.",
-						Snackbar.LENGTH_LONG);
+				Snackbar infoBar = Snackbar.make(findViewById(R.id.coordLayout), R.string.archive_done_text, Snackbar.LENGTH_LONG);
 				infoBar.setAction("UNDO", new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-
 						//undo deleting
 						Utility.undoTransferToArchive(removedIndices);
 						recyclerAdapter.notifyDataSetChanged();
@@ -205,29 +195,21 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 
 	@Override
 	protected void onResume(){
-
 		super.onResume();
-		if(Utility.getBucketList().isEmpty()){
+		if (Utility.getBucketList().isEmpty()) {
 			Utility.readData(this.getApplicationContext()); //read data from backup
-		}
-		else{
+		} else{
 			this.recyclerAdapter.notifyDataSetChanged(); //refresh
 		}
 
-		if(Utility.getBucketList().isEmpty()){
-			recyclerView.setVisibility(View.GONE);
-			emptyStateTextView.setVisibility(View.VISIBLE);
-		} else {
-			recyclerView.setVisibility(View.VISIBLE);
-			emptyStateTextView.setVisibility(View.GONE);
-		}
+		recyclerView.setVisibility(Utility.getBucketList().isEmpty() ? View.GONE : View.VISIBLE);
+		emptyStateTextView.setVisibility(Utility.getBucketList().isEmpty() ? View.VISIBLE : View.GONE);
 	}
 
 	@Override
 	protected void onPause() {
-
 		super.onPause();
-		if(itemsMoved) {
+		if (itemsMoved) {
 			Utility.writeData(this.getApplicationContext()); //backup data
 			itemsMoved = false;
 		}

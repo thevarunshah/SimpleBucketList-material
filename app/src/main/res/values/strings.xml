@@ -4,22 +4,36 @@
     <string name="title"><b>Bucket List</b></string>
     <string name="archived"><b>Archived Items</b></string>
     <string name="archive_completed_text">Archive Completed Items</string>
+    <string name="archive_nothing_text">No items to archive.</string>
+    <string name="archive_done_text">All completed items archived.</string>
     <string name="show_archived_text">Show Archived Items</string>
     <string name="delete_archived_text">Delete All</string>
+    <string name="delete_confirm_text">Are you sure you want to permanently delete all archived items?</string>
+    <string name="delete_item_text">Delete Item</string>
     <string name="unarchive_text">Unarchive All</string>
+    <string name="unarchive_confirm_text">Are you sure you want to unarchive all archived items?</string>
+    <string name="unarchive_item_text">Unarchive Item</string>
+    <string name="item_unarchived">Item unarchived.</string>
+    <string name="item_options">Item Options</string>
+    <string name="edit_item">Edit Item</string>
     <string name="edit">Edit</string>
     <string name="archive">Archive</string>
+    <string name="item_archived">Item archived.</string>
     <string name="delete">Delete</string>
+    <string name="item_deleted">Item deleted.</string>
     <string name="reorder">Reorder</string>
     <string name="settings">Settings</string>
     <string name="restore">Restore Data</string>
     <string name="restore_message">Are you sure you want to restore data from the Google server?\nData is automatically backed up every 24 hours.
         \n\n<b>This action cannot be undone.</b></string>
+    <string name="restore_success_message">Data successfully restored.</string>
+    <string name="restore_failed_message">Could not restore data - please try again later.</string>
     <string name="empty_state_text">Add a new item by\ntapping \'<b>+</b>\' below!</string>
     <string name="empty_state_text_archived">No archived items.</string>
     <string name="about">About</string>
     <string name="about_message">App created by: <b>Varun Shah</b>
         \n\nIf you find this app useful, please take a moment to rate it.\nThank you!</string>
+    <string name="play_launch_failed">Could not launch the Google Play app.</string>
     <string name="widget_empty_text">You have nothing in your bucket list.</string>
 
 </resources>

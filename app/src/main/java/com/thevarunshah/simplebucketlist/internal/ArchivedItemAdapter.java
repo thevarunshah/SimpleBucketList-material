@@ -25,11 +25,10 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 
 	/**
 	 * the archive list adapter
-	 *  @param context the application context
+	 * @param context the application context
 	 * @param archiveList the list of items
 	 */
 	public ArchivedItemAdapter(Context context, ArrayList<Item> archiveList) {
-		
 		super(context, R.layout.archived_row, archiveList);
 		this.context = context;
 		this.archiveList = archiveList;
@@ -39,7 +38,6 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 	 * a view holder for each item in the row
 	 */
 	private class ViewHolder {
-
 		ImageButton unarchive;
 		ImageButton delete;
 		TextView item;
@@ -49,7 +47,6 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 	public View getView(final int position, View convertView, ViewGroup parent) {
 
 		ViewHolder holder = new ViewHolder();
-
 		if(convertView == null){
 			//inflate view and link each component to the holder
 			LayoutInflater vi = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -58,8 +55,7 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 			holder.unarchive = convertView.findViewById(R.id.unarchive_button);
 			holder.delete = convertView.findViewById(R.id.delete_button);
 			convertView.setTag(holder);
-		} 
-		else{
+		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
@@ -77,11 +73,10 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 				Utility.writeData(getContext()); //backup data
 
 				//display success message and give option to undo
-				Snackbar infoBar = Snackbar.make(v, "Item unarchived.", Snackbar.LENGTH_LONG);
+				Snackbar infoBar = Snackbar.make(v, R.string.item_unarchived, Snackbar.LENGTH_LONG);
 				infoBar.setAction("UNDO", new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-
 						//undo unarchiving
 						Utility.getBucketList().remove(item);
 						archiveList.add(position, item);
@@ -107,11 +102,10 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 				Utility.writeData(getContext()); //backup data
 
 				//display success message and give option to undo
-				Snackbar infoBar = Snackbar.make(v, "Item deleted.", Snackbar.LENGTH_LONG);
+				Snackbar infoBar = Snackbar.make(v, R.string.item_deleted, Snackbar.LENGTH_LONG);
 				infoBar.setAction("UNDO", new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-
 						//undo deleting
 						archiveList.add(position, item);
 						notifyDataSetChanged();

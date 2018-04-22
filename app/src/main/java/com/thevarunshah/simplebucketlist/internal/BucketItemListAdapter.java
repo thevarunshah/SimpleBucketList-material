@@ -27,8 +27,7 @@ import com.thevarunshah.simplebucketlist.R;
 
 import java.util.ArrayList;
 
-public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAdapter.ItemViewHolder>
-        implements ItemTouchHelperAdapter {
+public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAdapter.ItemViewHolder> implements ItemTouchHelperAdapter {
 
     private final static String TAG = "BucketItemListAdapter"; //for debugging purposes
 
@@ -38,7 +37,6 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
     private final OnStartDragListener dragStartListener;
 
     public BucketItemListAdapter(Context context, ArrayList<Item> bucketList, boolean tablet, OnStartDragListener dragStartListener) {
-
         this.context = context;
         this.bucketList = bucketList;
         BucketItemListAdapter.tablet = tablet;
@@ -47,9 +45,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row, parent, false);
-        ItemViewHolder itemViewHolder = new ItemViewHolder(view);
-        return itemViewHolder;
+        return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.row, parent, false));
     }
 
     @Override
@@ -76,11 +72,10 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                     //inflate layout with customized alert dialog view
                     LayoutInflater layoutInflater = LayoutInflater.from(context);
                     final View dialog = layoutInflater.inflate(R.layout.context_menu_dialog, null);
-                    final AlertDialog.Builder itemOptionsDialogBuilder = new AlertDialog.Builder(context,
-                            R.style.AppCompatAlertDialogStyle);
+                    final AlertDialog.Builder itemOptionsDialogBuilder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
 
                     //customize alert dialog and set its view
-                    itemOptionsDialogBuilder.setTitle("Item Options");
+                    itemOptionsDialogBuilder.setTitle(R.string.item_options);
                     itemOptionsDialogBuilder.setView(dialog);
 
                     //set up actions for dialog buttons
@@ -89,9 +84,9 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                     //create the dialog
                     final AlertDialog itemOptionsDialog = itemOptionsDialogBuilder.create();
 
-				/*
-				 *fetch buttons and attach the appropriate on-tap listeners
-				 */
+                    /*
+                     *fetch buttons and attach the appropriate on-tap listeners
+                     */
 
                     //edit button on-tap listener
                     Button editButton = dialog.findViewById(R.id.context_edit);
@@ -102,8 +97,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                             //inflate layout with customized alert dialog view
                             LayoutInflater layoutInflater = LayoutInflater.from(context);
                             final View dialog = layoutInflater.inflate(R.layout.input_dialog, null);
-                            final AlertDialog.Builder editItemDialogBuilder = new AlertDialog.Builder(context,
-                                    R.style.AppCompatAlertDialogStyle);
+                            final AlertDialog.Builder editItemDialogBuilder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
 
                             //customize alert dialog and set its view
                             editItemDialogBuilder.setTitle("Edit Item");
@@ -141,8 +135,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                             editItemDialog.show();
 
                             //show keyboard
-                            editItemDialog.getWindow()
-                                    .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                            editItemDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                         }
                     });
                     //archive button on-tap listener
@@ -158,7 +151,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                             itemOptionsDialog.dismiss();
 
                             //display success message
-                            Snackbar infoBar = Snackbar.make(view, "Item archived.", Snackbar.LENGTH_SHORT);
+                            Snackbar infoBar = Snackbar.make(view, R.string.item_archived, Snackbar.LENGTH_SHORT);
                             infoBar.show();
                         }
                     });
@@ -175,11 +168,10 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                             itemOptionsDialog.dismiss();
 
                             //display success message and give option to undo
-                            Snackbar infoBar = Snackbar.make(view, "Item deleted.", Snackbar.LENGTH_LONG);
+                            Snackbar infoBar = Snackbar.make(view, R.string.item_deleted, Snackbar.LENGTH_LONG);
                             infoBar.setAction("UNDO", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-
                                     //undo deleting
                                     getBucketList().add(position, item);
                                     notifyDataSetChanged();
@@ -193,7 +185,6 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
 
                     //show the dialog
                     itemOptionsDialog.show();
-
                     return true;
                 }
             });
@@ -208,13 +199,8 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
 
                 //get item and set as done/undone
                 item.setDone(isChecked);
-
                 //apply or get rid of strikethrough effect
-                if (isChecked) {
-                    holder.item.setPaintFlags(holder.item.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                } else {
-                    holder.item.setPaintFlags(holder.item.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
-                }
+                holder.item.setPaintFlags(isChecked ? (holder.item.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG) : (holder.item.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG));
 
                 Utility.writeData(context); //backup data
             }
@@ -227,7 +213,6 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
             holder.item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     holder.done.setChecked(!item.isDone());
                 }
             });
@@ -240,11 +225,10 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                     //inflate layout with customized alert dialog view
                     LayoutInflater layoutInflater = LayoutInflater.from(context);
                     final View dialog = layoutInflater.inflate(R.layout.input_dialog, null);
-                    final AlertDialog.Builder editItemDialogBuilder = new AlertDialog.Builder(context,
-                            R.style.AppCompatAlertDialogStyle);
+                    final AlertDialog.Builder editItemDialogBuilder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
 
                     //customize alert dialog and set its view
-                    editItemDialogBuilder.setTitle("Edit Item");
+                    editItemDialogBuilder.setTitle(R.string.edit_item);
                     editItemDialogBuilder.setIcon(R.drawable.ic_edit_black_24px);
                     editItemDialogBuilder.setView(dialog);
 
@@ -258,18 +242,14 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                     editItemDialogBuilder.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int whichButton) {
-
                             //update text of item and the view
                             item.setItemText(input.getText().toString());
-
                             Utility.writeData(context); //backup data
                         }
                     });
                     editItemDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
+                        public void onClick(DialogInterface dialog, int which) { }
                     });
 
                     //create and show the dialog
@@ -277,8 +257,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                     editItemDialog.show();
 
                     //show keyboard
-                    editItemDialog.getWindow()
-                            .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                    editItemDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                 }
             });
 
@@ -293,7 +272,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                     Utility.writeData(context); //backup data
 
                     //display success message
-                    Snackbar infoBar = Snackbar.make(view, "Item archived.", Snackbar.LENGTH_SHORT);
+                    Snackbar infoBar = Snackbar.make(view, R.string.item_archived, Snackbar.LENGTH_SHORT);
                     infoBar.show();
                 }
             });
@@ -309,11 +288,10 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                     Utility.writeData(context); //backup data
 
                     //display success message and give option to undo
-                    Snackbar infoBar = Snackbar.make(view, "Item deleted.", Snackbar.LENGTH_LONG);
+                    Snackbar infoBar = Snackbar.make(view, R.string.item_deleted, Snackbar.LENGTH_LONG);
                     infoBar.setAction("UNDO", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
                             //undo deleting
                             bucketList.add(position, item);
                             notifyDataSetChanged();
@@ -362,8 +340,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
         return bucketList.size();
     }
 
-    public static class ItemViewHolder extends RecyclerView.ViewHolder implements
-            ItemTouchHelperViewHolder {
+    public static class ItemViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
 
         View itemView;
         CheckBox done;

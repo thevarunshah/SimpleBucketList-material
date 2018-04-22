@@ -16,7 +16,6 @@ import java.util.ArrayList;
 public class BucketListWidgetService extends RemoteViewsService {
 
     public RemoteViewsService.RemoteViewsFactory onGetViewFactory(Intent intent) {
-
         return new ListViewRemoteViewsFactory(this.getApplicationContext(), intent);
     }
 }
@@ -27,31 +26,24 @@ class ListViewRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
     private ArrayList<Item> records;
     private int mAppWidgetId;
 
-    public ListViewRemoteViewsFactory(Context context, Intent intent) {
-
+    ListViewRemoteViewsFactory(Context context, Intent intent) {
         mContext = context;
-        mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                AppWidgetManager.INVALID_APPWIDGET_ID);
+        mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
     }
 
     //initialize the data set
     public void onCreate() {
-
         records = Utility.getBucketList();
-        if(records.size() == 0){
+        if (records.size() == 0) {
             Utility.readData(mContext);
         }
     }
 
     @Override
-    public void onDataSetChanged() {
-
-    }
+    public void onDataSetChanged() { }
 
     @Override
-    public void onDestroy() {
-
-    }
+    public void onDestroy() { }
 
     @Override
     public int getCount() {
@@ -66,12 +58,7 @@ class ListViewRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactor
         Item item = records.get(position);
         String data = item.getItemText();
         rv.setTextViewText(R.id.widgetrow_text, data);
-        if(item.isDone()){
-            rv.setInt(R.id.widgetrow_text, "setPaintFlags", Paint.ANTI_ALIAS_FLAG | Paint.STRIKE_THRU_TEXT_FLAG);
-        }
-        else{
-            rv.setInt(R.id.widgetrow_text, "setPaintFlags", Paint.ANTI_ALIAS_FLAG & ~Paint.STRIKE_THRU_TEXT_FLAG);
-        }
+        rv.setInt(R.id.widgetrow_text, "setPaintFlags", item.isDone() ? (Paint.ANTI_ALIAS_FLAG | Paint.STRIKE_THRU_TEXT_FLAG) : (Paint.ANTI_ALIAS_FLAG & ~Paint.STRIKE_THRU_TEXT_FLAG));
 
         //setup onclick action for individual items
         final Intent onClickIntent = new Intent(mContext, BucketListWidgetProvider.class);

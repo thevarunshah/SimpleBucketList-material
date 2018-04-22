@@ -59,15 +59,11 @@ public class SettingsFragment extends PreferenceFragment {
                             @Override
                             public void restoreFinished(int error) {
                                 super.restoreFinished(error);
-                                Snackbar snackbar;
                                 if (error == 0) {
                                     Utility.readData(getActivity().getApplicationContext());
-                                    snackbar = Snackbar.make(getActivity().findViewById(R.id.relativeLayout),
-                                            "Data successfully restored.", Snackbar.LENGTH_SHORT);
-                                } else {
-                                    snackbar = Snackbar.make(getActivity().findViewById(R.id.relativeLayout),
-                                            "Could not restore data - please try again later.", Snackbar.LENGTH_LONG);
                                 }
+                                Snackbar snackbar = Snackbar.make(getActivity().findViewById(R.id.relativeLayout), error == 0 ? R.string.restore_success_message : R.string.restore_failed_message,
+                                        error == 0 ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG);
                                 overlay.setVisibility(View.GONE);
                                 progressBar.setVisibility(View.GONE);
                                 snackbar.show();
@@ -118,8 +114,7 @@ public class SettingsFragment extends PreferenceFragment {
                                 i.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName));
                                 startActivity(i);
                             } catch (ActivityNotFoundException e2){
-                                Snackbar errorBar = Snackbar.make(getActivity().findViewById(R.id.relativeLayout),
-                                        "Could not launch the Google Play app.", Snackbar.LENGTH_SHORT);
+                                Snackbar errorBar = Snackbar.make(getActivity().findViewById(R.id.relativeLayout), R.string.play_launch_failed, Snackbar.LENGTH_SHORT);
                                 errorBar.show();
                             }
                         }

@@ -21,13 +21,13 @@ public class BucketListWidgetProvider extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent){
 
         final String action = intent.getAction();
-        if(action.equals(CLICK_ACTION)){
+        if (action != null && action.equals(CLICK_ACTION)) {
             //start main activity
             Intent i = new Intent(context, BucketItemListView.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
         }
-        else if(action.equals(UPDATE_ACTION)){
+        else if (action != null && action.equals(UPDATE_ACTION)) {
             //update the widget data
             AppWidgetManager manager = AppWidgetManager.getInstance(context);
             ComponentName componentName = new ComponentName(context, BucketListWidgetProvider.class);
@@ -41,7 +41,7 @@ public class BucketListWidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
         //update each of the app widgets with the remote adapter
-        for(int appWidgetId : appWidgetIds){
+        for (int appWidgetId : appWidgetIds) {
 
             //setup the intent such that it calls the service to populate the widget views
             Intent intent = new Intent(context, BucketListWidgetService.class);
@@ -62,8 +62,7 @@ public class BucketListWidgetProvider extends AppWidgetProvider {
             onClickIntent.setAction(BucketListWidgetProvider.CLICK_ACTION);
             onClickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
             onClickIntent.setData(Uri.parse(onClickIntent.toUri(Intent.URI_INTENT_SCHEME)));
-            final PendingIntent onClickPendingIntent = PendingIntent.getBroadcast(context, 0,
-                    onClickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            final PendingIntent onClickPendingIntent = PendingIntent.getBroadcast(context, 0, onClickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             rv.setOnClickPendingIntent(R.id.empty_view, onClickPendingIntent);
             rv.setPendingIntentTemplate(R.id.widget_listview, onClickPendingIntent);
 
