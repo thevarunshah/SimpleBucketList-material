@@ -76,7 +76,7 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 				//inflate layout with customized alert dialog view
 				LayoutInflater layoutInflater = LayoutInflater.from(BucketItemListView.this);
 				final View dialog = layoutInflater.inflate(R.layout.input_dialog, null);
-				final AlertDialog.Builder newItemDialogBuilder = new AlertDialog.Builder(BucketItemListView.this, R.style.AppCompatAlertDialogStyle);
+				final AlertDialog.Builder newItemDialogBuilder = new AlertDialog.Builder(BucketItemListView.this);
 
 				//customize alert dialog and set its view
 				newItemDialogBuilder.setTitle("New Item");

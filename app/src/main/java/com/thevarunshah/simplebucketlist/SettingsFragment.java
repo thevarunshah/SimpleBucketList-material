@@ -38,7 +38,7 @@ public class SettingsFragment extends PreferenceFragment {
                 //inflate layout with customized alert dialog view
                 LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
                 final View dialog = layoutInflater.inflate(R.layout.info_dialog, null);
-                final AlertDialog.Builder infoDialogBuilder = new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle);
+                final AlertDialog.Builder infoDialogBuilder = new AlertDialog.Builder(getActivity());
 
                 //customize alert dialog and set its view
                 infoDialogBuilder.setTitle("Restore Data");
@@ -88,7 +88,7 @@ public class SettingsFragment extends PreferenceFragment {
                 //inflate layout with customized alert dialog view
                 LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
                 final View dialog = layoutInflater.inflate(R.layout.info_dialog, null);
-                final AlertDialog.Builder infoDialogBuilder = new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle);
+                final AlertDialog.Builder infoDialogBuilder = new AlertDialog.Builder(getActivity());
 
                 //customize alert dialog and set its view
                 infoDialogBuilder.setTitle("About");

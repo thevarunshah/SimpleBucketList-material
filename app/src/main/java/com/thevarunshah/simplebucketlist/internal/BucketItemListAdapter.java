@@ -72,7 +72,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                     //inflate layout with customized alert dialog view
                     LayoutInflater layoutInflater = LayoutInflater.from(context);
                     final View dialog = layoutInflater.inflate(R.layout.context_menu_dialog, null);
-                    final AlertDialog.Builder itemOptionsDialogBuilder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
+                    final AlertDialog.Builder itemOptionsDialogBuilder = new AlertDialog.Builder(context);
 
                     //customize alert dialog and set its view
                     itemOptionsDialogBuilder.setTitle(R.string.item_options);
@@ -97,7 +97,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                             //inflate layout with customized alert dialog view
                             LayoutInflater layoutInflater = LayoutInflater.from(context);
                             final View dialog = layoutInflater.inflate(R.layout.input_dialog, null);
-                            final AlertDialog.Builder editItemDialogBuilder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
+                            final AlertDialog.Builder editItemDialogBuilder = new AlertDialog.Builder(context);
 
                             //customize alert dialog and set its view
                             editItemDialogBuilder.setTitle("Edit Item");
@@ -225,7 +225,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                     //inflate layout with customized alert dialog view
                     LayoutInflater layoutInflater = LayoutInflater.from(context);
                     final View dialog = layoutInflater.inflate(R.layout.input_dialog, null);
-                    final AlertDialog.Builder editItemDialogBuilder = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
+                    final AlertDialog.Builder editItemDialogBuilder = new AlertDialog.Builder(context);
 
                     //customize alert dialog and set its view
                     editItemDialogBuilder.setTitle(R.string.edit_item);

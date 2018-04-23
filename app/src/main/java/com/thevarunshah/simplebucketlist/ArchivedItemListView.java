@@ -59,7 +59,7 @@ public class ArchivedItemListView extends AppCompatActivity {
                 //inflate layout with customized alert dialog view
                 LayoutInflater unarchiveLayoutInflater = LayoutInflater.from(ArchivedItemListView.this);
                 final View unarchiveDialog = unarchiveLayoutInflater.inflate(R.layout.info_dialog, null);
-                final AlertDialog.Builder unarchiveItemDialogBuilder = new AlertDialog.Builder(ArchivedItemListView.this, R.style.AppCompatAlertDialogStyle);
+                final AlertDialog.Builder unarchiveItemDialogBuilder = new AlertDialog.Builder(ArchivedItemListView.this);
 
                 //customize alert dialog and set its view
                 unarchiveItemDialogBuilder.setTitle("Unarchive All");
@@ -91,7 +91,7 @@ public class ArchivedItemListView extends AppCompatActivity {
                 //inflate layout with customized alert dialog view
                 LayoutInflater deleteLayoutInflater = LayoutInflater.from(ArchivedItemListView.this);
                 final View deleteDialog = deleteLayoutInflater.inflate(R.layout.info_dialog, null);
-                final AlertDialog.Builder deleteItemDialogBuilder = new AlertDialog.Builder(ArchivedItemListView.this, R.style.AppCompatAlertDialogStyle);
+                final AlertDialog.Builder deleteItemDialogBuilder = new AlertDialog.Builder(ArchivedItemListView.this);
 
                 //customize alert dialog and set its view
                 deleteItemDialogBuilder.setTitle("Delete All");
