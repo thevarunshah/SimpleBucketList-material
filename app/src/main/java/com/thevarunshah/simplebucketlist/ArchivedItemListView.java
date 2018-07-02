@@ -1,6 +1,5 @@
 package com.thevarunshah.simplebucketlist;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -72,15 +71,13 @@ public class ArchivedItemListView extends AppCompatActivity {
                 final TextView unarchiveMessage = unarchiveDialog.findViewById(R.id.info_dialog);
                 unarchiveMessage.setText(R.string.unarchive_confirm_text);
 
-                unarchiveItemDialogBuilder.setPositiveButton("UNARCHIVE", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogInterface, int whichButton) {
-                        //move all archived items from archive list to bucket list and update view
-                        Utility.getBucketList().addAll(Utility.getArchiveList());
-                        Utility.getArchiveList().clear();
-                        listAdapter.notifyDataSetChanged();
+                unarchiveItemDialogBuilder.setPositiveButton("UNARCHIVE", (dialogInterface, whichButton) -> {
+                    //move all archived items from archive list to bucket list and update view
+                    Utility.getBucketList().addAll(Utility.getArchiveList());
+                    Utility.getArchiveList().clear();
+                    listAdapter.notifyDataSetChanged();
 
-                        Utility.writeData(getApplicationContext()); //backup data
-                    }
+                    Utility.writeData(getApplicationContext()); //backup data
                 });
                 unarchiveItemDialogBuilder.setNegativeButton("CANCEL", null);
 
@@ -104,14 +101,12 @@ public class ArchivedItemListView extends AppCompatActivity {
                 final TextView deleteMessage = deleteDialog.findViewById(R.id.info_dialog);
                 deleteMessage.setText(R.string.delete_confirm_text);
 
-                deleteItemDialogBuilder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogInterface, int whichButton) {
-                        //remove all archived items from archive list and update view
-                        Utility.getArchiveList().clear();
-                        listAdapter.notifyDataSetChanged();
+                deleteItemDialogBuilder.setPositiveButton("DELETE", (dialogInterface, whichButton) -> {
+                    //remove all archived items from archive list and update view
+                    Utility.getArchiveList().clear();
+                    listAdapter.notifyDataSetChanged();
 
-                        Utility.writeData(getApplicationContext()); //backup data
-                    }
+                    Utility.writeData(getApplicationContext()); //backup data
                 });
                 deleteItemDialogBuilder.setNegativeButton("CANCEL", null);
 

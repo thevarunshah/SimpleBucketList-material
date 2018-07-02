@@ -81,52 +81,46 @@ public class SettingsFragment extends PreferenceFragment {
         });
 
         Preference about = findPreference("about");
-        about.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            //display app information and prompt them to rate it.
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                //inflate layout with customized alert dialog view
-                LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-                final View dialog = layoutInflater.inflate(R.layout.info_dialog, null, false);
-                final AlertDialog.Builder infoDialogBuilder = new AlertDialog.Builder(getActivity());
+        //display app information and prompt them to rate it.
+        about.setOnPreferenceClickListener(preference -> {
+            //inflate layout with customized alert dialog view
+            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+            final View dialog = layoutInflater.inflate(R.layout.info_dialog, null, false);
+            final AlertDialog.Builder infoDialogBuilder = new AlertDialog.Builder(getActivity());
 
-                //customize alert dialog and set its view
-                infoDialogBuilder.setTitle("About");
-                infoDialogBuilder.setIcon(R.drawable.ic_info_black_24px);
-                infoDialogBuilder.setView(dialog);
+            //customize alert dialog and set its view
+            infoDialogBuilder.setTitle("About");
+            infoDialogBuilder.setIcon(R.drawable.ic_info_black_24px);
+            infoDialogBuilder.setView(dialog);
 
-                //fetch textview and set its text
-                final TextView message = dialog.findViewById(R.id.info_dialog);
-                message.setText(R.string.about_message);
+            //fetch textview and set its text
+            final TextView message = dialog.findViewById(R.id.info_dialog);
+            message.setText(R.string.about_message);
 
-                //set up actions for dialog buttons
-                infoDialogBuilder.setPositiveButton("RATE APP", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int whichButton) {
+            //set up actions for dialog buttons
+            infoDialogBuilder.setPositiveButton("RATE APP", (dialogInterface, whichButton) -> {
 
-                        String appPackageName = getActivity().getApplicationContext().getPackageName();
-                        Intent i = new Intent(Intent.ACTION_VIEW);
-                        try{
-                            i.setData(Uri.parse("market://details?id=" + appPackageName));
-                            startActivity(i);
-                        } catch(ActivityNotFoundException e){
-                            try{
-                                i.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName));
-                                startActivity(i);
-                            } catch (ActivityNotFoundException e2){
-                                Snackbar errorBar = Snackbar.make(getActivity().findViewById(R.id.relativeLayout), R.string.play_launch_failed, Snackbar.LENGTH_SHORT);
-                                errorBar.show();
-                            }
-                        }
+                String appPackageName = getActivity().getApplicationContext().getPackageName();
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                try{
+                    i.setData(Uri.parse("market://details?id=" + appPackageName));
+                    startActivity(i);
+                } catch(ActivityNotFoundException e){
+                    try{
+                        i.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName));
+                        startActivity(i);
+                    } catch (ActivityNotFoundException e2){
+                        Snackbar errorBar = Snackbar.make(getActivity().findViewById(R.id.relativeLayout), R.string.play_launch_failed, Snackbar.LENGTH_SHORT);
+                        errorBar.show();
                     }
-                });
-                infoDialogBuilder.setNegativeButton("DISMISS", null);
+                }
+            });
+            infoDialogBuilder.setNegativeButton("DISMISS", null);
 
-                //create and show the dialog
-                AlertDialog infoDialog = infoDialogBuilder.create();
-                infoDialog.show();
-                return true;
-            }
+            //create and show the dialog
+            AlertDialog infoDialog = infoDialogBuilder.create();
+            infoDialog.show();
+            return true;
         });
     }
 }

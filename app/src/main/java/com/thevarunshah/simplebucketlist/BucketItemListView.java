@@ -1,6 +1,5 @@
 package com.thevarunshah.simplebucketlist;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -69,57 +67,52 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 
 		//obtain add button and attach a on-tap listener to it
 		final FloatingActionButton addButton = findViewById(R.id.add_item);
-		addButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
+		addButton.setOnClickListener(v -> {
 
-				//inflate layout with customized alert dialog view
-				LayoutInflater layoutInflater = LayoutInflater.from(BucketItemListView.this);
-				final View dialog = layoutInflater.inflate(R.layout.input_dialog, null, false);
-				final AlertDialog.Builder newItemDialogBuilder = new AlertDialog.Builder(BucketItemListView.this);
+            //inflate layout with customized alert dialog view
+            LayoutInflater layoutInflater = LayoutInflater.from(BucketItemListView.this);
+            final View dialog = layoutInflater.inflate(R.layout.input_dialog, null, false);
+            final AlertDialog.Builder newItemDialogBuilder = new AlertDialog.Builder(BucketItemListView.this);
 
-				//customize alert dialog and set its view
-				newItemDialogBuilder.setTitle("New Item");
-				newItemDialogBuilder.setIcon(R.drawable.ic_launcher);
-				newItemDialogBuilder.setView(dialog);
+            //customize alert dialog and set its view
+            newItemDialogBuilder.setTitle("New Item");
+            newItemDialogBuilder.setIcon(R.drawable.ic_launcher);
+            newItemDialogBuilder.setView(dialog);
 
-				//fetch and set up edittext
-				final EditText input = dialog.findViewById(R.id.input_dialog_text);
-				input.setHint("Enter Details");
-				input.setFocusableInTouchMode(true);
-				input.requestFocus();
+            //fetch and set up edittext
+            final EditText input = dialog.findViewById(R.id.input_dialog_text);
+            input.setHint("Enter Details");
+            input.setFocusableInTouchMode(true);
+            input.requestFocus();
 
-				//set up actions for dialog buttons
-				newItemDialogBuilder.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialogInterface, int whichButton) {
+            //set up actions for dialog buttons
+            newItemDialogBuilder.setPositiveButton("ADD", (dialogInterface, whichButton) -> {
 
-						//create new item
-						String itemText = input.getText().toString();
-						Item item = new Item(itemText);
+                //create new item
+                String itemText = input.getText().toString();
+                Item item = new Item(itemText);
 
-						//add item to main list and update view
-						Utility.getBucketList().add(item);
-						recyclerAdapter.notifyDataSetChanged();
-						Utility.writeData(getApplicationContext()); //backup data
+                //add item to main list and update view
+                Utility.getBucketList().add(item);
+                recyclerAdapter.notifyDataSetChanged();
+                Utility.writeData(getApplicationContext()); //backup data
 
-						if (recyclerView.getVisibility() == View.GONE) {
-							recyclerView.setVisibility(View.VISIBLE);
-							emptyStateTextView.setVisibility(View.GONE);
-						}
-					}
-				});
-				newItemDialogBuilder.setNegativeButton("CANCEL", null);
+                if (recyclerView.getVisibility() == View.GONE) {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    emptyStateTextView.setVisibility(View.GONE);
+                }
+            });
+            newItemDialogBuilder.setNegativeButton("CANCEL", null);
 
-				//create and show the dialog
-				AlertDialog newItemDialog = newItemDialogBuilder.create();
-				newItemDialog.show();
+            //create and show the dialog
+            AlertDialog newItemDialog = newItemDialogBuilder.create();
+            newItemDialog.show();
 
-				if (newItemDialog.getWindow() != null) {
-					//show keyboard
-					newItemDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-				}
-			}
-		});
+            if (newItemDialog.getWindow() != null) {
+                //show keyboard
+                newItemDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            }
+        });
 
 		//add specific listeners only if tablet is not being used
 		if(!tablet){
@@ -170,15 +163,12 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 
 				//friendly success message and give option to undo
 				Snackbar infoBar = Snackbar.make(findViewById(R.id.coordLayout), R.string.archive_done_text, Snackbar.LENGTH_LONG);
-				infoBar.setAction("UNDO", new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						//undo deleting
-						Utility.undoTransferToArchive(removedIndices);
-						recyclerAdapter.notifyDataSetChanged();
-						Utility.writeData(getApplicationContext()); //backup data
-					}
-				});
+				infoBar.setAction("UNDO", v -> {
+                    //undo deleting
+                    Utility.undoTransferToArchive(removedIndices);
+                    recyclerAdapter.notifyDataSetChanged();
+                    Utility.writeData(getApplicationContext()); //backup data
+                });
 				infoBar.setActionTextColor(Color.WHITE);
 				infoBar.show();
 				return true;

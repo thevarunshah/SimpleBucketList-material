@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -66,62 +65,50 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 		}
 
 		//attach a on-tap listener to the item for unarchiving
-		holder.unarchive.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
+		holder.unarchive.setOnClickListener(v -> {
 
-				final Item item = getItem(position); //get clicked item
+            final Item item = getItem(position); //get clicked item
 
-				//remove item from adapter, add to bucket list and update view
-				Utility.getBucketList().add(item);
-				archiveList.remove(item);
+            //remove item from adapter, add to bucket list and update view
+            Utility.getBucketList().add(item);
+            archiveList.remove(item);
+            notifyDataSetChanged();
+            Utility.writeData(getContext()); //backup data
+
+            //display success message and give option to undo
+            Snackbar infoBar = Snackbar.make(v, R.string.item_unarchived, Snackbar.LENGTH_LONG);
+            infoBar.setAction("UNDO", v12 -> {
+				//undo unarchiving
+				Utility.getBucketList().remove(item);
+				archiveList.add(position, item);
 				notifyDataSetChanged();
 				Utility.writeData(getContext()); //backup data
-
-				//display success message and give option to undo
-				Snackbar infoBar = Snackbar.make(v, R.string.item_unarchived, Snackbar.LENGTH_LONG);
-				infoBar.setAction("UNDO", new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						//undo unarchiving
-						Utility.getBucketList().remove(item);
-						archiveList.add(position, item);
-						notifyDataSetChanged();
-						Utility.writeData(getContext()); //backup data
-					}
-				});
-				infoBar.setActionTextColor(Color.WHITE);
-				infoBar.show();
-			}
-		});
+			});
+            infoBar.setActionTextColor(Color.WHITE);
+            infoBar.show();
+        });
 		
 		//attach a on-tap listener to the item for deleting
-		holder.delete.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
+		holder.delete.setOnClickListener(v -> {
 
-				final Item item = getItem(position); //get clicked item
+            final Item item = getItem(position); //get clicked item
 
-				//remove item from adapter and update view
-				archiveList.remove(item);
+            //remove item from adapter and update view
+            archiveList.remove(item);
+            notifyDataSetChanged();
+            Utility.writeData(getContext()); //backup data
+
+            //display success message and give option to undo
+            Snackbar infoBar = Snackbar.make(v, R.string.item_deleted, Snackbar.LENGTH_LONG);
+            infoBar.setAction("UNDO", v1 -> {
+				//undo deleting
+				archiveList.add(position, item);
 				notifyDataSetChanged();
 				Utility.writeData(getContext()); //backup data
-
-				//display success message and give option to undo
-				Snackbar infoBar = Snackbar.make(v, R.string.item_deleted, Snackbar.LENGTH_LONG);
-				infoBar.setAction("UNDO", new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						//undo deleting
-						archiveList.add(position, item);
-						notifyDataSetChanged();
-						Utility.writeData(getContext()); //backup data
-					}
-				});
-				infoBar.setActionTextColor(Color.WHITE);
-				infoBar.show();
-			}
-		});
+			});
+            infoBar.setActionTextColor(Color.WHITE);
+            infoBar.show();
+        });
 
 		//get item and link references to holder
 		Item item = archiveList.get(position);
