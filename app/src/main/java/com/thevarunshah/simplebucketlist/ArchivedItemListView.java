@@ -33,7 +33,9 @@ public class ArchivedItemListView extends AppCompatActivity {
         //fetch toolbar and set it as the action bar
         Toolbar toolbar = findViewById(R.id.archived_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //back button
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true); //back button
+        }
 
         //obtain list view and create new archive list custom adapter
         listView = findViewById(R.id.archived_listview);
@@ -58,7 +60,7 @@ public class ArchivedItemListView extends AppCompatActivity {
             case R.id.unarchive_archived:
                 //inflate layout with customized alert dialog view
                 LayoutInflater unarchiveLayoutInflater = LayoutInflater.from(ArchivedItemListView.this);
-                final View unarchiveDialog = unarchiveLayoutInflater.inflate(R.layout.info_dialog, null);
+                final View unarchiveDialog = unarchiveLayoutInflater.inflate(R.layout.info_dialog, null, false);
                 final AlertDialog.Builder unarchiveItemDialogBuilder = new AlertDialog.Builder(ArchivedItemListView.this);
 
                 //customize alert dialog and set its view
@@ -90,7 +92,7 @@ public class ArchivedItemListView extends AppCompatActivity {
             case R.id.delete_archived:
                 //inflate layout with customized alert dialog view
                 LayoutInflater deleteLayoutInflater = LayoutInflater.from(ArchivedItemListView.this);
-                final View deleteDialog = deleteLayoutInflater.inflate(R.layout.info_dialog, null);
+                final View deleteDialog = deleteLayoutInflater.inflate(R.layout.info_dialog, null, false);
                 final AlertDialog.Builder deleteItemDialogBuilder = new AlertDialog.Builder(ArchivedItemListView.this);
 
                 //customize alert dialog and set its view

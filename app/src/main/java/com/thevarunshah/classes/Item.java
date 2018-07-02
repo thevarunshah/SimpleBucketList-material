@@ -6,7 +6,7 @@ public class Item implements Serializable {
 
 	private static final long serialVersionUID = 1L; //for serializing data
 
-	private String itemText = ""; //the itemText
+	private String itemText; //the itemText
 	private boolean done; //boolean indicating if item is done
 
 	/**
@@ -15,7 +15,7 @@ public class Item implements Serializable {
 	 * @param text the contents of the item
 	 */
 	public Item(String text){
-		this.itemText = text;
+		this.itemText = text == null ? "" : text;
 		this.done = false;
 	}
 

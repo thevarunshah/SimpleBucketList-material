@@ -75,7 +75,7 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 
 				//inflate layout with customized alert dialog view
 				LayoutInflater layoutInflater = LayoutInflater.from(BucketItemListView.this);
-				final View dialog = layoutInflater.inflate(R.layout.input_dialog, null);
+				final View dialog = layoutInflater.inflate(R.layout.input_dialog, null, false);
 				final AlertDialog.Builder newItemDialogBuilder = new AlertDialog.Builder(BucketItemListView.this);
 
 				//customize alert dialog and set its view
@@ -114,8 +114,10 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 				AlertDialog newItemDialog = newItemDialogBuilder.create();
 				newItemDialog.show();
 
-				//show keyboard
-				newItemDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+				if (newItemDialog.getWindow() != null) {
+					//show keyboard
+					newItemDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+				}
 			}
 		});
 

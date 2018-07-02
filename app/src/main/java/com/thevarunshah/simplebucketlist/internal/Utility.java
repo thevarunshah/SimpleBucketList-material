@@ -52,8 +52,6 @@ public class Utility {
 
     /**
      * undoes the transferring of completed items to the archive list
-     *
-     * @param removedIndices
      */
     public static void undoTransferToArchive(ArrayList<Integer> removedIndices){
 

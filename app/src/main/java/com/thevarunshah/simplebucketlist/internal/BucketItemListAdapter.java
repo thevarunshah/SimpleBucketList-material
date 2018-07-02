@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,13 +43,14 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
         this.dragStartListener = dragStartListener;
     }
 
+    @NonNull
     @Override
-    public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.row, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final ItemViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ItemViewHolder holder, final int position) {
 
         if(!tablet) {
             //attach an on-tap listener to the item for checking/unchecking
@@ -71,7 +72,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
 
                     //inflate layout with customized alert dialog view
                     LayoutInflater layoutInflater = LayoutInflater.from(context);
-                    final View dialog = layoutInflater.inflate(R.layout.context_menu_dialog, null);
+                    final View dialog = layoutInflater.inflate(R.layout.context_menu_dialog, null, false);
                     final AlertDialog.Builder itemOptionsDialogBuilder = new AlertDialog.Builder(context);
 
                     //customize alert dialog and set its view
@@ -96,7 +97,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
 
                             //inflate layout with customized alert dialog view
                             LayoutInflater layoutInflater = LayoutInflater.from(context);
-                            final View dialog = layoutInflater.inflate(R.layout.input_dialog, null);
+                            final View dialog = layoutInflater.inflate(R.layout.input_dialog, null, false);
                             final AlertDialog.Builder editItemDialogBuilder = new AlertDialog.Builder(context);
 
                             //customize alert dialog and set its view
@@ -134,8 +135,10 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                             AlertDialog editItemDialog = editItemDialogBuilder.create();
                             editItemDialog.show();
 
-                            //show keyboard
-                            editItemDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                            if (editItemDialog.getWindow() != null) {
+                                //show keyboard
+                                editItemDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                            }
                         }
                     });
                     //archive button on-tap listener
@@ -224,7 +227,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
 
                     //inflate layout with customized alert dialog view
                     LayoutInflater layoutInflater = LayoutInflater.from(context);
-                    final View dialog = layoutInflater.inflate(R.layout.input_dialog, null);
+                    final View dialog = layoutInflater.inflate(R.layout.input_dialog, null, false);
                     final AlertDialog.Builder editItemDialogBuilder = new AlertDialog.Builder(context);
 
                     //customize alert dialog and set its view
@@ -256,8 +259,10 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                     AlertDialog editItemDialog = editItemDialogBuilder.create();
                     editItemDialog.show();
 
-                    //show keyboard
-                    editItemDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                    if (editItemDialog.getWindow() != null) {
+                        //show keyboard
+                        editItemDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                    }
                 }
             });
 
@@ -307,7 +312,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
         holder.handle.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                int action = MotionEventCompat.getActionMasked(event);
+                int action = event.getActionMasked();
                 if (action == MotionEvent.ACTION_DOWN) {
                     dragStartListener.onStartDrag(holder);
                     BucketItemListView.itemsMoved = true;

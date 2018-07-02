@@ -2,6 +2,7 @@ package com.thevarunshah.simplebucketlist.internal;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,18 +44,23 @@ public class ArchivedItemAdapter extends ArrayAdapter<Item> {
 		TextView item;
 	}
 
+	@NonNull
 	@Override
-	public View getView(final int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
 
 		ViewHolder holder = new ViewHolder();
 		if(convertView == null){
 			//inflate view and link each component to the holder
 			LayoutInflater vi = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = vi.inflate(R.layout.archived_row, null);
-			holder.item = convertView.findViewById(R.id.row_text);
-			holder.unarchive = convertView.findViewById(R.id.unarchive_button);
-			holder.delete = convertView.findViewById(R.id.delete_button);
-			convertView.setTag(holder);
+			if (vi != null) {
+				convertView = vi.inflate(R.layout.archived_row, parent, false);
+				holder.item = convertView.findViewById(R.id.row_text);
+				holder.unarchive = convertView.findViewById(R.id.unarchive_button);
+				holder.delete = convertView.findViewById(R.id.delete_button);
+				convertView.setTag(holder);
+			} else {
+				return null;
+			}
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}

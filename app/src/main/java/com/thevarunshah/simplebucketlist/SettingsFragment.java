@@ -37,7 +37,7 @@ public class SettingsFragment extends PreferenceFragment {
             public boolean onPreferenceClick(Preference preference) {
                 //inflate layout with customized alert dialog view
                 LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-                final View dialog = layoutInflater.inflate(R.layout.info_dialog, null);
+                final View dialog = layoutInflater.inflate(R.layout.info_dialog, null, false);
                 final AlertDialog.Builder infoDialogBuilder = new AlertDialog.Builder(getActivity());
 
                 //customize alert dialog and set its view
@@ -87,7 +87,7 @@ public class SettingsFragment extends PreferenceFragment {
             public boolean onPreferenceClick(Preference preference) {
                 //inflate layout with customized alert dialog view
                 LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-                final View dialog = layoutInflater.inflate(R.layout.info_dialog, null);
+                final View dialog = layoutInflater.inflate(R.layout.info_dialog, null, false);
                 final AlertDialog.Builder infoDialogBuilder = new AlertDialog.Builder(getActivity());
 
                 //customize alert dialog and set its view

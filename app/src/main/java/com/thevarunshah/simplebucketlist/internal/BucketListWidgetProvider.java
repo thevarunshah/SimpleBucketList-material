@@ -14,8 +14,8 @@ import com.thevarunshah.simplebucketlist.R;
 
 public class BucketListWidgetProvider extends AppWidgetProvider {
 
-    public static String CLICK_ACTION = "com.thevarunshah.simplebucketlist.internal.CLICK";
-    public static String UPDATE_ACTION = "com.thevarunshah.simplebucketlist.internal.UPDATE";
+    public static final String CLICK_ACTION = "com.thevarunshah.simplebucketlist.internal.CLICK";
+    public static final String UPDATE_ACTION = "com.thevarunshah.simplebucketlist.internal.UPDATE";
 
     @Override
     public void onReceive(Context context, Intent intent){
