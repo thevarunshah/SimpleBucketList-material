@@ -22,7 +22,8 @@
         android:layout_centerInParent="true"
         android:layout_margin="2.5dp"
         android:layout_toStartOf="@id/context_edit"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:autoLink="web|phone|email"/>
 
     <ImageButton
         android:id="@+id/context_edit"
