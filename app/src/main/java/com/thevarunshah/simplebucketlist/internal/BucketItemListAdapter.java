@@ -54,9 +54,9 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
 
         if(!tablet) {
             //attach an on-tap listener to the item for checking/unchecking
-            holder.itemView.setOnClickListener(view -> {
+            holder.item.setOnClickListener(view -> {
                 Item item = getItem(position);
-                CheckBox cb = view.findViewById(R.id.row_check);
+                CheckBox cb = holder.itemView.findViewById(R.id.row_check);
                 cb.setChecked(!item.isDone());
             });
 
