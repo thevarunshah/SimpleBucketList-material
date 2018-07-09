@@ -34,6 +34,8 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
     private static boolean tablet;
     private final OnStartDragListener dragStartListener;
 
+    private boolean isLongClick = false;
+
     public BucketItemListAdapter(Context context, ArrayList<Item> bucketList, boolean tablet, OnStartDragListener dragStartListener) {
         this.context = context;
         this.bucketList = bucketList;
@@ -59,7 +61,9 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
             });
 
             //attach a long-tap listener to the item
-            holder.itemView.setOnLongClickListener(view -> {
+            holder.item.setOnLongClickListener(view -> {
+
+                isLongClick = true;
 
                 final Item item = getItem(position); //get clicked item
 
@@ -162,6 +166,18 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                 //show the dialog
                 itemOptionsDialog.show();
                 return true;
+            });
+
+            holder.item.setOnTouchListener((v, event) -> {
+                int action = event.getActionMasked();
+                if(action == MotionEvent.ACTION_UP && isLongClick){
+                    isLongClick = false;
+                    return true;
+                }
+                if(action == MotionEvent.ACTION_DOWN){
+                    isLongClick = false;
+                }
+                return v.onTouchEvent(event);
             });
         }
 
