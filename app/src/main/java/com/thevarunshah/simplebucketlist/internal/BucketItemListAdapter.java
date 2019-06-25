@@ -31,7 +31,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
 
     private ArrayList<Item> bucketList; //the list the adapter manages
     private final Context context; //context attached to adapter
-    private static boolean tablet;
+    private boolean tablet;
     private final OnStartDragListener dragStartListener;
 
     private boolean isLongClick = false;
@@ -39,14 +39,14 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
     public BucketItemListAdapter(Context context, ArrayList<Item> bucketList, boolean tablet, OnStartDragListener dragStartListener) {
         this.context = context;
         this.bucketList = bucketList;
-        BucketItemListAdapter.tablet = tablet;
+        this.tablet = tablet;
         this.dragStartListener = dragStartListener;
     }
 
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.row, parent, false));
+        return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.row, parent, false), tablet);
     }
 
     @Override
@@ -276,7 +276,6 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
             int action = event.getActionMasked();
             if (action == MotionEvent.ACTION_DOWN) {
                 dragStartListener.onStartDrag(holder);
-                BucketItemListView.itemsMoved = true;
             }
             return false;
         });
@@ -315,12 +314,12 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
         ImageButton delete;
         ImageView handle;
 
-        public ItemViewHolder(View itemView) {
+        public ItemViewHolder(View itemView, boolean tablet) {
             super(itemView);
             this.itemView = itemView;
             item = itemView.findViewById(R.id.row_text);
             done = itemView.findViewById(R.id.row_check);
-            if(BucketItemListAdapter.tablet){
+            if(tablet){
                 edit = itemView.findViewById(R.id.context_edit);
                 archive = itemView.findViewById(R.id.context_archive);
                 delete = itemView.findViewById(R.id.context_delete);

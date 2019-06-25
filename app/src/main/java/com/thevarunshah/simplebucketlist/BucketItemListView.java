@@ -39,7 +39,7 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 	private TextView emptyStateTextView;
 	private ItemTouchHelper itemTouchHelper;
 
-	public static boolean itemsMoved = false;
+	public boolean itemsMoved = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +136,7 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 	@Override
 	public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
 		itemTouchHelper.startDrag(viewHolder);
+		itemsMoved = true;
 	}
 
 	@Override
