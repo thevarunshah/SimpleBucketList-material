@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -120,13 +122,11 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 			recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
 				@Override
-				public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-					super.onScrollStateChanged(recyclerView, newState);
-					if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-						addButton.animate().translationY(addButton.getHeight()*2);
-					}
-					if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-						addButton.animate().translationY(0);
+				public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+					if (dy > 0) {
+						addButton.animate().translationY(addButton.getHeight()*2); //scrolling down
+					} else {
+						addButton.animate().translationY(0); //scrolling up
 					}
 				}
 			});
