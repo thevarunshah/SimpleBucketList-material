@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="add_to_top"
+        android:title="@string/add_to_top" />
+
     <Preference
         android:key="restore"
         android:title="@string/restore" />

@@ -95,7 +95,11 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
                 Item item = new Item(itemText);
 
                 //add item to main list and update view
-                Utility.getBucketList().add(item);
+				if (Utility.getAddToTopPreference(getApplicationContext())) {
+					Utility.getBucketList().add(0, item);
+				} else {
+					Utility.getBucketList().add(item);
+				}
                 recyclerAdapter.notifyDataSetChanged();
                 Utility.writeData(getApplicationContext()); //backup data
 

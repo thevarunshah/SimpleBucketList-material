@@ -10,6 +10,8 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AlertDialog;
+
+import android.preference.SwitchPreference;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -30,6 +32,16 @@ public class SettingsFragment extends PreferenceFragment {
 
         overlay = getActivity().findViewById(R.id.overlay);
         progressBar = getActivity().findViewById(R.id.progress_bar);
+
+        SwitchPreference addToTop = (SwitchPreference) findPreference("add_to_top");
+        addToTop.setChecked(Utility.getAddToTopPreference(getActivity().getApplicationContext())); //set default
+        addToTop.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                Utility.updateAddToTopPreference(getActivity().getApplicationContext(), (boolean) newValue);
+                return true;
+            }
+        });
 
         Preference restore = findPreference("restore");
         restore.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

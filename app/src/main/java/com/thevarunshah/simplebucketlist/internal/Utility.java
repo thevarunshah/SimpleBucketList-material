@@ -4,6 +4,7 @@ import android.app.backup.BackupManager;
 import android.app.backup.RestoreObserver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.thevarunshah.classes.Item;
@@ -20,6 +21,9 @@ public class Utility {
 
     private static final ArrayList<Item> bucketList = new ArrayList<>(); //list of all items
     private static final ArrayList<Item> archiveList = new ArrayList<>(); //list of archived items
+
+    private static final String PREFERENCE_FILE_KEY = "BucketListPreferences";
+    private static final String ADD_TO_TOP_PREFERENCE_KEY = "AddToTop";
 
     private static final String TAG = "Utility"; //for debugging purposes
 
@@ -76,6 +80,30 @@ public class Utility {
     public static void moveToArchive(int position){
         archiveList.add(bucketList.get(position));
         bucketList.remove(position);
+    }
+
+    /**
+     * fetches the user's preference of whether to add items to top or bottom.
+     *
+     * @param context the application context
+     * @return the user's preference to add items to top or bottom; false by default
+     */
+    public static boolean getAddToTopPreference(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(ADD_TO_TOP_PREFERENCE_KEY, false);
+    }
+
+    /**
+     * updates the user's preference of whether to add items to top or bottom.
+     *
+     * @param context the application context
+     * @param addToTop true if user wants to add items to the top; false otherwise
+     */
+    public static void updateAddToTopPreference(Context context, boolean addToTop) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(ADD_TO_TOP_PREFERENCE_KEY, addToTop);
+        editor.apply();
     }
 
     /**
