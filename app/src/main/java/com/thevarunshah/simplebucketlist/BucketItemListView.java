@@ -39,7 +39,7 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 	private TextView emptyStateTextView;
 	private ItemTouchHelper itemTouchHelper;
 
-	public boolean itemsMoved = false;
+	private boolean itemsMoved = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -35,12 +35,9 @@ public class SettingsFragment extends PreferenceFragment {
 
         SwitchPreference addToTop = (SwitchPreference) findPreference("add_to_top");
         addToTop.setChecked(Utility.getAddToTopPreference(getActivity().getApplicationContext())); //set default
-        addToTop.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                Utility.updateAddToTopPreference(getActivity().getApplicationContext(), (boolean) newValue);
-                return true;
-            }
+        addToTop.setOnPreferenceChangeListener((preference, newValue) -> {
+            Utility.updateAddToTopPreference(getActivity().getApplicationContext(), (boolean) newValue);
+            return true;
         });
 
         Preference restore = findPreference("restore");

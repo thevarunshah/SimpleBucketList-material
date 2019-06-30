@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.thevarunshah.classes.Item;
-import com.thevarunshah.simplebucketlist.BucketItemListView;
 import com.thevarunshah.simplebucketlist.R;
 
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
         if(!tablet) {
             //attach an on-tap listener to the item for checking/unchecking
             holder.item.setOnClickListener(view -> {
-                Item item = getItem(position);
+                Item item = bucketList.get(position);
                 CheckBox cb = holder.itemView.findViewById(R.id.row_check);
                 cb.setChecked(!item.isDone());
             });
@@ -65,7 +64,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
 
                 isLongClick = true;
 
-                final Item item = getItem(position); //get clicked item
+                final Item item = bucketList.get(position); //get clicked item
 
                 //inflate layout with customized alert dialog view
                 LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -146,7 +145,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                 deleteButton.setOnClickListener(v -> {
 
                     //remove item from adapter and update view
-                    getBucketList().remove(position);
+                    bucketList.remove(position);
                     notifyDataSetChanged();
                     Utility.writeData(context); //backup data
                     itemOptionsDialog.dismiss();
@@ -155,7 +154,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
                     Snackbar infoBar = Snackbar.make(view, R.string.item_deleted, Snackbar.LENGTH_LONG);
                     infoBar.setAction("UNDO", v1 -> {
                         //undo deleting
-                        getBucketList().add(position, item);
+                        bucketList.add(position, item);
                         notifyDataSetChanged();
                         Utility.writeData(context); //backup data
                     });
@@ -314,7 +313,7 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
         ImageButton delete;
         ImageView handle;
 
-        public ItemViewHolder(View itemView, boolean tablet) {
+        ItemViewHolder(View itemView, boolean tablet) {
             super(itemView);
             this.itemView = itemView;
             item = itemView.findViewById(R.id.row_text);
@@ -336,17 +335,5 @@ public class BucketItemListAdapter extends RecyclerView.Adapter<BucketItemListAd
         public void onItemClear() {
             itemView.setBackgroundColor(0);
         }
-    }
-
-    public Item getItem(int position){
-        return this.bucketList.get(position);
-    }
-
-    public ArrayList<Item> getBucketList(){
-        return this.bucketList;
-    }
-
-    public void setBucketList(ArrayList<Item> bucketList) {
-        this.bucketList = bucketList;
     }
 }

@@ -16,6 +16,7 @@
         android:layout_marginBottom="10dp"
         android:inputType="textCapSentences|textMultiLine"
         android:maxLines="5"
-        tools:ignore="LabelFor"/>
+        tools:ignore="LabelFor"
+        android:importantForAutofill="no"/>
 
 </LinearLayout>
