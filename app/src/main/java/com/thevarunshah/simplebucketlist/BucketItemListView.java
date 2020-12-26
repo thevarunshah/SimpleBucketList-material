@@ -3,16 +3,6 @@ package com.thevarunshah.simplebucketlist;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +12,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.thevarunshah.classes.Item;
 import com.thevarunshah.simplebucketlist.internal.BucketItemListAdapter;
 import com.thevarunshah.simplebucketlist.internal.OnStartDragListener;
@@ -30,6 +22,14 @@ import com.thevarunshah.simplebucketlist.internal.Utility;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class BucketItemListView extends AppCompatActivity implements OnStartDragListener {
 
 	private static final String TAG = "BucketItemListView"; //for debugging purposes
@@ -37,15 +37,20 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 	private RecyclerView recyclerView = null; //main view of items
 	private BucketItemListAdapter recyclerAdapter = null; //adapter for items display
 	private TextView emptyStateTextView;
+	private FloatingActionButton addButton;
 	private ItemTouchHelper itemTouchHelper;
 
 	private boolean itemsMoved = false;
+	private boolean startedFromShortcut = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.bucket_item_listview);
+
+		final String intentAction = getIntent().getAction();
+		startedFromShortcut = intentAction.equals("android.intent.action.VIEW");
 
 		//fetch toolbar and set it as the action bar
 		Toolbar toolbar = findViewById(R.id.toolbar);
@@ -68,7 +73,7 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 		emptyStateTextView = findViewById(R.id.list_empty_textview);
 
 		//obtain add button and attach a on-tap listener to it
-		final FloatingActionButton addButton = findViewById(R.id.add_item);
+		addButton = findViewById(R.id.add_item);
 		addButton.setOnClickListener(v -> {
 
             //inflate layout with customized alert dialog view
@@ -201,11 +206,16 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 
 		recyclerView.setVisibility(Utility.getBucketList().isEmpty() ? View.GONE : View.VISIBLE);
 		emptyStateTextView.setVisibility(Utility.getBucketList().isEmpty() ? View.VISIBLE : View.GONE);
+
+		if (startedFromShortcut) {
+			addButton.callOnClick();
+		}
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
+		startedFromShortcut = false;
 		if (itemsMoved) {
 			Utility.writeData(this.getApplicationContext()); //backup data
 			itemsMoved = false;

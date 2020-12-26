@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="add_item"
+        android:enabled="true"
+        android:icon="@drawable/ic_add_black_24px"
+        android:shortcutShortLabel="@string/add_item"
+        android:shortcutLongLabel="@string/add_item">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.thevarunshah.simplebucketlist"
+            android:targetClass="com.thevarunshah.simplebucketlist.BucketItemListView" />
+    </shortcut>
+</shortcuts>
