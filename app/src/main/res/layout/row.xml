@@ -22,7 +22,8 @@
         android:layout_margin="2.5dp"
         android:layout_toStartOf="@+id/handle"
         android:textSize="20sp"
-        android:autoLink="web|phone|email"/>
+        android:autoLink="web|phone|email"
+        android:textColor="@android:color/black" />
 
     <ImageView
         android:id="@+id/handle"
