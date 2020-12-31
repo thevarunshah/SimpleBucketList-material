@@ -50,7 +50,8 @@ public class BucketItemListView extends AppCompatActivity implements OnStartDrag
 		setContentView(R.layout.bucket_item_listview);
 
 		final String intentAction = getIntent().getAction();
-		startedFromShortcut = intentAction.equals("android.intent.action.VIEW");
+		startedFromShortcut = intentAction != null
+								&& intentAction.equals("android.intent.action.VIEW");
 
 		//fetch toolbar and set it as the action bar
 		Toolbar toolbar = findViewById(R.id.toolbar);
