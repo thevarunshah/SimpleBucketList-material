@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.thevarunshah.simplebucketlist"
-    android:versionCode="15"
-    android:versionName="3.0" >
+    android:versionCode="16"
+    android:versionName="3.1" >
 
     <application
         android:allowBackup="true"
@@ -16,7 +15,8 @@
             android:value="AEdPqrEAAAAIuylTDI_5OT4wkoHWOxJUHeut5YuR1bi7b238Rw" />
         <activity
             android:name=".BucketItemListView"
-            android:label="@string/title" >
+            android:label="@string/title"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -28,7 +28,9 @@
         <activity
             android:name=".ArchivedItemListView"
             android:label="@string/archived" />
-        <receiver android:name=".internal.BucketListWidgetProvider" >
+        <receiver
+            android:name=".internal.BucketListWidgetProvider"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
